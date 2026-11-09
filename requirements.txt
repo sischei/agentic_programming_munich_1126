@@ -1,0 +1,20 @@
+# Agentic Programming for Economic Research -- CES Munich, November 2026
+#
+#   python3 -m venv .venv && source .venv/bin/activate
+#   pip install -r requirements.txt
+#
+# Python 3.10-3.12. Everything runs on a laptop CPU.
+# The example hooks (code/hooks/settings.json) also need the command-line
+# tools jq, ruff and latexmk (brew/apt install jq; pip install ruff).
+
+# the growth-model sandbox, the data generator and the Euler-error demo
+numpy>=1.26
+scipy>=1.11
+pandas>=2.0
+matplotlib>=3.8
+
+# the PINN examples (code/ode_solver, code/pinn_loop)
+torch>=2.2
+
+# the verifier of the /loop demo and of the templates
+pytest>=8.0

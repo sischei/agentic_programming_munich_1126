@@ -1,0 +1,58 @@
+{
+  "_comment": "Example Claude Code settings for an economics research project. Place at .claude/settings.json (project) or ~/.claude/settings.json (global). Two mechanisms: permission rules (deny the agent READING confidential paths: the agent never sees the content, so it is never sent to the API) and hooks (shell commands that run around tool calls; the PreToolUse hook blocks EDITS under data/raw/, protecting integrity). Hooks receive the tool input as JSON on stdin; file_path arrives as an ABSOLUTE path, hence the (^|/) in the patterns. Needs jq; the PostToolUse hooks also need ruff and latexmk (delete the ones you do not want). See https://code.claude.com/docs/en/hooks-guide and https://code.claude.com/docs/en/permissions",
+  "permissions": {
+    "_comment": "Deny rules are checked before any hook runs. Read(...) stops the agent from opening the files; the Bash rules stop the obvious shell detours. Not airtight against every shell command: restricted data belongs on a machine the agent does not run on.",
+    "deny": [
+      "Read(./data/raw/**)",
+      "Bash(cat data/raw/*)",
+      "Bash(head data/raw/*)",
+      "Bash(python* data/raw/*)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "_comment": "Recompile LaTeX whenever Claude edits a .tex file in paper/.",
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path // empty' | grep -E '(^|/)paper/[^/]*\\.tex$' | xargs -r -I{} sh -c 'cd paper && latexmk -pdf -interaction=nonstopmode main.tex > .latexmk.log 2>&1 || echo \"latexmk failed, see paper/.latexmk.log\"'"
+          }
+        ]
+      },
+      {
+        "_comment": "Run ruff on every Python file Claude writes or edits.",
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path // empty' | grep -E '\\.py$' | xargs -r ruff check --fix"
+          }
+        ]
+      },
+      {
+        "_comment": "Append every file Claude touched to an audit log. Note: only logs file paths; full Bash commands are deliberately NOT captured to avoid leaking secrets (API keys in env vars, tokens in URLs, etc.) into .claude/audit.log.",
+        "matcher": "Edit|Write|MultiEdit|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '\"[\" + (now | todate) + \"] \" + .tool_name + \" \" + (.tool_input.file_path // .tool_input.notebook_path // \"<no-path>\")' >> .claude/audit.log"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "_comment": "Block edits to data/raw/ at the system level. Exit code 2 blocks the tool call and shows stderr to Claude as the reason; the JSON form (hookSpecificOutput.permissionDecision = deny) does the same with more control.",
+        "matcher": "Edit|Write|MultiEdit|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -e '(.tool_input.file_path // .tool_input.notebook_path // \"\") | test(\"(^|/)data/raw/\")' > /dev/null && { echo 'data/raw/ is read-only per CLAUDE.md' >&2; exit 2; }; exit 0"
+          }
+        ]
+      }
+    ]
+  }
+}
