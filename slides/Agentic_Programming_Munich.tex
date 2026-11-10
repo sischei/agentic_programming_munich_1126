@@ -546,29 +546,13 @@ claude doctor
 \begin{lstlisting}[style=bash, basicstyle=\scriptsize\ttfamily]
 cd ~/research/my-project
 claude          # launch in the project
-/init           # bootstrap CLAUDE.md (Part V)
+/init           # write CLAUDE.md (Part V)
 /model          # pick the model
 /cost           # token spend so far
 \end{lstlisting}
 
-\vspace{0.2em}
-\textbf{Models} (November 2026), all with a 1M-token window:
-
-\scriptsize
-\renewcommand{\arraystretch}{1.05}
-\begin{tabular}{lll}
-\toprule
-\textbf{Model} & \textbf{Alias} & \textbf{Use for} \\
-\midrule
-Fable 5.1 & \texttt{fable} & hardest planning and review \\
-Opus 5.5 & \texttt{opus} & the default for real work \\
-Sonnet 5.5 & \texttt{sonnet} & most daily tasks, cheaper \\
-Haiku 5.5 & \texttt{haiku} & cheap verifier subagents \\
-\bottomrule
-\end{tabular}
-
 \vspace{0.3em}
-{\scriptsize Switch with \texttt{/model}; \texttt{/fast} for faster output on Opus. Cost is a research input: pick the cheapest model that keeps quality and put the expensive one where judgement is needed (planning, review).}
+\textbf{Models:} \texttt{haiku} / \texttt{sonnet} / \texttt{opus} / \texttt{fable}, switched with \texttt{/model}; \texttt{/fast} for faster output on Opus and Fable. Which one, and at what effort: next slide. Cost is a research input: the cheapest model that keeps quality, the expensive one where judgement is needed (planning, review).
 
 \vspace{0.2em}
 \begin{block}{\small What replaying this lecture costs}
@@ -605,6 +589,55 @@ Haiku 5.5 & \texttt{haiku} & cheap verifier subagents \\
 \begin{block}{\small The most important skill: how to interrupt}
 \scriptsize Interrupt early (Esc), steer, continue; do not let a bad path run to the end. After two failed corrections: \texttt{/clear} and a better prompt. In the default permission mode the agent asks before each edit and command.
 \end{block}
+\end{columns}
+\end{frame}
+
+% --- Which model, which effort (source: Osmani, claude.dev blog, 9 Nov 2026) ---
+\begin{frame}[fragile,shrink=8]{Which Model, Which Effort?}
+\begin{columns}[T]
+\column{0.50\textwidth}
+\textbf{The four models} (API list prices per million tokens, Nov.\ 2026; all 1M-token window):
+
+\vspace{0.2em}
+\scriptsize
+\renewcommand{\arraystretch}{1.1}
+\begin{tabular}{@{}llp{2.9cm}r@{}}
+\toprule
+\textbf{Model} & \texttt{/model} & \textbf{Built for} & \textbf{\$ in\,/\,out} \\
+\midrule
+Haiku 5.5 & \texttt{haiku} & high volume, cheap: classification, extraction; side-task subagents & 0.10 / 0.50 \\
+Sonnet 5.5 & \texttt{sonnet} & well-scoped work: a bug fix, a feature with a spec; interactive replies & 2 / 10 \\
+Opus 5.5 & \texttt{opus} & \textbf{the default}: everyday coding, debugging, multi-step features & 4 / 20 \\
+Fable 5.2 & \texttt{fable} & the hardest projects; deep quantitative analysis; long unattended runs & 8 / 40 \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3em}
+{\scriptsize Each model also has an \emphc{effort} level (\texttt{low} / \texttt{medium} / \texttt{high} / \texttt{xhigh}): how long it thinks before acting; \texttt{medium} by default. Cached input is cheap (Opus: \$0.20/M); you pay for fresh input and output.}
+
+\vspace{0.3em}
+\begin{block}{\small For economists}
+\scriptsize Start on Opus at \texttt{medium}. Sonnet for the routine (cleaning, a table, a plot). Fable for the model solution or estimation you would otherwise give a very good RA for a week. Haiku for verifiers and readers (Part VI).
+\end{block}
+
+\column{0.47\textwidth}
+\textbf{When the output is not good enough}, in this order:
+\begin{enumerate}\itemsep1pt \scriptsize
+  \item \textbf{Make the task verifiable}: a test, a script, a known answer the agent can run itself (Part IX). A model that cannot check its work does not improve with size.
+  \item \textbf{Raise effort one level.} Past \texttt{high}, one more level can cost as much as the next model up.
+  \item \textbf{Move up one model}, starting at a \emph{lower} effort than on the smaller one.
+\end{enumerate}
+
+\vspace{0.2em}
+\begin{block}{\small Cost per finished task, not per token}
+\scriptsize On one coding benchmark, Opus at \texttt{low} with failures re-run at \texttt{high} passed 97\,\% of tasks at \$0.17 each; every task at \texttt{high}: 95\,\% at \$0.29. A cheap first pass plus a test beats the expensive model everywhere.
+\end{block}
+
+\vspace{0.2em}
+{\scriptsize\raggedright \textbf{Mixing models:} switch after \texttt{/compact} (the prompt cache belongs to the model that wrote it); small models only where a mistake is cheap to spot; compare two models on one task (\texttt{/model}, then \texttt{/cost}).\par}
+
+\vspace{0.3em}
+{\scriptsize\raggedright \textbf{Source:} Osmani, A. (9 Nov 2026), ``Which Claude model should you build with?'', claude.dev blog: \url{https://claude.dev/blog/which-claude-model-should-you-build-with/}. Table, rule and numbers from there; prices change, check before you budget.\par}
 \end{columns}
 \end{frame}
 
@@ -2245,7 +2278,7 @@ Linf < 0.1 is real learning, not a bug pretending to converge.
 \end{enumerate}
 \column{0.47\textwidth}
 \begin{alertblock}{\small The lesson}
-\tiny Two failures were loud and a PyTorch user recognises them. The third was silent and \emph{only the reference written into the plan exposed it}. Its cause is ordinary: an untuned penalty weight, one loss term dominating another, the thing the \texttt{loss-balancing-reviewer} subagent (slide 36) is written to catch. The hard-constraint trial solution removes the term rather than tuning it.\\[2pt]
+\tiny Two failures were loud and a PyTorch user recognises them. The third was silent and \emph{only the reference written into the plan exposed it}. Its cause is ordinary: an untuned penalty weight, one loss term dominating another, the thing the \texttt{loss-balancing-reviewer} subagent (slide 37) is written to catch. The hard-constraint trial solution removes the term rather than tuning it.\\[2pt]
 \textbf{The economist's version:} a small Euler residual with a wrong policy; a criterion minimum that moves with the sample length; a significant coefficient behind a weak first stage. All of them run cleanly.
 \end{alertblock}
 \begin{lstlisting}[style=bash, basicstyle=\tiny\ttfamily]
@@ -2794,6 +2827,7 @@ cd ~/research/munich-demo && claude
     \item METR (2025). Early-2025 AI and experienced open-source developer productivity (a 19\,\% slow-down).
     \item Liu et al.\ (2024). ``Lost in the Middle.'' \emph{TACL} 12: 157--173.
     \item Walters \& Wilder (2023). Fabricated citations from ChatGPT. \emph{Sci.\ Rep.}\ 13: 14045.
+    \item Osmani (2026). ``Which Claude Model Should You Build With?'' claude.dev blog (slide 13). \url{https://claude.dev/blog/which-claude-model-should-you-build-with/}
     \item Anthropic (2026). Claude Code docs: best practices, context window, hooks, subagents, scheduled tasks. \url{https://code.claude.com/docs}
 \end{itemize}
 \textbf{Tools}\\

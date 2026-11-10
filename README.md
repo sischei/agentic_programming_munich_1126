@@ -5,7 +5,7 @@ A 150-minute lecture at the **Center for Economic Studies (CES), LMU Munich**,
 such as Claude Code can and cannot be trusted with in a research workflow.
 
 Slides: [`slides/Agentic_Programming_Munich.pdf`](slides/Agentic_Programming_Munich.pdf)
-(65 frames, source in the same folder). Everything shown in the lecture is in
+(66 frames, source in the same folder). Everything shown in the lecture is in
 [`code/`](code), and [`code/WALKTHROUGH.md`](code/WALKTHROUGH.md) lists every
 file in lecture order with its slide, what to look at and the command that
 reproduces it.
@@ -61,26 +61,26 @@ reproduces it.
 |---|---|---|---|---|
 | 0:00 | Intro | Why now; what "agentic" means; today's plan | 1–3 | |
 | 0:05 | I | Orientation: chatbox vs agent, the context window, where the agent excels and struggles, the workflow, the running example | 4–9 | `code/data/`, `code/brock_mirman_reference.py` |
-| 0:20 | II | Setting up: Claude Code, commands and models, git, the demo project (**demo 1**) | 10–14 | `code/setup_demo_project.sh`, `code/generate_synthetic_data.py` |
-| 0:30 | III | The core loop: feedback and interruption, prompt quality levels, a research task in plan mode (**demo 2**), notebooks, parallel sessions, context management | 15–22 | `code/prompts.md` §2–6 |
-| 0:55 | IV | Prompt engineering for research: six components, the constraint vocabulary, six templates, failure modes | 23–28 | `code/prompts.md` §7 |
-| 1:10 | | *Break* | 29 | |
-| 1:20 | V | Project memory: `CLAUDE.md` | 30–32 | `code/CLAUDE_md_template.md`, `code/prompts.md` §8 |
-| 1:28 | VI | Skills, subagents, deny rules and hooks, MCP (**demo 3**: a skill and a verifier subagent) | 33–39 | `code/skills/`, `code/agents/`, `code/hooks/settings.json`, `code/prompts.md` §9–10 |
-| 1:43 | VII | Autonomous loops: the pattern and three ways to run it, how `/goal` works, `/goal` builds a solver against three tests (**demo 4**), the goal taken apart, the run turn by turn, guardrails, headless use | 40–47 | `code/pinn_loop/`, `code/prompts.md` §11–12 |
-| 1:58 | VIII | From plan to table and figure: the plan the agent wrote and how it was reconciled, the silent failure; one prompt → table + figure (**demo 5**); the full pipeline; replication | 48–53 | `code/ode_solver/`, `code/euler_check_demo.py`, `code/outputs/`, `code/prompts.md` §13–15 |
-| 2:10 | IX | Verification, disclosure norms, what they mean for referees, supervisors and students, replication packages, GDPR / EU AI Act / data agreements, six habits | 54–60 | |
-| 2:25 | Wrap-up | Quick reference, takeaways, ten tips, taking it home | 61–65 | `code/WALKTHROUGH.md` |
+| 0:20 | II | Setting up: Claude Code, commands and models, git, the demo project (**demo 1**) | 10–15 | `code/setup_demo_project.sh`, `code/generate_synthetic_data.py` |
+| 0:30 | III | The core loop: feedback and interruption, prompt quality levels, a research task in plan mode (**demo 2**), notebooks, parallel sessions, context management | 16–23 | `code/prompts.md` §2–6 |
+| 0:55 | IV | Prompt engineering for research: six components, the constraint vocabulary, six templates, failure modes | 24–29 | `code/prompts.md` §7 |
+| 1:10 | | *Break* | 30 | |
+| 1:20 | V | Project memory: `CLAUDE.md` | 31–33 | `code/CLAUDE_md_template.md`, `code/prompts.md` §8 |
+| 1:28 | VI | Skills, subagents, deny rules and hooks, MCP (**demo 3**: a skill and a verifier subagent) | 34–40 | `code/skills/`, `code/agents/`, `code/hooks/settings.json`, `code/prompts.md` §9–10 |
+| 1:43 | VII | Autonomous loops: the pattern and three ways to run it, how `/goal` works, `/goal` builds a solver against three tests (**demo 4**), the goal taken apart, the run turn by turn, guardrails, headless use | 41–48 | `code/pinn_loop/`, `code/prompts.md` §11–12 |
+| 1:58 | VIII | From plan to table and figure: the plan the agent wrote and how it was reconciled, the silent failure; one prompt → table + figure (**demo 5**); the full pipeline; replication | 49–54 | `code/ode_solver/`, `code/euler_check_demo.py`, `code/outputs/`, `code/prompts.md` §13–15 |
+| 2:10 | IX | Verification, disclosure norms, what they mean for referees, supervisors and students, replication packages, GDPR / EU AI Act / data agreements, six habits | 55–61 | |
+| 2:25 | Wrap-up | Quick reference, takeaways, ten tips, taking it home | 62–66 | `code/WALKTHROUGH.md` |
 
 ## The five live demos
 
 | # | Slide | What happens | Prompt / command |
 |---|---|---|---|
-| 1 | 11, 14 | The stack check, then one script builds the demo project and the agent summarises it without writing anything | `claude doctor`; `bash code/setup_demo_project.sh`; `prompts.md` §1 |
-| 2 | 19 | A Level-3 research task on the simulated panel in **plan mode**: the plan is read and approved before anything is written; diagnostics, moments, a figure and a note come out in one pass | `prompts.md` §4 |
-| 3 | 35–36 | The `/data-diagnostics` skill on the panel, then the read-only `verifier` subagent checks the report's claims | `prompts.md` §9 |
-| 4 | 44–46 | `/goal` keeps the agent working until three `pytest` tests pass on a small differential-equation solver; set in a second terminal while the goal is taken apart and the run is followed turn by turn on the slides; result shown at the end of Part VII | `prompts.md` §11 |
-| 5 | 51 | One prompt → a `booktabs` table and a PDF figure of Euler-equation errors, with a verification assertion; the committed reference run is in `code/outputs/` | `prompts.md` §13; `python3 code/euler_check_demo.py` |
+| 1 | 11, 15 | The stack check, then one script builds the demo project and the agent summarises it without writing anything | `claude doctor`; `bash code/setup_demo_project.sh`; `prompts.md` §1 |
+| 2 | 20 | A Level-3 research task on the simulated panel in **plan mode**: the plan is read and approved before anything is written; diagnostics, moments, a figure and a note come out in one pass | `prompts.md` §4 |
+| 3 | 36–37 | The `/data-diagnostics` skill on the panel, then the read-only `verifier` subagent checks the report's claims | `prompts.md` §9 |
+| 4 | 45–47 | `/goal` keeps the agent working until three `pytest` tests pass on a small differential-equation solver; set in a second terminal while the goal is taken apart and the run is followed turn by turn on the slides; result shown at the end of Part VII | `prompts.md` §11 |
+| 5 | 52 | One prompt → a `booktabs` table and a PDF figure of Euler-equation errors, with a verification assertion; the committed reference run is in `code/outputs/` | `prompts.md` §13; `python3 code/euler_check_demo.py` |
 
 ## Replaying the lecture at home
 
@@ -128,7 +128,7 @@ README.md                      this page
 requirements.txt
 LICENCE                        CC0
 slides/
-  Agentic_Programming_Munich.tex / .pdf   the deck (65 frames); make / latexmk -pdf
+  Agentic_Programming_Munich.tex / .pdf   the deck (66 frames); make / latexmk -pdf
   figures/                     the figures the deck includes
 code/
   WALKTHROUGH.md               every file shown, in lecture order, with slide numbers and commands
@@ -165,6 +165,7 @@ code/
 * METR (2025). Measuring the impact of early-2025 AI on experienced open-source developer productivity.
 * Liu, N. F. et al. (2024). Lost in the middle: how language models use long contexts. *TACL* 12, 157–173.
 * Walters, W. H. and E. I. Wilder (2023). Fabrication and errors in the bibliographic citations generated by ChatGPT. *Scientific Reports* 13, 14045.
+* Osmani, A. (2026). Which Claude model should you build with? Fable, Opus, Sonnet, or Haiku. claude.dev blog, 9 November 2026 (the source of slide 13). https://claude.dev/blog/which-claude-model-should-you-build-with/
 * Anthropic (2026). Claude Code documentation: best practices, context window, hooks, subagents, scheduled tasks. https://code.claude.com/docs
 
 ## Lineage
