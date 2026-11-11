@@ -95,12 +95,29 @@ number: [`code/deqn/README.md`](code/deqn/README.md).
 
 ## 6. Readings and licence
 
-Azinovic, M., L. Gaegauf and S. Scheidegger (2022). Deep Equilibrium Nets. *International Economic
-Review* 63(4), 1471–1525, https://onlinelibrary.wiley.com/doi/abs/10.1111/iere.12575 (the method of the lead example).
-Further: Korinek (2023, *JEL*); Schluntz and Zhang (2024); Goldsmith-Pinkham (2026); Bilionis et al. (2026);
-Hans and Bilionis (2026, arXiv:2607.02134); Cherny (2025); Osmani (2026,
-[claude.dev blog](https://claude.dev/blog/which-claude-model-should-you-build-with/)); the
-[Claude Code documentation](https://code.claude.com/docs). Full list on the last slide.
+**The method of the lead example**
 
-[Simon Scheidegger](https://sischei.github.io/), HEC Lausanne and LSE Grantham Research Institute.
-Licence: [CC0 1.0](LICENCE).
+* Azinovic, M., L. Gaegauf and S. Scheidegger (2022). Deep Equilibrium Nets. *International Economic Review* 63(4), 1471–1525. [doi:10.1111/iere.12575](https://onlinelibrary.wiley.com/doi/abs/10.1111/iere.12575)
+
+**Agents in economic research**
+
+* Korinek, A. (2023). Generative AI for economic research: use cases and implications for economists. *Journal of Economic Literature* 61(4), 1281–1317.
+* Hans, A. and I. Bilionis (2026). Coding-agents can replicate scientific machine learning papers. [arXiv:2607.02134](https://arxiv.org/abs/2607.02134); the skill: [paper-replication-paper](https://github.com/PredictiveScienceLab/paper-replication-paper).
+* Bilionis, I. et al. (2026). We asked an AI agent to replicate three papers. *ebilionis.substack.com*.
+* Schwartz, M., I. Andrews and J. M. Shapiro (2026). An LLM workflow that reproduces, improves, and extends published economics research. [NBER Working Paper 35782](https://www.nber.org/papers/w35782).
+* Galiani, S., F. A. López and R. A. Sosa (2026). AI agents and prompt engineering in econometric coding. [NBER Working Paper 35588](https://www.nber.org/papers/w35588).
+
+**Working with Claude Code**
+
+* Goldsmith-Pinkham, P. (2026). Getting started with Claude Code. *paulgp.substack.com*.
+* Cherny, B. (2025). 10 Claude Code tips from the creator of Claude Code. Thread on X.
+* Osmani, A. (2026). Which Claude model should you build with? [claude.dev blog](https://claude.dev/blog/which-claude-model-should-you-build-with/), 9 November 2026.
+* Schluntz, E. and B. Zhang (2024). Building effective agents. Anthropic engineering blog.
+* Anthropic (2026). [Claude Code documentation](https://code.claude.com/docs).
+
+The full list, with the sources behind every slide, is on the last two slides of the deck.
+
+**Lecturer and licence**
+
+* [Simon Scheidegger](https://sischei.github.io/), HEC Lausanne and LSE Grantham Research Institute.
+* Licence: [CC0 1.0](LICENCE).
