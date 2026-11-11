@@ -16,7 +16,8 @@ to your own projects, and a repository that replays everything at home.
 3. [What is in this repository](#3-what-is-in-this-repository)
 4. [The lecture at a glance](#4-the-lecture-at-a-glance)
 5. [The lead example](#5-the-lead-example)
-6. [Readings and licence](#6-readings-and-licence)
+6. [Readings](#6-readings)
+7. [Author](#7-author)
 
 ## 1. Install
 
@@ -93,7 +94,7 @@ once at the end. Every concept of the lecture is introduced on this example; Par
 whose loss converged while the policy was wrong, and the check that caught it. Details and every
 number: [`code/deqn/README.md`](code/deqn/README.md).
 
-## 6. Readings and licence
+## 6. Readings
 
 **The method of the lead example**
 
@@ -117,7 +118,11 @@ number: [`code/deqn/README.md`](code/deqn/README.md).
 
 The full list, with the sources behind every slide, is on the last two slides of the deck.
 
-**Lecturer and licence**
+## 7. Author
 
-* [Simon Scheidegger](https://sischei.github.io/), HEC Lausanne and LSE Grantham Research Institute.
-* Licence: [CC0 1.0](LICENCE).
+**Simon Scheidegger**
+
+* Department of Economics, HEC, University of Lausanne; Grantham Research Institute, London School of Economics
+* Website: [sischei.github.io](https://sischei.github.io/)
+* Lecture material: [github.com/sischei/agentic_programming_munich_1126](https://github.com/sischei/agentic_programming_munich_1126)
+* Licence of this repository: [CC0 1.0](LICENCE).
