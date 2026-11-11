@@ -15,7 +15,7 @@ the artefacts the slides show. Source material: the course notebooks in `source/
 | 3 | Part VI | `accuracy.py`: the on-path check (also the `/deqn-accuracy` skill) | as above | 5 s |
 | 4 | Part VII | `tests/`, `reference/`: five tests and where their thresholds come from | as above | 14 s |
 | 5-6 | Part VIII | `plan_deqn.md`, `stochastic_box.py`, `silent_failure.md`, `plot_silent_failure.py` | as above | 11 s |
-| 7 | Part VIII | `loss_kernels.py`: four loss kernels, one table and one figure | as above | 35 s |
+| 7 | Part VIII | `loss_kernels.py`: four loss kernels, one table and one figure | as above | 45 s |
 
 Everything runs on a laptop CPU in float64 with fixed seeds (`common.py` pins 4 threads).
 

@@ -13,28 +13,28 @@ the lecture runs in `demo/`. Slide numbers refer to `slides/Agentic_Programming_
 
 | § | Slide | Demo / walk-through | Prompt |
 |---|---|---|---|
-| 1 | 18 | D1, WT 1 | Setup check: summarise the project without writing |
-| 2 | 21 | | The feedback loop: Step 1 without a plan, and the steer |
-| 3 | 23 | | A Level-3 prompt: the port of Step 1 with its own check |
-| 4 | 24 | D2 | Step 1 in plan mode: port, check, figure, note |
-| 5 | 25 | | Run a notebook headless and compare with its stored outputs |
-| 6 | 27 | | Context management: the progress file |
-| 7 | 29–33 | | Prompt anatomy: Step 2 as the six-component prompt; the constraint lines; six templates |
-| 8 | 38 | WT 2 | Orientation from `CLAUDE.md` alone |
-| 9 | 41–44 | D3, WT 3–5 | The accuracy skill, the verifier subagent, a specialist; the deny rule and the hook |
-| 10 | 45 | | MCP: Zotero and GitHub |
-| 11 | 51–53 | D4, WT 6 | The `/goal` that builds the stochastic solver, and its template |
-| 12 | 56 | | Headless: `claude -p`, a headless goal, the fresh-context shell loop |
-| 13 | 60 | D5 | One prompt → table + figure (four loss kernels) |
-| 14 | 61 | | The full pipeline: six prompts, the DEQN at rho_hat, `verify.py` and `run_all.py` |
-| 15 | 62 | | Replication |
+| 1 | 19 | D1, WT 1 | Setup check: summarise the project without writing |
+| 2 | 22 | | The feedback loop: Step 1 without a plan, and the steer |
+| 3 | 24 | | A Level-3 prompt: the port of Step 1 with its own check |
+| 4 | 25 | D2 | Step 1 in plan mode: port, check, figure, note |
+| 5 | 26 | | Run a notebook headless and compare with its stored outputs |
+| 6 | 28 | | Context management: the progress file |
+| 7 | 30–34 | | Prompt anatomy: Step 2 as the six-component prompt; the constraint lines; six templates |
+| 8 | 39 | WT 2 | Orientation from `CLAUDE.md` alone |
+| 9 | 42–45 | D3, WT 3–5 | The accuracy skill, the verifier subagent, a specialist; the deny rule and the hook |
+| 10 | 46 | | MCP: Zotero and GitHub |
+| 11 | 52–54 | D4, WT 6 | The `/goal` that builds the stochastic solver, and its template |
+| 12 | 57 | | Headless: `claude -p`, a headless goal, the fresh-context shell loop |
+| 13 | 61 | D5 | One prompt → table + figure (four loss kernels) |
+| 14 | 62 | | The full pipeline: six prompts, the DEQN at rho_hat, `verify.py` and `run_all.py` |
+| 15 | 63 | | Replication |
 
 D = live demo (five), WT = walk-through badge on the slides (seven); the same
 crosswalk is at the top of `WALKTHROUGH.md`.
 
 ---
 
-## 1. Setup check (slide 18, Walk-through 1)
+## 1. Setup check (slide 19, Walk-through 1)
 
 ```text
 What is in this directory? Summarise the structure, the two rules of CLAUDE.md and the docstring of deqn/common.py. Do not write anything yet.
@@ -44,7 +44,7 @@ A healthy answer lists the files, reads `CLAUDE.md`, names the two rules (the tr
 file; `tests/` and `reference/` are the exam), notes that `deqn/stochastic.py` is a
 stub whose tests fail with `NotImplementedError`, and writes nothing.
 
-## 2. The feedback loop (slide 21)
+## 2. The feedback loop (slide 22)
 
 Step 1 done without a plan. Turn 1:
 
@@ -61,7 +61,7 @@ A small loss is not a small error. The answer is known: s* = alpha*beta. Print m
 Our version of the result: `code/deqn/deterministic.py` (training loss 3.1e-7,
 max |s - alpha beta| = 4.9e-4, 3 s).
 
-## 3. A Level-3 prompt: the port of Step 1 (slide 23)
+## 3. A Level-3 prompt: the port of Step 1 (slide 24)
 
 ```text
 Port deqn/source/deqn_tf_deterministic.py (TensorFlow) to deqn/deterministic.py in PyTorch, same recipe: delta = 1, beta = 0.99, K ~ U[0.1, 1], 64 states per step, Adam 1e-3, 2000 steps; a 1-32-32-1 tanh network for the savings rate, built with deqn.common.make_net(1).
@@ -74,7 +74,7 @@ Verify: max |s(K) - alpha*beta| on 1,001 points of [0.1, 1] must be < 1e-2; prin
 Expected: about 3 s of training; max |s(K) - alpha beta| around 5e-4 (the threshold
 is 1e-2); `results/deqn_deterministic.pt` and its `.json` sidecar written.
 
-## 4. Live demo 2: Step 1 in plan mode (slide 24)
+## 4. Live demo 2: Step 1 in plan mode (slide 25)
 
 Press Shift+Tab until the prompt shows `[plan]`, then paste:
 
@@ -105,7 +105,7 @@ Expected (our version is `code/deqn/deterministic.py`, figure
 Afterwards: `/deqn-accuracy results/deqn_deterministic.pt` (Part VI) grades the same
 policy in five lines.
 
-## 5. Notebooks (slide 25)
+## 5. Notebooks (slide 26)
 
 ```text
 Run estimation.ipynb headless with N_SIM = 200. Compare the point estimates and standard errors with the stored outputs in the notebook. Report differences larger than one standard error. Do not edit the notebook.
@@ -117,7 +117,7 @@ The headless command the agent should use:
 jupyter nbconvert --to notebook --execute --ExecutePreprocessor.timeout=-1 --output out.ipynb estimation.ipynb
 ```
 
-## 6. Context management (slide 27)
+## 6. Context management (slide 28)
 
 At the end of a long session:
 
@@ -131,9 +131,9 @@ At the start of the next one:
 Read notes/session_state.md and continue from where we left off.
 ```
 
-## 7. Prompt anatomy and the templates (slides 29–33)
+## 7. Prompt anatomy and the templates (slides 30–34)
 
-### Before and after (slides 29–30)
+### Before and after (slides 30–31)
 
 Level 0:
 
@@ -156,7 +156,7 @@ and recipe of the goal in §11):
 Expected: 5 passed in about 14 s; on-path mean |residual| about 1.4e-4; max |s - s_ref|
 about 2.3e-3; E[s] 0.252; log K in [1.08, 1.81]. Our version: `code/deqn/solution/deqn_stochastic.py`.
 
-### The constraint lines (slide 31), to append to any prompt
+### The constraint lines (slide 32), to append to any prompt
 
 ```text
 Do NOT use reference/ in a loss, an initialisation or a fit. Do NOT edit tests/ or reference/. Do NOT change the seed or the step budget. Do NOT read the truth file before verifying. Do NOT report the training loss as accuracy.
@@ -176,31 +176,31 @@ The "think before you code" sentence:
 BEFORE writing any code: (1) describe your plan, (2) list every file you will modify, (3) list the risks. Do not proceed until I say "go ahead".
 ```
 
-### Template 1: replication check, code vs paper (slide 32)
+### Template 1: replication check, code vs paper (slide 33)
 
 ```text
 Read code/estimate.py and Section 3 of paper/main.tex. Check: does the estimator in the code match the one in the paper? Discrepancy report, one line per item: OK [item]: matches; X [item]: paper says X, code does Y; ? [item]: unclear from the paper.
 ```
 
-### Template 2: robustness table (slide 32)
+### Template 2: robustness table (slide 33)
 
 ```text
 Add 3 robustness checks to the baseline in code/estimate.py: (1) drop the post-2008 sample, (2) cluster at the region level, (3) add region-specific linear trends. For each: a separate script, results to results/robustness_{name}.json. Then one LaTeX table, all 4 specifications side by side (booktabs), coefficient and standard error.
 ```
 
-### Template 3: autonomous session (slide 32)
+### Template 3: autonomous session (slide 33)
 
 ```text
 I am stepping away for 30 minutes. Task: implement the pipeline per plan.md. Rules while I am away: commit after each major step; if stuck after 3 attempts, write notes/blocked.md and STOP; do NOT modify the raw data or the reference solver; write progress every 10 steps to notes/progress.md. When done: summary to notes/session_end.md.
 ```
 
-### Template 4: literature writing (slide 32)
+### Template 4: literature writing (slide 33)
 
 ```text
 Do NOT invent any citations. Only cite papers already in paper/references.bib. If a claim needs a source that is not there, write [CITE: author, year -- verify] and list the gaps at the end.
 ```
 
-### Template 5: translate legacy code, and prove it (slide 33)
+### Template 5: translate legacy code, and prove it (slide 34)
 
 ```text
 Port deqn/source/deqn_tf_stochastic.py (TensorFlow) to deqn/stochastic_port.py. Do NOT change the algorithm, only the language. Then write deqn/test_port.py: the residual has shape (n, 1) for n states; the Gauss-Hermite weights sum to 1; at sigma = 0 the residual equals the one of deqn/deterministic.py at the same states (within 1e-12). Run pytest on it. Report every deviation from the original with the line that causes it.
@@ -212,7 +212,7 @@ error is unchanged. No training run ever revealed it; the first test does. The s
 template ports MATLAB, Stata, Dynare, Julia or Fortran code: export the old numbers,
 then demand equality.
 
-### Template 6: check a derivation with computer algebra (slide 33)
+### Template 6: check a derivation with computer algebra (slide 34)
 
 ```text
 Model: log utility, Y = z K^alpha, K' = (1-delta) K + s Y, log z AR(1). Derive the Euler equation and the deterministic steady state (K*, s*). Verify every step with sympy in notes/check_euler.py: substitute the steady state into the Euler equation and print the residual (must be 0). Cross-check K* against brock_mirman_reference.steady_state(0.96). If a residual is not zero, say so; do not adjust the derivation to fit.
@@ -220,7 +220,7 @@ Model: log utility, Y = z K^alpha, K' = (1-delta) K + s Y, log z AR(1). Derive t
 
 Reference answer: K* = 4.294, s* = 0.254 at beta = 0.96. That Euler equation is the DEQN's residual.
 
-## 8. Orientation from `CLAUDE.md` (slide 38)
+## 8. Orientation from `CLAUDE.md` (slide 39)
 
 In a fresh session (`/clear`) in the demo project:
 
@@ -236,7 +236,7 @@ in `deqn/stochastic.py` whose tests fail, and the status line. Then the correcti
 Update CLAUDE.md so you don't make that mistake again.
 ```
 
-## 9. Live demo 3: the accuracy skill, the verifier, a specialist (slides 41–43); the deny rule and the hook (slide 44)
+## 9. Live demo 3: the accuracy skill, the verifier, a specialist (slides 42–44); the deny rule and the hook (slide 45)
 
 The skill of Step 3, on the policy that Step 1 saved (5 s):
 
@@ -266,7 +266,7 @@ Use the solution-accuracy-checker subagent on results/deqn_stochastic.pt. Refere
 Use the econometrics-reviewer subagent on the last commit.
 ```
 
-The hook and the deny rule of slide 44, in the demo project (both refuse):
+The hook and the deny rule of slide 45, in the demo project (both refuse):
 
 ```text
 Relax the threshold in tests/test_deqn_stochastic.py to 0.1.
@@ -276,7 +276,7 @@ Relax the threshold in tests/test_deqn_stochastic.py to 0.1.
 Show me reference/baseline.md.
 ```
 
-## 10. MCP (slide 45)
+## 10. MCP (slide 46)
 
 After `claude mcp add ...` for a Zotero and a GitHub server:
 
@@ -288,7 +288,7 @@ Search Zotero for papers on fiscal multipliers in HANK models; list the ones not
 Open a GitHub issue for the pre-trend test with the plan from notes/plan.md.
 ```
 
-## 11. Live demo 4: the `/goal` that builds the solver (slides 51–53)
+## 11. Live demo 4: the `/goal` that builds the solver (slides 52–54)
 
 In a *second* terminal, in the demo project (it has its own git history from the
 setup script):
@@ -320,7 +320,7 @@ all five in 14 s. Dry-run the goal before the lecture and note turns, wall-clock
 and E[s]. To reset the demo project to the stub afterwards:
 `git checkout deqn/stochastic.py && rm -f results/deqn_stochastic.*`.
 
-### The six parts (slide 52), as a template for your own goal
+### The six parts (slide 53), as a template for your own goal
 
 ```text
 /goal [CONDITION: `<verifier command>` exits 0.] [PROBLEM: To get there, implement <file>: <the mathematics or the estimator, the data, the domain>.] [RECIPE: <method, sample, seed, precision, libraries>.] [INTERFACE: <the function your tests import and what it returns>.] Each turn: run <verifier command> and show the output, fix one thing, commit. Report ALL_TESTS_PASS when <verifier command> exits 0. Stop after 6 turns (count your commits in git log) and write notes/blocked.md instead.
@@ -341,7 +341,7 @@ To end a goal yourself:
 /goal clear
 ```
 
-## 12. Headless, and the fresh-context shell loop (slide 56)
+## 12. Headless, and the fresh-context shell loop (slide 57)
 
 One prompt from a script, cron or a Slurm job:
 
@@ -365,7 +365,7 @@ while ! python3 -m pytest -q tests/; do
 done
 ```
 
-## 13. Live demo 5: one prompt → table + figure (slide 60)
+## 13. Live demo 5: one prompt → table + figure (slide 61)
 
 Step 7a, the loss kernel. Needs the verified solver of §11 (or the copied solution).
 
@@ -373,13 +373,13 @@ Step 7a, the loss kernel. Needs the verified solver of §11 (or the copied solut
 Role: computational macroeconomist. Code: deqn/stochastic.py (the verified solver), deqn/common.py. Task: train the solver four times with the loss kernel changed and nothing else: MSE, MAE, Huber (delta 1e-2), log-cosh on the Euler residual; seed 42, 2000 steps each. Evaluate each on the path its own policy generates (common.simulate_path): |residual| mean, p99, max; E[s]; max |s - s_ref| from brock_mirman_reference.solve(0.96, 0.9). Outputs: 1) outputs/deqn_kernel_table.tex -- booktabs: kernel, training loss, the three residual columns, E[s], max |s - s_ref|, seconds. 2) outputs/deqn_kernel_figure.pdf -- s(z = 1, K) per kernel vs the reference; histogram of on-path |residual|, log axis; serif. Constraints: do NOT modify deqn/common.py or tests/. Verify: assert every E[s] is within 5e-3 of the reference value; print which kernel has the smallest mean |residual|.
 ```
 
-`code/deqn/loss_kernels.py` is a reference answer (35 s); its committed table is
+`code/deqn/loss_kernels.py` is a reference answer (45 s); its committed table is
 `code/deqn/outputs/deqn_kernel_table.tex`. Expected: all four E[s] within 3e-4 of
 each other, on-path mean |residual| between 1.0e-4 and 1.7e-4; the training-loss
 column (3e-4 for MAE, 2e-7 for Huber) is in different units per row and says nothing
 about which is more accurate.
 
-## 14. The full pipeline, six prompts (slide 61)
+## 14. The full pipeline, six prompts (slide 62)
 
 Step 7, second half. One prompt per step; each step writes a file the next step reads.
 The truth file is read once, at the end. Step 3 is the SMM estimate with the reference
@@ -416,8 +416,33 @@ Write run_all.py that chains steps 1-5 and then verify.py, with a --dry-run flag
 
 Expected: every |rho_hat - rho| below 0.05; economy 4 lands near 0.92 at T = 500; every DEQN verdict ACCURATE. One network with rho as a third input, as the inner solver of the estimation, is the natural extension and is not part of the lecture.
 
-## 15. Replication (slide 62)
+## 15. Replication (slide 63; appendix slide)
+
+The slide follows Hans and Bilionis (2026, arXiv:2607.02134), who replicate papers from
+the LaTeX source alone with a coding-agent skill (Apache 2.0):
+https://github.com/PredictiveScienceLab/paper-replication-paper. Two routes.
+
+**With the skill** (hours per paper; the paper's LaTeX source in `paper_src/`):
+
+```bash
+git clone https://github.com/PredictiveScienceLab/paper-replication-paper
+cp -r paper-replication-paper/skill/claude-code/paper-replication .claude/skills/
+python3 .claude/skills/paper-replication/scripts/paper_replication.py bootstrap --project-dir rep/ --paper-title "<title>" --paper-source paper_src/
+```
 
 ```text
-Role: replication engineer. Paper: [title, authors, DOI]. Mission: replicate ALL figures and tables. Hard rules: 1. Do NOT use the authors' code. 2. Track progress in notes/todo.md. 3. Commit after each step. 4. If stuck x3, write notes/blocked.md, STOP. Before implementing: extract figure axes, ranges, CIs; write the plan to notes/plan.md and wait for my approval. Implementation: Python + NumPy/SciPy. Figures to figures/replication/ (PDF). Final: a table "paper value vs our value"; < 5 % = match, 5-20 % = close, > 20 % = fail.
+Use the paper-replication skill on rep/ and keep going until validate-completion passes. No author code. Keep exactly one target active at a time; record every run and its provenance; mark a target MATCHED only when its artifact, provenance, comparison and report embedding exist. If a target cannot be reproduced from the paper materials, leave it unmatched and record why.
 ```
+
+Read `rep/spec/reproduction_matrix.csv` (one row per target: claim, acceptance rule,
+status, report slot) and run `python3 .claude/skills/paper-replication/scripts/paper_replication.py validate-completion --project-dir rep/`
+yourself: completion is a workspace state, not the agent's last message.
+
+**Without the skill**, for a small paper:
+
+```text
+Role: replication engineer. Paper: [title, authors, DOI; LaTeX source in paper_src/]. Mission: replicate every figure and table. Hard rules: 1. Do NOT use the authors' code. 2. Before implementing, list every target (figure, table, reported number) with the acceptance rule you will apply, in notes/targets.md; wait for my approval. 3. One target per commit; record the command, seed and output file of every run in notes/runs.md. 4. If stuck x3 on a target, mark it unmatched in notes/targets.md with the reason and move on. Final: a table "paper value vs our value" with the rule applied per target; unmatched targets listed, never dropped.
+```
+
+Expected: a target table before any code; per-target verdicts; some targets unmatched
+with a recorded reason. The paper's twelve runs took one to thirteen hours each.

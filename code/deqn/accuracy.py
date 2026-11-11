@@ -55,7 +55,7 @@ def check(path: str | Path) -> dict:
         path_range = (float(LK.min()), float(LK.max()))
         egm = bm.solve(b, p["rho"])
         if in_window:
-            LZc, LKc, gap_where = LZ, LK, "the own path"
+            LZc, LKc, gap_where = LZ, LK, "the network's own path"
         else:                                   # compare where the reference is defined
             _, _, K_egm = bm.simulate(egm, b, p["rho"], len(LZ), seed=7)
             LZc, LKc, gap_where = LZ, np.log(K_egm), "the reference solver's path"
@@ -121,21 +121,22 @@ def plot(o: dict, path: str | Path) -> Path:
     import matplotlib.pyplot as plt
     plt.rcParams.update({"font.family": "serif", "font.size": 9})
     pn, stoch = o["panel"], o["model"] == "stochastic"
-    fig, ax = plt.subplots(1, 3, figsize=(6.6, 2.4))
+    fig, ax = plt.subplots(1, 3, figsize=(7.0, 2.4))
     for i, (lab, s_net, s_ref) in enumerate(pn["curves"]):
         ax[0].plot(pn["K"], s_ref, "k--", lw=0.8, label="reference" if i == 0 else None)
         ax[0].plot(pn["K"], s_net, lw=1.1, label=f"network {lab}".strip())
-    ax[0].set_xlabel("$K$"); ax[0].set_ylabel("savings rate"); ax[0].legend(frameon=False, fontsize=7, loc="best")
-    ax[0].set_title("policy vs reference" + (" (training window)" if stoch else " (grid)"), fontsize=9)
+    ax[0].set_xlabel("$K$"); ax[0].set_ylabel("savings rate"); ax[0].legend(frameon=False, fontsize=7, loc="upper right")
+    ax[0].set_title("policy vs reference", fontsize=9)
     r = pn["r"]
     ax[1].semilogy(np.arange(len(r)), r + 1e-16, lw=0.5, color="0.3")
     ax[1].axhline(1e-3, color="darkred", ls="--", lw=0.8, label="test threshold, mean")
-    ax[1].axhline(r.mean(), color="C0", lw=0.9, label=f"mean {r.mean():.1e}")
+    ax[1].axhline(r.mean(), color="C0", lw=0.9, label="mean " + f"{r.mean():.1e}".replace("e-0", "e-"))
+    ax[1].set_ylim(top=max(r.max(), 1e-3) * 300)
     ax[1].set_xlabel("period" if stoch else "grid point"); ax[1].set_ylabel("|Euler residual|")
-    ax[1].set_title("residual " + ("on the own path" if stoch else "on the grid"), fontsize=9); ax[1].legend(frameon=False, fontsize=7, loc="best")
+    ax[1].set_title("Euler residual, " + ("own path" if stoch else "grid"), fontsize=9); ax[1].legend(frameon=False, fontsize=7, loc="upper left")
     lo, hi = o["window"]
     if stoch:
-        ax[2].axhspan(lo, hi, color="0.88", label="training window")
+        ax[2].axhspan(lo, hi, facecolor="0.88", edgecolor="0.5", lw=0.8, label="training window")
         ax[2].plot(pn["path"], lw=0.6, label="simulated $\\log K$")
         ax[2].set_ylabel("$\\log K$")
     else:
@@ -143,7 +144,8 @@ def plot(o: dict, path: str | Path) -> Path:
         ax[2].plot(pn["path"], lw=0.9, label="$\\log K_t$ from $K_0 = 0.5$")
         ax[2].set_ylabel("$\\log K$")
     ax[2].set_xlabel("period"); ax[2].set_title("where the policy goes", fontsize=9)
-    ax[2].legend(frameon=False, fontsize=7, loc="lower right")
+    if stoch: ax[2].set_ylim(lo - 0.3, hi + 0.75)
+    ax[2].legend(frameon=False, fontsize=7, loc="upper right")
     fig.suptitle(f"{Path(o['file']).name}: verdict {o['verdict']}", fontsize=9, x=0.01, ha="left")
     fig.tight_layout()
     path = Path(path); path.parent.mkdir(parents=True, exist_ok=True)

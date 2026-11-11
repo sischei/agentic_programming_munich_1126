@@ -30,14 +30,14 @@ consumption. Known answer: the reference policy, `brock_mirman_reference.solve(0
 ## Metrics and targets (from `reference/baseline.md`)
 | Metric | Target |
 |---|---|
-| mean \|r\| on the own path (2,000 periods, seed 7) | < 1e-3 |
+| mean \|r\| on the network's own path (2,000 periods, seed 7) | < 1e-3 |
 | max \|s - s_ref\| on the reference states | < 1e-2 |
 | \|E[s] - 0.2521\| | < 5e-3 |
 | own-path log K inside [0.96, 1.96] | always |
 | two runs, same seed | identical |
 
 ## First implementation, and what the plan did not foresee
-The recipe as planned. Training loss after 2000 steps: 2.9e-7, the lowest of any run.
+The recipe as planned. Training loss after 2000 steps: 2.9e-7, below the correct run's 6.0e-7.
 On-path mean |r|: 9.2e-2. E[s] = 0.94 instead of 0.25; the simulated log K drifted to
 [3.14, 3.72], outside the box [0.96, 1.96] the loss was evaluated on. WRONG on four of
 the five tests. Cause: the Euler equation is necessary, not sufficient; on the box it

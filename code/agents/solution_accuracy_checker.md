@@ -25,10 +25,11 @@ If any of these is missing, say which, and audit what you can.
 
 ## Four checks, in this order
 
-1. **Residuals on a held-out test set.** Euler equation, HJB, market
-   clearing, whichever conditions define the solution. Evaluate them on
-   states the solver did *not* train on (a fresh simulation, or a grid two
-   standard deviations wider than the ergodic set). Report mean and max in
+1. **Residuals where the policy sends the economy.** Euler equation, HJB,
+   market clearing, whichever conditions define the solution. Evaluate them
+   on the path the policy itself generates (a fresh simulation), and on a
+   grid two standard deviations wider than the ergodic set, never only on
+   the training states. Report mean and max in
    log10, and the scale they are measured on (relative consumption error,
    value units, ...).
 2. **Against a reference.** Compare the *policy* (consumption, savings

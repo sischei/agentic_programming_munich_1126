@@ -2,7 +2,7 @@
 
 ![Agentic Programming for Economic Research, CES Munich, 18 November 2026](fig/theme.png)
 
-A 150-minute lecture at the Center for Economic Studies (CES), LMU Munich, 18 November 2026:
+A 150-minute lecture at the [Center for Economic Studies (CES)](https://www.en.ces.econ.uni-muenchen.de/), LMU Munich, 18 November 2026:
 what AI coding agents such as Claude Code can and cannot be trusted with in economic research.
 One example runs through the whole lecture: a neural solver for a growth model, built step by
 step with the agent and graded at every step against a known answer.
@@ -55,7 +55,7 @@ Cost: a Pro subscription covers every demo; on the API, about a dollar on Sonnet
 
 | Path | What |
 |---|---|
-| [`slides/Agentic_Programming_Munich.pdf`](slides/Agentic_Programming_Munich.pdf) | the deck, 75 pages (LaTeX source and figures next to it) |
+| [`slides/Agentic_Programming_Munich.pdf`](slides/Agentic_Programming_Munich.pdf) | the deck, 78 pages, the last one an appendix (LaTeX source and figures next to it) |
 | [`code/WALKTHROUGH.md`](code/WALKTHROUGH.md), [`code/prompts.md`](code/prompts.md) | every file and every prompt, in lecture order, with slide numbers |
 | [`code/deqn/`](code/deqn/README.md) | the lead example: scripts, the five tests, the reference, the committed numbers and figures |
 | `code/brock_mirman_reference.py`, `code/data/` | the reference solver (the known answer) and five simulated economies |
@@ -69,22 +69,22 @@ Cost: a Pro subscription covers every demo; on the API, about a dollar on Sonnet
 |---|---|---|
 | Intro | Why now; what "agentic" means; today's plan | 1–4 |
 | I | Mental models: tiers, the context window, the workflow; the running example and its seven steps | 5–12 |
-| II | Setting up: Claude Code, models and effort, git, the demo project (demo 1) | 13–19 |
-| III | The core loop on Step 1; the same task in plan mode (demo 2); notebooks, parallel sessions, context | 20–27 |
-| IV | Prompt engineering: the six-component prompt, constraints, templates, failure modes | 28–34 |
-| V | Project memory: `CLAUDE.md` | 36–38 |
-| VI | Skills, subagents, deny rules and hooks, MCP (demo 3: the accuracy skill, then a verifier subagent) | 39–45 |
-| VII | Autonomous loops: `/goal` builds the solver against five tests (demo 4); the verification figure; guardrails | 46–56 |
-| VIII | From plan to table and figure: the reconciled plan, the silent failure, four loss kernels (demo 5), the pipeline | 57–62 |
-| IX | Verification, disclosure, referees and supervisors, replication packages, data governance | 63–69 |
-| Wrap-up | Quick reference, takeaways, conclusion, references | 70–75 |
+| II | Setting up: Claude Code, models and effort, git, the demo project (demo 1) | 13–20 |
+| III | The core loop on Step 1; the same task in plan mode (demo 2); notebooks, parallel sessions, context | 21–28 |
+| IV | Prompt engineering: the six-component prompt, constraints, templates, failure modes | 29–35 |
+| V | Project memory: `CLAUDE.md` | 37–39 |
+| VI | Skills, subagents, deny rules and hooks, MCP (demo 3: the accuracy skill, then a verifier subagent) | 40–46 |
+| VII | Autonomous loops: `/goal` builds the solver against five tests (demo 4); the verification figure; guardrails | 47–57 |
+| VIII | From plan to table and figure: the reconciled plan, the silent failure, four loss kernels (demo 5), the pipeline | 58–63 |
+| IX | Verification, disclosure, referees and supervisors, replication packages, data governance | 64–70 |
+| Wrap-up | Quick reference, takeaways, conclusion, references | 71–76 |
 
 Block 1 is Parts I–IV, Block 2 Parts V–IX, with a break in between. Five live demos, nothing to install to attend.
 
 ## 5. The lead example
 
-The stochastic Brock–Mirman growth model. A deep equilibrium net (DEQN; Azinovic, Gaegauf and
-Scheidegger, 2022) learns the savings rate by gradient descent on the Euler residual. Three known
+The stochastic Brock–Mirman growth model. A deep equilibrium net (DEQN; [Azinovic, Gaegauf and
+Scheidegger, 2022](https://onlinelibrary.wiley.com/doi/abs/10.1111/iere.12575)) learns the savings rate by gradient descent on the Euler residual. Three known
 answers grade it: the closed form of the deterministic case (Step 1), a conventional grid-based reference
 solver (Steps 2–7), and a truth file with the hidden persistence of five simulated economies, read
 once at the end. Every concept of the lecture is introduced on this example; Part VIII shows a run
@@ -93,7 +93,9 @@ number: [`code/deqn/README.md`](code/deqn/README.md).
 
 ## 6. Readings and licence
 
-Korinek (2023, *JEL*); Schluntz and Zhang (2024); Goldsmith-Pinkham (2026); Bilionis et al. (2026);
+Azinovic, M., L. Gaegauf and S. Scheidegger (2022). Deep Equilibrium Nets. *International Economic
+Review* 63(4), 1471–1525, https://onlinelibrary.wiley.com/doi/abs/10.1111/iere.12575 (the method of the lead example).
+Further: Korinek (2023, *JEL*); Schluntz and Zhang (2024); Goldsmith-Pinkham (2026); Bilionis et al. (2026);
 Hans and Bilionis (2026, arXiv:2607.02134); Cherny (2025); Osmani (2026,
 [claude.dev blog](https://claude.dev/blog/which-claude-model-should-you-build-with/)); the
 [Claude Code documentation](https://code.claude.com/docs). Full list on the last slide.

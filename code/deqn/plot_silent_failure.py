@@ -37,7 +37,7 @@ for tag, fname in (("bad", "deqn_stochastic_box.pt"), ("good", "deqn_stochastic.
     ax[0].plot(np.exp(Kg), egm(np.ones_like(Kg), np.exp(Kg)), "k--", lw=0.9, label="reference")
     ax[0].plot(np.exp(Kg), s_fn(np.zeros_like(Kg), Kg), lw=1.2, label="network")
     ax[0].set_ylim(0, 1); ax[0].set_xlabel("$K$ (at $z=1$)"); ax[0].set_ylabel("savings rate"); ax[0].legend(frameon=False)
-    ax[1].axhspan(lo, hi, color="0.85", label="training window")
+    ax[1].axhspan(lo, hi, facecolor="0.85", edgecolor="0.5", lw=0.8, label="training window")
     ax[1].plot(LK, lw=0.8, label="simulated $\\log K$")
     ax[1].set_ylim(0.5, 4.0); ax[1].set_xlabel("period"); ax[1].set_ylabel("$\\log K$"); ax[1].legend(frameon=False, loc="lower right", fontsize=7)
     fig.tight_layout()

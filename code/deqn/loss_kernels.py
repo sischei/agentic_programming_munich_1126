@@ -85,7 +85,7 @@ if __name__ == "__main__":
     bins = np.logspace(-6, -1, 40)
     for name, (_, _, r) in curves.items():
         ax[1].hist(r, bins=bins, histtype="step", label=name)
-    ax[1].set_xscale("log"); ax[1].set_xlabel("|Euler residual| on the own path"); ax[1].set_ylabel("periods")
+    ax[1].set_xscale("log"); ax[1].set_xlabel("|Euler residual| on the network's own path"); ax[1].set_ylabel("periods")
     ax[1].legend(frameon=False, fontsize=7)
     fig.tight_layout()
     fig.savefig(OUT / "deqn_kernel_figure.pdf")
