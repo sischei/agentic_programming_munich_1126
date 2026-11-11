@@ -38,9 +38,9 @@ section (§) of `prompts.md`.
 | D3 | WT 3, WT 4 | §9 | the accuracy skill on the Step-1 policy, then the verifier subagent |
 | D4 | WT 6 | §11 | `/goal` builds the stochastic solver against five tests |
 | D5 | | §13 | one prompt → table + figure: four loss kernels (optional live run) |
-| | 39 | WT 2 | §8 | the demo project's `CLAUDE.md` next to a paper's |
-| | 45 | WT 5 | §9 | deny rules and hooks |
-| | 59 | WT 7 | | the plan of Step 4, and how it was reconciled |
+| | WT 2 | §8 | the demo project's `CLAUDE.md` next to a paper's |
+| | WT 5 | §9 | deny rules and hooks |
+| | WT 7 | | the plan of Step 4, and how it was reconciled |
 
 ## Block 1 (70 min)
 
@@ -110,9 +110,9 @@ If running late: drop the notebook and worktree slides, the paper-replication sl
 
 | File | Why it is here |
 |---|---|
-| `code/agents/code_reviewer.md`, `doc_generator.md`, `test_writer.md`, `monte_carlo_designer.md`, `loss_balancing_reviewer.md` | The rest of the subagent set installed by the setup script; mentioned on slides 44 and 71. |
+| `code/agents/code_reviewer.md`, `doc_generator.md`, `test_writer.md`, `monte_carlo_designer.md`, `loss_balancing_reviewer.md` | The rest of the subagent set installed by the setup script; mentioned on the subagent slide and the quick-reference card. |
 | `code/deqn/source/deqn_tf_stochastic.py` | The stochastic course notebook flattened, with its shape bug kept; the input of template 5. Not run. |
 | `code/deqn/common.py` | The shared module shipped to `demo/deqn/`; its docstring is read in D1. |
 | `code/generate_synthetic_data.py`, `code/euler_check_demo.py`, `code/outputs/` | The data generator (10 s) and the Euler-error check of the reference solver with its committed table and figure; the latter was the one-prompt demo of an earlier version of this lecture. |
-| `paper/2607.02134v2.pdf` (git-ignored; arXiv:2607.02134), the skill at github.com/PredictiveScienceLab/paper-replication-paper | Hans and Bilionis (2026): the replication workflow of slide 63 and the appendix slide; `prompts.md` §15 has the install lines and both prompts. Not run in the lecture (hours per paper). |
+| `paper/2607.02134v2.pdf` (git-ignored; arXiv:2607.02134), the skill at github.com/PredictiveScienceLab/paper-replication-paper | Hans and Bilionis (2026): the replication workflow of the paper-replication slide and the appendix; `prompts.md` §15 has the install lines and both prompts. Not run in the lecture (hours per paper). |
 | `code/extras/` | The PINN material of the earlier version (the `/goal` on u'' + u = 0, the 2-D Poisson plan and session notes); see its README. No slide refers to it. |
