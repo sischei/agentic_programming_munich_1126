@@ -456,23 +456,48 @@ Four phases, from the Claude Code team, for every non-trivial task.
 \end{frame}
 
 % --- The running example ---
-\begin{frame}{One Growth Model; Every Check Reads Its Euler Residual}
+\begin{frame}{The Growth Model: One Euler Equation Grades Everything}
 \small
-Everything today happens on the stochastic Brock--Mirman growth model:
-\begin{align*}
-Y_t &= z_t K_t^{\alpha}, \qquad C_t = (1 - s_t)\, Y_t,\\
-K_{t+1} &= (1-\delta) K_t + s_t Y_t, \qquad \log z_{t+1} = \varrho \log z_t + \sigma \varepsilon_{t+1}, \quad \varepsilon \sim N(0,1),
-\end{align*}
-log utility, $\alpha = 0.36$, $\delta = 0.10$, $\sigma = 0.04$, $\beta = 0.96$, $\varrho = 0.9$. The household chooses the savings rate $s_t$.
+A household (equivalently, a planner) with log utility chooses consumption and next period's capital in the stochastic Brock--Mirman growth model:
+\[
+\max_{\{C_t,\,K_{t+1}\}}\ \mathbb{E}_0 \sum_{t=0}^{\infty} \beta^{t} \ln C_t
+\quad\text{s.t.}\quad
+C_t + K_{t+1} = z_t K_t^{\alpha} + (1-\delta) K_t,\qquad
+\log z_{t+1} = \varrho \log z_t + \sigma \varepsilon_{t+1},\ \ \varepsilon \sim N(0,1),
+\]
+with $K_0$ given; $\alpha = 0.36$, $\delta = 0.10$, $\sigma = 0.04$, $\beta = 0.96$, $\varrho = 0.9$. We write the choice as a \emphc{savings rate} $s_t$ out of output $Y_t = z_t K_t^{\alpha}$: $C_t = (1 - s_t)\,Y_t$ and $K_{t+1} = (1-\delta)K_t + s_t Y_t$.
 
-\vspace{0.3em}
-\begin{block}{The equilibrium condition, and the number every check today looks at}
-The Euler equation, $1/C_t = \beta\,\mathbb{E}_t\!\left[(1-\delta+\alpha z_{t+1}K_{t+1}^{\alpha-1})/C_{t+1}\right]$. Its \emphc{residual} $r = \beta C\,\mathbb{E}[\,\cdot\,] - 1$, a fraction of consumption, is zero at the solution. Every check today asks how far from zero it is, and \emph{where}.
+\vspace{0.2em}
+\begin{block}{The first-order condition, and the number every check today looks at}
+The Euler equation, $1/C_t = \beta\,\mathbb{E}_t\!\left[(1-\delta+\alpha z_{t+1}K_{t+1}^{\alpha-1})/C_{t+1}\right]$: the marginal utility of a unit consumed today equals the discounted expected marginal utility of investing it. Its \emphc{residual} $r = \beta C\,\mathbb{E}[\,\cdot\,] - 1$, a fraction of consumption, is zero at the solution. Every check today asks how far from zero, and \emph{where}.
 \end{block}
 
-\vspace{0.3em}
-\textbf{The lead example.} A \emphc{deep equilibrium net} (DEQN; Azinovic, Gaegauf and Scheidegger, 2022): a small neural network $s_\theta(z, K)$ for the savings rate, trained by gradient descent until the Euler equation holds on sampled states. Built \emph{with the agent} in seven steps, each graded against a known answer.
+\vspace{0.2em}
+\textbf{What has to be found} is a function, the policy $s(z, K)$, not a number. Classical methods put it on a grid; the next slide replaces the grid by a neural network. Built \emph{with the agent} in seven steps, each graded against a known answer.
 \filebox{code/brock\_mirman\_reference.py (167 lines), code/data/, code/deqn/README.md (every step, script and number)}
+\end{frame}
+
+\begin{frame}{A DEQN Trains a Network Until the Euler Equation Holds}
+\footnotesize
+Azinovic, Gaegauf and Scheidegger (2022, \emph{IER}): solve a dynamic model by training a neural network to satisfy its equilibrium conditions.
+\begin{columns}[T]
+\column{0.50\textwidth}
+\begin{enumerate}\itemsep4pt
+  \item \textbf{The unknown is a function.} The policy, here the savings rate $s(z, K)$, is represented by a small network $s_\theta(x)$ with $x = (\log z/\mathrm{sd}_z,\ \log K - \log K^*)$ and a sigmoid output, so $s \in (0, 1)$.
+  \item \textbf{The equilibrium condition is the loss.} At a batch of states the residual $r(x)$ is computed (five quadrature nodes); $\theta$ moves by gradient descent on the mean of $r^2$, by automatic differentiation.
+  \item \textbf{No grid.} The paper draws the training states by simulating the network's own policy, so the solution is accurate where the economy lives, and the method scales to many state variables. Today's version draws them from a fixed window around $K^*$; the on-path check of Step 3 restores the paper's criterion.
+\end{enumerate}
+\column{0.46\textwidth}
+\begin{block}{The residual, a fraction of consumption}
+\[
+r(x) = \beta\, C\, \mathbb{E}\!\left[\frac{1-\delta+\alpha z' K'^{\alpha-1}}{C'}\right] - 1
+\]
+zero at the solution; the tests ask how far from zero, where the policy sends the economy, and how far from the reference solver.
+\end{block}
+\vspace{0.3em}
+\textbf{Why this example:} a known answer at every step, a way to be wrong that \emph{looks} right (Part VIII), eleven seconds per training run.
+\end{columns}
+\filebox{Azinovic, Gaegauf \& Scheidegger (2022), IER 63(4); code/deqn/README.md}
 \end{frame}
 
 \begin{frame}{Three Known Answers Grade Every Step}
@@ -1745,29 +1770,6 @@ The evaluator reads only the transcript, so the agent must \emph{show} the test 
 \end{frame}
 
 % --- The demo problem ---
-\begin{frame}{A DEQN Trains a Network Until the Euler Equation Holds}
-\footnotesize
-\hfill\stepmarker{4}\par\vspace{0.1em}
-Azinovic, Gaegauf and Scheidegger (2022, \emph{IER}): solve a dynamic model by training a neural network to satisfy its equilibrium conditions.
-\begin{columns}[T]
-\column{0.50\textwidth}
-\begin{enumerate}\itemsep4pt
-  \item \textbf{The unknown is a function.} The policy, here the savings rate $s(z, K)$, is represented by a small network $s_\theta(x)$ with $x = (\log z/\mathrm{sd}_z,\ \log K - \log K^*)$ and a sigmoid output, so $s \in (0, 1)$.
-  \item \textbf{The equilibrium condition is the loss.} At a batch of states the residual $r(x)$ is computed (five quadrature nodes); $\theta$ moves by gradient descent on the mean of $r^2$, by automatic differentiation.
-  \item \textbf{No grid.} The paper draws the training states by simulating the network's own policy, so the solution is accurate where the economy lives, and the method scales to many state variables. Today's version draws them from a fixed window around $K^*$; the on-path check of Step 3 restores the paper's criterion.
-\end{enumerate}
-\column{0.46\textwidth}
-\begin{block}{The residual, a fraction of consumption}
-\[
-r(x) = \beta\, C\, \mathbb{E}\!\left[\frac{1-\delta+\alpha z' K'^{\alpha-1}}{C'}\right] - 1
-\]
-zero at the solution; the tests ask how far from zero, where the policy sends the economy, and how far from the reference solver.
-\end{block}
-\vspace{0.3em}
-\textbf{Why this problem:} a known answer, a way to be wrong that \emph{looks} right, eleven seconds per run.
-\end{columns}
-\filebox{Azinovic, Gaegauf \& Scheidegger (2022), IER 63(4); code/deqn/README.md}
-\end{frame}
 
 \begin{frame}[fragile]{The Residual, as Our Solution Writes It}
 \footnotesize
