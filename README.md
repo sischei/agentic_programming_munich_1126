@@ -2,10 +2,12 @@
 
 ![Agentic Programming for Economic Research, CES Munich, 18 November 2026](fig/theme.png)
 
-A 150-minute lecture at the [Center for Economic Studies (CES)](https://www.en.ces.econ.uni-muenchen.de/), LMU Munich, 18 November 2026:
-what AI coding agents such as Claude Code can and cannot be trusted with in economic research.
-One example runs through the whole lecture: a neural solver for a growth model, built step by
-step with the agent and graded at every step against a known answer.
+> **AI coding agents can now take on much of the computational work of economic research. This lecture shows how to put them to work, and how to keep every result verifiable.**
+
+**A 150-minute lecture at the [Center for Economic Studies (CES)](https://www.en.ces.econ.uni-muenchen.de/), LMU Munich, 18 November 2026.**
+One example runs through the whole lecture: a neural solver for a growth model, built step by step *with* the agent
+and graded at every step against a known answer. You leave with a working solver, a prompt discipline that transfers
+to your own projects, and a repository that replays everything at home.
 
 ## Contents
 
