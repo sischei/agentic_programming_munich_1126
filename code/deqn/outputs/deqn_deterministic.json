@@ -1,0 +1,26 @@
+{
+  "model": "deterministic",
+  "params": {
+    "alpha": 0.36,
+    "beta": 0.99,
+    "delta": 1.0,
+    "sigma": 0.0,
+    "rho": 0.0
+  },
+  "seed": 42,
+  "steps": 2000,
+  "wall": 3.17,
+  "train_loss_last100": 3.097671429767782e-07,
+  "s_init": null,
+  "K_range": [
+    0.1,
+    1.0
+  ],
+  "max_abs_ds": 0.0004910569354322214,
+  "arch": {
+    "n_in": 1,
+    "width": 32,
+    "act": "tanh"
+  },
+  "torch": "2.2.1+cu121"
+}

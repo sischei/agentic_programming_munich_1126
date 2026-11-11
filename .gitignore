@@ -14,6 +14,12 @@ slides/*.fls
 slides/*.fdb_latexmk
 slides/*.synctex.gz
 slides/build.log
+# the demo project built by code/setup_demo_project.sh (its own git history)
+/demo/
+# policies written by the DEQN tests and scripts when run inside code/
+code/results/
 # agent session artefacts that must never be published
 .claude/audit.log
 .env
+# third-party PDFs downloaded for reading (not redistributed)
+/paper/

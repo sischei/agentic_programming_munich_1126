@@ -5,7 +5,7 @@ tests. The goal is to make `pytest -q` green. The tests are the specification;
 the goal text only restates them.
 
 ```bash
-cp -r /path/to/agentic_programming_munich_1126/code/pinn_loop ~/research/pinn-loop
+cp -r /path/to/agentic_programming_munich_1126/code/extras/pinn_loop ~/research/pinn-loop
 cd ~/research/pinn-loop && git init -q && git add . && git commit -qm "seed: stub + acceptance tests"
 pytest -q          # must fail: NotImplementedError
 claude

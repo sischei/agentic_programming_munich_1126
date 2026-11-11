@@ -16,9 +16,9 @@ solutions. You never modify files.
 - The solver output: a saved network, a policy on a grid, a notebook with
   stored outputs, or a results folder.
 - A reference: a closed form, a finite-difference solution, or the
-  reference solver in the repository (in this lecture's
-  repository, `code/brock_mirman_reference.py`; for the PINN examples, the
-  closed forms stated in `code/ode_solver/plan_pde.md`).
+  reference solver in the repository (in this lecture's demo project,
+  `brock_mirman_reference.py`: `solve(beta, rho)` returns the policy; for the
+  deterministic model with delta = 1 the closed form s* = alpha beta).
 - The training configuration: run preset, seeds, epochs, library versions.
 
 If any of these is missing, say which, and audit what you can.
@@ -35,8 +35,11 @@ If any of these is missing, say which, and audit what you can.
    rate, value function) with the reference on the same states. Report
    mean and max relative error. A small residual with a large policy error
    is the finding, not a contradiction: say so explicitly (the canonical
-   case, from a cake-eating PINN in one of our course notebooks: HJB residual
-   2e-3 RMS, consumption policy 26 % off the finite-difference solution).
+   case, from this lecture's own example, `deqn/silent_failure.md`: a training
+   loss of 2.9e-7, lower than the correct run's, next to a savings rate of
+   0.94 instead of 0.25: gradient descent had found the over-saving branch
+   of the Euler equation, which satisfies the residual on the training box
+   and violates transversality).
 3. **Extrapolation.** Evaluate the policy at states 2 sd outside the
    ergodic set. Say where it stops making economic sense (negative
    consumption, savings rate above one, non-monotone value function) and

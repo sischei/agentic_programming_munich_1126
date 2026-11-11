@@ -1,0 +1,22 @@
+{
+  "model": "stochastic",
+  "params": {
+    "alpha": 0.36,
+    "beta": 0.96,
+    "delta": 0.1,
+    "sigma": 0.04,
+    "rho": 0.9
+  },
+  "seed": 42,
+  "steps": 2000,
+  "wall": 10.8,
+  "train_loss_last100": 6.049203229130629e-07,
+  "s_init": 0.2541176470588235,
+  "window": 0.5,
+  "arch": {
+    "n_in": 2,
+    "width": 32,
+    "act": "tanh"
+  },
+  "torch": "2.2.1+cu121"
+}

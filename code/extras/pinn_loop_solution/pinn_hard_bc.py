@@ -1,4 +1,4 @@
-"""Reference solution of the loop demo (kept OUTSIDE code/pinn_loop/ so the agent cannot read it).
+"""Reference solution of the loop demo (kept OUTSIDE code/extras/pinn_loop/ so the agent cannot read it).
 
 u'' + u = 0 on [0, pi/2], u(0) = 0, u(pi/2) = 1, exact solution sin x.
 Trial solution u(x) = 2x/pi + x (pi/2 - x) N(x): the boundary conditions hold by

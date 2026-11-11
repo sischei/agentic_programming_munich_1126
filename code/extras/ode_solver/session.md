@@ -124,7 +124,7 @@ PDE, `solver_pde.py --hard-bc` (20k epochs, run 2026-09-09):
 
 ## How to restore / resume
 
-1. `cd code/ode_solver`
+1. `cd code/extras/ode_solver`
 2. `python3 plot.py` and `python3 plot_pde.py`, regenerate figures from the
    cached weights (no retraining).
 3. `python3 solver.py` and `python3 solver_pde.py`, retrain from scratch
