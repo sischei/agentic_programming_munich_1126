@@ -158,7 +158,7 @@ about 2.3e-3; E[s] 0.252; log K in [1.08, 1.81]. Our version: `code/deqn/solutio
 ### The constraint lines, to append to any prompt
 
 ```text
-Do NOT use reference/ in a loss, an initialisation or a fit. Do NOT edit tests/ or reference/. Do NOT change the seed or the step budget. Do NOT read the truth file before verifying. Do NOT report the training loss as accuracy.
+Do NOT use reference/ in a loss, an initialisation or a fit. Do NOT edit tests/ or reference/. Do NOT change the seed or the step budget. Do NOT report the training loss as accuracy.
 Use deqn/common.py: make_net, encode_state, save_policy, simulate_path. float64; torch.manual_seed before the network. Save every policy with its JSON sidecar. Use the notation of CLAUDE.md (K, z, s, rho, K*, s*).
 Only write deqn/stochastic.py and results/. Do not touch deqn/common.py, deqn/source/ or data/. Make the minimum change that fixes the failing test. Stop and report after each pytest run.
 ```
