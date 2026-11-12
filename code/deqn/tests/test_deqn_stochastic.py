@@ -14,8 +14,8 @@ from conftest import LOG_K_SS, REFERENCE_CSV, euler_residual, simulate_own_path
 from deqn.stochastic import solve
 
 MEAN_ABS_RESIDUAL = 1e-3      # reference solution: 1.4e-4
-MAX_POLICY_GAP = 1e-2         # reference solution: 2.3e-3 (max |s - s_egm| on 2,000 EGM states)
-MEAN_SAVINGS_TOL = 5e-3       # |E[s] - mean s_egm of the reference file|; reference solution: 2e-4
+MAX_POLICY_GAP = 1e-2         # reference solution: 2.3e-3 (max |s - s_ref| on 2,000 reference states)
+MEAN_SAVINGS_TOL = 5e-3       # |E[s] - mean s_ref of the reference file|; reference solution: 2e-4
 WINDOW = 0.5                  # training states: log K in [log K* - 0.5, log K* + 0.5]
 
 

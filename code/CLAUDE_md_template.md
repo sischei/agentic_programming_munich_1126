@@ -7,28 +7,16 @@
 - **Co-authors:** Jane Doe (MIT), John Smith (LSE)
 - **Last updated:** 2026-03-31
 
-## Repository Structure
-```
-data/
-  raw/            <- READ ONLY. Never modify. BLS/FRED downloads.
-  processed/      <- Cleaned panels, merged datasets
-  simulated/      <- Model-generated data (overwritten by code)
-code/
-  calibrate.py    <- Calibration targets and steady-state solver
-  estimate.py     <- Main estimation (SMM + neural surrogate)
-  simulate.py     <- Impulse responses and counterfactuals
-  utils.py        <- Shared helpers (IO, plotting defaults)
-  config.py       <- All hyperparameters and file paths
-figures/          <- Publication-quality figures (PDF only)
-paper/
-  main.tex        <- Main manuscript
-  appendix.tex    <- Online appendix
-  tables/         <- Generated LaTeX tables (do not hand-edit)
-  bib/            <- BibTeX files
-results/          <- JSON/pickle outputs from estimation
-notes/            <- Session logs, TODOs, referee memos
-tests/            <- pytest test suite
-```
+## Paths With Rules
+- `data/raw/` -- READ ONLY. Never modify. BLS/FRED downloads.
+- `data/simulated/` -- model-generated; overwritten by code
+- `paper/tables/` -- generated LaTeX tables; do not hand-edit
+- `figures/` -- publication-quality figures, PDF only
+- `code/config.py` -- all hyperparameters and file paths live here, nowhere else
+
+## Commands
+- Run the tests: `pytest -q tests/`
+- Estimation: `python code/estimate.py`; run the smoke-test settings in `code/config.py` first
 
 ## Coding Standards
 - Python 3.11+; type hints on all function signatures

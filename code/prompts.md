@@ -5,6 +5,9 @@ code blocks are **plain text**: no `>` marker, no indentation, so you can
 select a block and paste it straight into Claude Code. Slash commands
 (`/deqn-accuracy ...`, `/goal ...`) are typed as shown.
 
+Written for Claude Code 2.1 with Opus 5.5 at medium effort, November 2026. Commands and
+models change: check them against the current documentation before you reuse a prompt.
+
 All prompts assume the demo project built by `setup_demo_project.sh`: `demo/` at the
 root of this repository (git-ignored, with its own git history), holding
 `brock_mirman_reference.py`, the DEQN scaffold (`deqn/`, `tests/`,
@@ -232,7 +235,7 @@ The agent answers from `CLAUDE.md` alone: the growth-model sandbox, the two rule
 in `deqn/stochastic.py` whose tests fail, and the status line. Then the correction loop:
 
 ```text
-Update CLAUDE.md so you don't make that mistake again.
+Update your CLAUDE.md so you don't make that mistake again.
 ```
 
 ## 9. Live demo 3: the accuracy skill, the verifier, a specialist; the deny rule and the hook
@@ -374,7 +377,7 @@ about which is more accurate.
 
 ## 14. Replication
 
-The paper-replication slide follows Hans and Bilionis (2026, arXiv:2607.02134), who replicate papers from
+The paper-replication slides follow Hans and Bilionis (2026, arXiv:2607.02134), who replicate papers from
 the LaTeX source alone with a coding-agent skill (Apache 2.0):
 https://github.com/PredictiveScienceLab/paper-replication-paper. Two routes.
 

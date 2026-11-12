@@ -18,5 +18,5 @@ if __name__ == "__main__":
     R = good.report(out)
     print(f"trained in {R['wall']:.1f} s; training loss (last 100 steps) {R['train_loss']:.2e}")
     print(f"on-path |Euler residual|: mean {R['mean_abs_r']:.2e}, max {R['max_abs_r']:.2e}")
-    print(f"max |s - s_egm| on {R['gap_where']} {R['max_abs_ds']:.2e}; E[s] {R['mean_s']:.4f} vs EGM {R['mean_s_egm']:.4f}")
+    print(f"max |s - s_ref| on {R['gap_where']} {R['max_abs_ds']:.2e}; E[s] {R['mean_s']:.4f} vs reference {R['mean_s_ref']:.4f}")
     print(f"simulated log K in [{R['logK_min']:.2f}, {R['logK_max']:.2f}], training window [{R['window'][0]:.2f}, {R['window'][1]:.2f}]")

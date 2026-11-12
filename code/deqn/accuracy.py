@@ -5,13 +5,13 @@
 
 Loads the weights and the JSON sidecar (model, parameters, architecture), simulates
 2,000 periods with the network's own policy, and reports: the Euler residual (mean, p50,
-p90, p99, max) along that path, the distance to the reference policy (the EGM solver at
+p90, p99, max) along that path, the distance to the reference policy (the reference solver at
 the sidecar's beta and rho for the stochastic model, the closed form alpha beta for the
 deterministic one), E[s] against the reference, and whether the path stayed inside the
 training window. The training loss is not part of the report: it is not an accuracy measure.
 
 If the path left the window, the policy gap is measured on the reference solver's own
-simulated path instead (the EGM spline is clipped beyond its grid), so it is always a
+simulated path instead (the reference solver's spline is clipped beyond its grid), so it is always a
 meaningful number.
 
 Verdict: ACCURATE if mean |r| < 1e-3, max |s - s_ref| < 1e-2 and the path is inside the
@@ -53,18 +53,18 @@ def check(path: str | Path) -> dict:
         lo, hi = math.log(kss) - half, math.log(kss) + half
         in_window = bool(LK.min() > lo and LK.max() < hi)
         path_range = (float(LK.min()), float(LK.max()))
-        egm = bm.solve(b, p["rho"])
+        ref_policy = bm.solve(b, p["rho"])
         if in_window:
             LZc, LKc, gap_where = LZ, LK, "the network's own path"
         else:                                   # compare where the reference is defined
-            _, _, K_egm = bm.simulate(egm, b, p["rho"], len(LZ), seed=7)
-            LZc, LKc, gap_where = LZ, np.log(K_egm), "the reference solver's path"
-        s_net, s_ref = s_fn(LZc, LKc), egm(np.exp(LZc), np.exp(LKc))
+            _, _, K_ref = bm.simulate(ref_policy, b, p["rho"], len(LZ), seed=7)
+            LZc, LKc, gap_where = LZ, np.log(K_ref), "the reference solver's path"
+        s_net, s_ref = s_fn(LZc, LKc), ref_policy(np.exp(LZc), np.exp(LKc))
         ref_name = f"reference policy solve({b}, {p['rho']})"
         Kg = np.linspace(lo, hi, 200)                       # the policy across the window, at three z
         sd = common.sd_logz(p)
         panel = dict(K=np.exp(Kg), curves=[(f"z = exp({k:+.0f} sd)" if k else "z = 1",
-                                            s_fn(np.full_like(Kg, k * sd), Kg), egm(np.exp(np.full_like(Kg, k * sd)), np.exp(Kg)))
+                                            s_fn(np.full_like(Kg, k * sd), Kg), ref_policy(np.exp(np.full_like(Kg, k * sd)), np.exp(Kg)))
                                            for k in (-2, 0, 2)], path=LK, r=r)
     else:
         lo, hi = meta.get("K_range", [0.1, 1.0])

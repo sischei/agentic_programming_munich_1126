@@ -11,23 +11,21 @@
   a closed form and against the reference solver.
 - **Stage:** exploration; nothing here is a paper.
 
-## Repository Structure
-```
-brock_mirman_reference.py  <- the reference solver (a conventional grid-based solver). READ ONLY.
-deqn/
-  common.py                <- shared DEQN pieces: parameters, steady state, quadrature nodes,
-                              make_net, encode_state, save/load a policy, simulate_path, and the
-                              numpy residual used for CHECKING. The torch residual and the training
-                              loop are what you write. READ ONLY.
-  deterministic.py         <- Step 1 (written in a session): the ported deterministic DEQN
-  stochastic.py            <- Step 4: solve(seed, steps); the tests below are its specification
-  source/                  <- the original TensorFlow notebooks as scripts; legacy input, never run
-tests/                     <- the five acceptance tests of deqn/stochastic.py. THE EXAM: never edit.
-reference/                 <- the reference policy on simulated states + baseline.md. THE EXAM: never edit.
-data/raw/                  <- stands in for confidential raw data: never read, never edit
-results/                   <- saved policies (*.pt with a *.json sidecar), JSON and CSV outputs
-scripts/  figures/  notes/ <- analysis scripts, PDF figures, session notes and reports
-```
+## What the code does not tell you
+- **Check your work:** `python3 -m pytest -q tests/`. The five tests are the specification of
+  `deqn/stochastic.py`, a stub until Step 4 (`solve(seed, steps)`). `deqn/deterministic.py` is
+  Step 1, written in a session.
+- **Finished, READ ONLY:** `brock_mirman_reference.py` (the reference solver, a conventional
+  grid-based solver) and `deqn/common.py` (parameters, steady state, quadrature nodes, `make_net`,
+  `encode_state`, save/load a policy, `simulate_path`, and the numpy residual used for CHECKING).
+  The torch residual and the training loop are what you write.
+- **Legacy input, never run:** `deqn/source/`, the original TensorFlow notebooks as scripts.
+- **The exam, never edit:** `tests/` (the five acceptance tests) and `reference/` (the reference
+  policy on simulated states, and `baseline.md`).
+- **Stand-in for confidential raw data, never read, never edit:** `data/raw/`.
+- **Where output goes:** saved policies, JSON and CSV in `results/` (`*.pt` with a `*.json`
+  sidecar); analysis scripts in `scripts/`, PDF figures in `figures/`, session notes and reports
+  in `notes/`.
 
 ## The two rules of this project
 1. `reference/` holds the reference solver's policy on simulated states and `tests/` the

@@ -11,7 +11,7 @@ ROOT = next(p for p in Path(__file__).resolve().parents if (p / "brock_mirman_re
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 # the reference policy: reference/ in the demo project, deqn/reference/ in the repository
-REFERENCE_CSV = next(c for c in (ROOT / "reference" / "egm_policy_rho090.csv", ROOT / "deqn" / "reference" / "egm_policy_rho090.csv") if c.exists())
+REFERENCE_CSV = next(c for c in (ROOT / "reference" / "policy_rho090.csv", ROOT / "deqn" / "reference" / "policy_rho090.csv") if c.exists())
 
 ALPHA, BETA, DELTA, SIGMA, RHO = 0.36, 0.96, 0.10, 0.04, 0.9
 K_SS = (ALPHA * BETA / (1.0 - BETA * (1.0 - DELTA))) ** (1.0 / (1.0 - ALPHA))   # 4.294

@@ -54,7 +54,7 @@ stochastic_box.py    the same solver with s_init=None; writes outputs/deqn_stoch
 accuracy.py          the on-path check and, with --plot, its three-panel figure (slides/figures/
                      agentic_deqn_verify_*.pdf); copied into .claude/skills/deqn-accuracy/ by the setup script
 tests/               conftest.py (an independent numpy oracle) and the five tests
-reference/           make_reference.py, egm_policy_rho090.csv, baseline.md
+reference/           make_reference.py, policy_rho090.csv, baseline.md
 loss_kernels.py      writes outputs/deqn_kernel_table.tex and deqn_kernel_figure.pdf
 plot_silent_failure.py   writes slides/figures/agentic_deqn_silent_{bad,good}.pdf
 plan_deqn.md         the plan of Step 4 as shown on the Part VIII slide, with the reconciliation

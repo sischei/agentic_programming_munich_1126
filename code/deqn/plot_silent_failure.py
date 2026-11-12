@@ -25,7 +25,7 @@ HERE = Path(__file__).resolve().parent
 FIG = HERE.parents[1] / "slides" / "figures"
 P = common.PARAMS["stochastic"]
 kss, _ = common.steady_state(P)
-egm = bm.solve(P["beta"], P["rho"])
+ref_policy = bm.solve(P["beta"], P["rho"])
 
 for tag, fname in (("bad", "deqn_stochastic_box.pt"), ("good", "deqn_stochastic.pt")):
     net, meta = common.load_policy(HERE / "outputs" / fname)
@@ -34,7 +34,7 @@ for tag, fname in (("bad", "deqn_stochastic_box.pt"), ("good", "deqn_stochastic.
     lo, hi = np.log(kss) - 0.5, np.log(kss) + 0.5
     Kg = np.linspace(lo, hi, 200)
     fig, ax = plt.subplots(1, 2, figsize=(5.2, 2.2))
-    ax[0].plot(np.exp(Kg), egm(np.ones_like(Kg), np.exp(Kg)), "k--", lw=0.9, label="reference")
+    ax[0].plot(np.exp(Kg), ref_policy(np.ones_like(Kg), np.exp(Kg)), "k--", lw=0.9, label="reference")
     ax[0].plot(np.exp(Kg), s_fn(np.zeros_like(Kg), Kg), lw=1.2, label="network")
     ax[0].set_ylim(0, 1); ax[0].set_xlabel("$K$ (at $z=1$)"); ax[0].set_ylabel("savings rate"); ax[0].legend(frameon=False, fontsize=7, loc="center right" if tag == "bad" else "upper right")
     ax[1].axhspan(lo, hi, facecolor="0.85", edgecolor="0.5", lw=0.8, label="training window")

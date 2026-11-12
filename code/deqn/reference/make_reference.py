@@ -1,4 +1,4 @@
-"""Writes reference/egm_policy_rho090.csv: the EGM savings rate on 2,000 simulated states.
+"""Writes reference/policy_rho090.csv: the reference solver's savings rate on 2,000 simulated states.
 
 The states are a path of the reference solver's own economy (beta 0.96, rho 0.9, seed 7,
 200 periods burn-in). The tests evaluate the network at these states and compare.
@@ -19,6 +19,6 @@ Y, C, K = bm.simulate(policy, BETA, RHO, T=2000, seed=7)
 z = Y / K ** bm.ALPHA
 s = 1.0 - C / Y
 out = np.column_stack([np.log(z), np.log(K), s])
-path = Path(__file__).resolve().parent / "egm_policy_rho090.csv"
-np.savetxt(path, out, delimiter=",", header="log_z,log_K,s_egm", comments="", fmt="%.10f")
-print(f"wrote {path.name}: {len(out)} rows; mean s_egm = {s.mean():.4f}; log K in [{np.log(K).min():.2f}, {np.log(K).max():.2f}]")
+path = Path(__file__).resolve().parent / "policy_rho090.csv"
+np.savetxt(path, out, delimiter=",", header="log_z,log_K,s_ref", comments="", fmt="%.10f")
+print(f"wrote {path.name}: {len(out)} rows; mean s_ref = {s.mean():.4f}; log K in [{np.log(K).min():.2f}, {np.log(K).max():.2f}]")

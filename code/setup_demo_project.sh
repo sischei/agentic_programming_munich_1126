@@ -26,6 +26,7 @@ printf 'Stand-in for confidential raw data. The permission rules in .claude/sett
 cp "$HERE/deqn/__init__.py" "$HERE/deqn/common.py" "$HERE/deqn/stochastic.py" "$TARGET/deqn/"
 cp "$HERE/deqn/plan_deqn.md" "$HERE/deqn/silent_failure.md"   "$TARGET/deqn/"   # the Part VIII reading, referenced by the agents
 cp "$HERE"/deqn/source/*.py                                     "$TARGET/deqn/source/"
+rm -f "$TARGET"/tests/*.py "$TARGET"/reference/*                  # the exam folders mirror the repository: nothing stale survives a re-run
 cp "$HERE"/deqn/tests/*.py                                      "$TARGET/tests/"
 cp "$HERE"/deqn/reference/*                                     "$TARGET/reference/"
 cp -r "$HERE/skills/data-diagnostics"                           "$TARGET/.claude/skills/"
@@ -62,4 +63,6 @@ echo "Check:  cd $TARGET && python3 -m pytest -q tests/     (must fail with NotI
 echo
 echo "Next:  cd $TARGET && claude"
 echo "Then follow code/WALKTHROUGH.md; the prompts are in code/prompts.md."
-for t in jq ruff latexmk; do command -v $t >/dev/null || echo "note: $t is not installed; a hook in .claude/settings.json uses it (delete that hook or install it)."; done
+command -v jq >/dev/null || echo "WARNING: jq is not installed. The read-only guard in .claude/settings.json needs it: without jq it blocks nothing."
+command -v ruff >/dev/null || echo "note: ruff is not installed; the formatting hook skips itself."
+command -v latexmk >/dev/null || echo "note: latexmk is not installed; it is only used when a paper/*.tex file is edited."

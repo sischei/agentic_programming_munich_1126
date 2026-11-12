@@ -3,7 +3,7 @@
 This replaces take-home exercises. Each row is a file (or a command) that is
 opened and stepped through during the lecture, in the order of the slides, with
 what to look at and the command that reproduces it (the deck is
-`slides/Agentic_Programming_Munich.pdf`; its last frame is an appendix). Paths are relative to the
+`slides/Agentic_Programming_Munich.pdf`; its last two frames are an appendix). Paths are relative to the
 repository root. The demo project is `demo/` at the repository root, built by
 `bash code/setup_demo_project.sh` (git-ignored, with its own git history); every
 live session runs there: `cd demo && claude`. The prompts are in
@@ -59,7 +59,7 @@ section (§) of `prompts.md`.
 
 | # | WT | Part | File / command | What to look at |
 |---|---|---|---|---|
-| 9 | WT 2 | V | `code/CLAUDE_md_template.md` (the paper example) and `code/CLAUDE_md_demo.md` (= `demo/CLAUDE.md`) | In the template: Repository Structure (`data/raw/ <- READ ONLY`), Current Status, Decisions Made, and the stale line (JAX in the log, TensorFlow in the package list). In the demo file: the two rules, the DEQN notation, "accuracy means ... never the training loss". Live: §8. |
+| 9 | WT 2 | V | `code/CLAUDE_md_template.md` (the paper example) and `code/CLAUDE_md_demo.md` (= `demo/CLAUDE.md`) | In the template: Paths With Rules (`data/raw/`: READ ONLY), Current Status, Decisions Made, and the stale line (JAX in the log, TensorFlow in the package list). In the demo file: what the code does not tell you, the two rules, the DEQN notation, "accuracy means ... never the training loss". Live: §8. |
 | 10 | WT 3 | VI | `code/skills/deqn-accuracy/SKILL.md`, `code/deqn/accuracy.py` | Frontmatter, the four steps, the constraints; the script is the same one the tests' logic mirrors. **D3:** `/deqn-accuracy results/deqn_deterministic.pt` (§9, 5 s); open the report under `notes/`. Then `/data-diagnostics data/bm_panel.csv` if time allows. |
 | 11 | WT 3 | VI | `code/skills/data-diagnostics/SKILL.md`, `code/skills/strategic-revision/SKILL.md` | Two more skills of the same shape, for data files and for referee reports; not on the slides. |
 | 12 | WT 4 | VI | `code/agents/verifier.md` | The whole file (28 lines). Live: the verifier prompt of §9 on the accuracy report. Watch the main session delegate and receive a summary. |
@@ -79,7 +79,7 @@ section (§) of `prompts.md`.
 
 | Clock | Part | Minutes | Content |
 |---|---|---|---|
-| 0:00 | Intro | 5 | Title, why now, today's plan |
+| 0:00 | Intro | 5 | Title, why now, the red thread (one model, seven steps, the tool each step introduces) |
 | 0:05 | I | 15 | Tiers, context window, where the agent helps, workflow, the running example and the step ladder |
 | 0:20 | II | 10 | Stack, commands, models and effort, open-weight models, git, **D1** + WT 1 |
 | 0:30 | III | 25 | Feedback loop on Step 1, prompt levels, the Level-3 port, **D2 (12 min)**, notebooks, parallel, context |
@@ -92,7 +92,7 @@ section (§) of `prompts.md`.
 | 2:10 | IX | 15 | Verification, disclosure, referees/supervisors/students, replication packages, governance, six habits |
 | 2:25 | Wrap-up | 5 | Quick reference, takeaways, ten tips, conclusion, references |
 
-If running late: drop the notebook and worktree slides, the paper-replication slide and the tips slide; never drop D2 or D4.
+If running late: drop the notebook and worktree slides, the paper-replication slides and the tips slides; never drop D2 or D4.
 
 ## Pre-lecture checklist
 
@@ -102,7 +102,7 @@ If running late: drop the notebook and worktree slides, the paper-replication sl
 - [ ] `cd demo && python3 -m pytest -q tests/` fails with `NotImplementedError`.
 - [ ] Dry-run D2 (plan mode, §4) once in `demo/`; note how long the plan takes to appear; then `git checkout .` and `git clean -fd` in `demo/`.
 - [ ] Dry-run the `/goal` (§11) once in `demo/`; write the measured turns, wall-clock and E[s] into the turn-by-turn transcript slide. Then reset: `git checkout deqn/stochastic.py && rm -f results/deqn_stochastic.*`, or simply rebuild `demo/`. In the default permission mode the goal asks before running `pytest`; allow it with `/permissions` or run the demo in auto mode.
-- [ ] A second terminal tab ready for the goal; `/cost` noted at the start so the total spend of the lecture can be shown at the end.
+- [ ] A second terminal tab ready for the goal; `/usage` noted at the start so the total spend of the lecture can be shown at the end.
 - [ ] `slides/Agentic_Programming_Munich.pdf` open, presenter mode; the figures live in `slides/figures/`.
 
 ## Files not stepped through, kept for reference
@@ -113,5 +113,5 @@ If running late: drop the notebook and worktree slides, the paper-replication sl
 | `code/deqn/source/deqn_tf_stochastic.py` | The stochastic course notebook flattened, with its shape bug kept; the input of template 5. Not run. |
 | `code/deqn/common.py` | The shared module shipped to `demo/deqn/`; its docstring is read in D1. |
 | `code/euler_check_demo.py`, `code/outputs/` | The Euler-error check of the reference solver with its committed table and figure: the one-prompt demo of an earlier version of this lecture. |
-| `paper/2607.02134v2.pdf` (git-ignored; arXiv:2607.02134), the skill at github.com/PredictiveScienceLab/paper-replication-paper | Hans and Bilionis (2026): the replication workflow of the paper-replication slide and the appendix; `prompts.md` §14 has the install lines and both prompts. Not run in the lecture (hours per paper). |
+| arXiv:2607.02134 (not in the repository), the skill at github.com/PredictiveScienceLab/paper-replication-paper | Hans and Bilionis (2026): the replication workflow of the paper-replication slides and the appendix; `prompts.md` §14 has the install lines and both prompts. Not run in the lecture (hours per paper). |
 | `code/extras/` | The PINN material of the earlier version (the `/goal` on u'' + u = 0, the 2-D Poisson plan and session notes); see its README. No slide refers to it. |

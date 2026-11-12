@@ -3,9 +3,9 @@
 Trains the stochastic DEQN four times (MSE, MAE, Huber, log-cosh on the Euler residual),
 everything else as in solution/deqn_stochastic.py, and reports each on the path the
 trained network generates: training loss, |Euler residual| mean / p99 / max, E[s],
-max |s - s_egm|, seconds. Writes outputs/deqn_kernel_table.tex (booktabs, no preamble)
+max |s - s_ref|, seconds. Writes outputs/deqn_kernel_table.tex (booktabs, no preamble)
 and outputs/deqn_kernel_figure.pdf. Asserts that every E[s] is within 5e-3 of the mean
-reference savings rate of reference/egm_policy_rho090.csv (the constant the tests use): the
+reference savings rate of reference/policy_rho090.csv (the constant the tests use): the
 kernels differ in accuracy, not in the answer.
 """
 from __future__ import annotations
@@ -48,7 +48,7 @@ def train_with(kernel, seed=42, steps=2000, batch=128, lr=1e-3):
 
 if __name__ == "__main__":
     P = sol.P
-    egm = bm.solve(P["beta"], P["rho"])
+    ref_policy = bm.solve(P["beta"], P["rho"])
     rows, curves = [], {}
     for name, kernel in KERNELS.items():
         net, wall, tl = train_with(kernel)
@@ -56,15 +56,15 @@ if __name__ == "__main__":
         s_fn = common.policy_fn(net, meta)
         LZ, LK = common.simulate_path(s_fn, P)
         r = np.abs(common.euler_residual_np(s_fn, LZ, LK, P))
-        s_net, s_egm = s_fn(LZ, LK), egm(np.exp(LZ), np.exp(LK))
-        rows.append((name, tl, r.mean(), np.percentile(r, 99), r.max(), s_net.mean(), np.abs(s_net - s_egm).max(), wall))
+        s_net, s_ref = s_fn(LZ, LK), ref_policy(np.exp(LZ), np.exp(LK))
+        rows.append((name, tl, r.mean(), np.percentile(r, 99), r.max(), s_net.mean(), np.abs(s_net - s_ref).max(), wall))
         Kg = np.linspace(np.log(sol.K_SS) - 0.5, np.log(sol.K_SS) + 0.5, 200)
         curves[name] = (np.exp(Kg), s_fn(np.zeros_like(Kg), Kg), r)
         print(f"{name:9s} loss {tl:.2e}  mean|r| {r.mean():.2e}  p99 {np.percentile(r, 99):.2e}  max {r.max():.2e}  "
-              f"E[s] {s_net.mean():.4f}  max|s-s_egm| {np.abs(s_net - s_egm).max():.2e}  {wall:.0f} s")
-    ref = np.loadtxt(Path(__file__).resolve().parent / "reference" / "egm_policy_rho090.csv", delimiter=",", skiprows=1)
-    mean_s_egm = ref[:, 2].mean()
-    assert all(abs(row[5] - mean_s_egm) < 5e-3 for row in rows), "a kernel changed the answer, not just the accuracy"
+              f"E[s] {s_net.mean():.4f}  max|s-s_ref| {np.abs(s_net - s_ref).max():.2e}  {wall:.0f} s")
+    ref = np.loadtxt(Path(__file__).resolve().parent / "reference" / "policy_rho090.csv", delimiter=",", skiprows=1)
+    mean_s_ref = ref[:, 2].mean()
+    assert all(abs(row[5] - mean_s_ref) < 5e-3 for row in rows), "a kernel changed the answer, not just the accuracy"
     OUT.mkdir(exist_ok=True)
     with open(OUT / "deqn_kernel_table.tex", "w") as f:
         f.write("\\begin{tabular}{lrrrrrrr}\n\\toprule\n")
@@ -78,7 +78,7 @@ if __name__ == "__main__":
     plt.rcParams.update({"font.family": "serif", "font.size": 9})
     fig, ax = plt.subplots(1, 2, figsize=(6.4, 2.5))
     Kg = np.linspace(np.log(sol.K_SS) - 0.5, np.log(sol.K_SS) + 0.5, 200)
-    ax[0].plot(np.exp(Kg), egm(np.ones_like(Kg), np.exp(Kg)), "k--", lw=0.9, label="reference")
+    ax[0].plot(np.exp(Kg), ref_policy(np.ones_like(Kg), np.exp(Kg)), "k--", lw=0.9, label="reference")
     for name, (K, s, _) in curves.items():
         ax[0].plot(K, s, lw=0.9, label=name)
     ax[0].set_xlabel("$K$ (at $z = 1$)"); ax[0].set_ylabel("savings rate"); ax[0].legend(frameon=False, fontsize=7)

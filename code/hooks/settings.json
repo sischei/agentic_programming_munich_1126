@@ -28,12 +28,12 @@
         ]
       },
       {
-        "_comment": "Run ruff on every Python file Claude writes or edits.",
+        "_comment": "Run ruff on every Python file Claude writes or edits; skipped quietly when ruff is not installed.",
         "matcher": "Edit|Write",
         "hooks": [
           {
             "type": "command",
-            "command": "jq -r '.tool_input.file_path // empty' | grep -E '\\.py$' | xargs -r ruff check --fix"
+            "command": "jq -r '.tool_input.file_path // empty' | grep -E '\\.py$' | xargs -r sh -c 'command -v ruff >/dev/null 2>&1 || exit 0; ruff check --fix \"$@\"' sh"
           }
         ]
       },

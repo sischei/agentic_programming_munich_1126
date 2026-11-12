@@ -58,7 +58,7 @@ Cost: a Pro subscription covers every demo; on the API, a few dollars on Opus, a
 
 | Path | What |
 |---|---|
-| [`slides/Agentic_Programming_Munich.pdf`](slides/Agentic_Programming_Munich.pdf) | the deck, 77 pages, the last one an appendix (LaTeX source and figures next to it) |
+| [`slides/Agentic_Programming_Munich.pdf`](slides/Agentic_Programming_Munich.pdf) | the deck, 131 pages, the last two an appendix (LaTeX source and figures next to it) |
 | [`code/WALKTHROUGH.md`](code/WALKTHROUGH.md), [`code/prompts.md`](code/prompts.md) | every file and every prompt, in lecture order |
 | [`code/deqn/`](code/deqn/README.md) | the lead example: scripts, the five tests, the reference, the committed numbers and figures |
 | `code/brock_mirman_reference.py` | the reference solver: the known answer |
@@ -70,7 +70,7 @@ Cost: a Pro subscription covers every demo; on the API, a few dollars on Opus, a
 
 | Part | Topic |
 |---|---|
-| Intro | Why now; what "agentic" means; today's plan |
+| Intro | Why now; what "agentic" means; the red thread of the lecture |
 | I | Mental models: tiers, the context window, the workflow; the running example and its seven steps |
 | II | Setting up: Claude Code, models and effort, open-weight models, git, the demo project (demo 1) |
 | III | The core loop on Step 1; the same task in plan mode (demo 2); notebooks, parallel sessions, context |
@@ -103,15 +103,15 @@ number: [`code/deqn/README.md`](code/deqn/README.md).
 
 * Korinek, A. (2023). Generative AI for economic research: use cases and implications for economists. *Journal of Economic Literature* 61(4), 1281–1317.
 * Hans, A. and I. Bilionis (2026). Coding-agents can replicate scientific machine learning papers. [arXiv:2607.02134](https://arxiv.org/abs/2607.02134); the skill: [paper-replication-paper](https://github.com/PredictiveScienceLab/paper-replication-paper).
-* Bilionis, I. et al. (2026). We asked an AI agent to replicate three papers. *ebilionis.substack.com*.
+* Bilionis, I. (2026). We asked an AI agent to replicate three research papers. [*Democratizing Science with AI*](https://ebilionis.substack.com/p/we-asked-an-ai-agent-to-replicate) (Substack), 5 March 2026.
 * Schwartz, M., I. Andrews and J. M. Shapiro (2026). An LLM workflow that reproduces, improves, and extends published economics research. [NBER Working Paper 35782](https://www.nber.org/papers/w35782).
 * Galiani, S., F. A. López and R. A. Sosa (2026). AI agents and prompt engineering in econometric coding. [NBER Working Paper 35588](https://www.nber.org/papers/w35588).
 
 **Working with Claude Code**
 
-* Goldsmith-Pinkham, P. (2026). Getting started with Claude Code. *paulgp.substack.com*.
-* Cherny, B. (2025). 10 Claude Code tips from the creator of Claude Code. Thread on X.
-* Osmani, A. (2026). Which Claude model should you build with? [claude.dev blog](https://claude.dev/blog/which-claude-model-should-you-build-with/), 9 November 2026.
+* Goldsmith-Pinkham, P. (2026). Getting started with Claude Code: a researcher's setup guide. [*paulgp.substack.com*](https://paulgp.substack.com/p/getting-started-with-claude-code), 29 March 2026.
+* Cherny, B. (2026). Ten tips from the Claude Code team. [Thread on X](https://x.com/bcherny/status/2017742741636321619), 31 January 2026.
+* Osmani, A. (2026). Which Claude model should you build with? Fable, Opus, Sonnet, or Haiku. [claude.dev blog](https://claude.dev/blog/which-claude-model-should-you-build-with/), 9 November 2026.
 * Schluntz, E. and B. Zhang (2024). Building effective agents. Anthropic engineering blog.
 * Anthropic (2026). [Claude Code documentation](https://code.claude.com/docs).
 
