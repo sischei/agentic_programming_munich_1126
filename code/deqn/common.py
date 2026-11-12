@@ -13,7 +13,7 @@ each step. The numpy residual euler_residual_np is here for CHECKING a saved pol
 
 Both models of the lecture:
     "deterministic": delta = 1, beta = 0.99 (the course notebook); closed form s* = alpha beta
-    "stochastic":    the repository's growth model, beta = 0.96, rho = 0.9; truth = the EGM solver
+    "stochastic":    the repository's growth model, beta = 0.96, rho = 0.9; known answer = the reference solver
 
 The project root (where brock_mirman_reference.py lives) is put on sys.path below.
 """
@@ -114,7 +114,7 @@ def load_policy(path: str | Path) -> tuple[torch.nn.Sequential, dict]:
 
 def params_of(meta: dict) -> dict:
     """The parameters a policy was trained with: the sidecar's, else the defaults of its model.
-    A network trained at another rho (the estimation pipeline) must be encoded and simulated at that rho."""
+    A network trained at another calibration must be encoded and simulated at that calibration."""
     return dict(meta.get("params") or PARAMS[meta["model"]])
 
 

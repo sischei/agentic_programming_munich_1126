@@ -61,16 +61,16 @@ Check and report:
 ## Example usage
 
 ```
-> /data-diagnostics data/bm_panel.csv
+> /data-diagnostics data/firm_panel.csv
 ```
 
 Expected output:
 ```
-=== Data Diagnostics: bm_panel.csv ===
+=== Data Diagnostics: firm_panel.csv ===
 Shape: (2500, 6)
 Memory: 0.1 MB
 
-Column: economy
+Column: firm
   dtype: int64 | missing: 0 (0.0%) | unique: 5
   min=1  p25=2  median=3  p75=4  max=5
 

@@ -1,7 +1,7 @@
 {
-  "_comment": "Example Claude Code settings for an economics research project. Place at .claude/settings.json (project) or ~/.claude/settings.json (global). Two mechanisms: permission rules (deny the agent READING confidential paths: the agent never sees the content, so it is never sent to the API) and hooks (shell commands that run around tool calls; the PreToolUse hook blocks EDITS under data/raw/, protecting integrity). Hooks receive the tool input as JSON on stdin; file_path arrives as an ABSOLUTE path, hence the (^|/) in the patterns. Needs jq; the PostToolUse hooks also need ruff and latexmk (delete the ones you do not want). See https://code.claude.com/docs/en/hooks-guide and https://code.claude.com/docs/en/permissions",
+  "_comment": "Example Claude Code settings for an economics research project. Place at .claude/settings.json (project) or ~/.claude/settings.json (global). Two mechanisms: permission rules (deny the agent READING confidential paths: the agent never sees the content, so it is never sent to the API) and hooks (shell commands that run around tool calls; the PreToolUse hook blocks EDITS under data/raw/, protecting integrity). Hooks receive the tool input as JSON on stdin; file_path may arrive as an absolute path, hence the (^|/) in the patterns. Needs jq; the PostToolUse hooks also need ruff and latexmk (delete the ones you do not want). See https://code.claude.com/docs/en/hooks-guide and https://code.claude.com/docs/en/permissions",
   "permissions": {
-    "_comment": "Deny rules are checked before any hook runs. Read(...) stops the agent from opening the files; the Bash rules stop the obvious shell detours. data/raw/ stands for confidential data; reference/ holds the reference policy the DEQN tests compare with: pytest (a Bash command) may read it, the agent's Read tool may not, so the numbers cannot be hard-coded into a solver. Not airtight against every shell command: restricted data belongs on a machine the agent does not run on.",
+    "_comment": "Deny rules still apply when a PreToolUse hook allows a call; a PreToolUse hook that exits 2 blocks the call before permission rules are checked. Read(...) stops the agent from opening the files (it also covers Grep and Glob); the Bash rules stop the obvious shell detours. ./path is relative to the directory Claude Code starts in: start it in the project root. data/raw/ stands for confidential data; reference/ holds the reference policy the DEQN tests compare with: pytest (a Bash command) may read it, the agent's Read tool may not, so the numbers cannot be hard-coded into a solver. Not airtight against every shell command: restricted data belongs on a machine the agent does not run on.",
     "deny": [
       "Read(./data/raw/**)",
       "Bash(cat data/raw/*)",
@@ -19,7 +19,7 @@
     "PostToolUse": [
       {
         "_comment": "Recompile LaTeX whenever Claude edits a .tex file in paper/.",
-        "matcher": "Edit|Write|MultiEdit",
+        "matcher": "Edit|Write",
         "hooks": [
           {
             "type": "command",
@@ -29,7 +29,7 @@
       },
       {
         "_comment": "Run ruff on every Python file Claude writes or edits.",
-        "matcher": "Edit|Write|MultiEdit",
+        "matcher": "Edit|Write",
         "hooks": [
           {
             "type": "command",
@@ -39,7 +39,7 @@
       },
       {
         "_comment": "Append every file Claude touched to an audit log. Note: only logs file paths; full Bash commands are deliberately NOT captured to avoid leaking secrets (API keys in env vars, tokens in URLs, etc.) into .claude/audit.log.",
-        "matcher": "Edit|Write|MultiEdit|NotebookEdit",
+        "matcher": "Edit|Write|NotebookEdit",
         "hooks": [
           {
             "type": "command",
@@ -51,7 +51,7 @@
     "PreToolUse": [
       {
         "_comment": "Block edits under data/raw/, reference/ and tests/ at the system level (the tests are the exam the /goal works against). Exit code 2 blocks the tool call and shows stderr to Claude as the reason; the JSON form (hookSpecificOutput.permissionDecision = deny) does the same with more control.",
-        "matcher": "Edit|Write|MultiEdit|NotebookEdit",
+        "matcher": "Edit|Write|NotebookEdit",
         "hooks": [
           {
             "type": "command",

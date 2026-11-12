@@ -1,5 +1,5 @@
 """
-Euler-error check: the thirty-second demo of Part VIII.
+Euler-error check of the reference solver: an earlier one-prompt demo, no longer on the slides.
 
 One prompt, one publication-ready table, one figure, on the stochastic
 Brock-Mirman model used throughout the lecture. The reference solver in this

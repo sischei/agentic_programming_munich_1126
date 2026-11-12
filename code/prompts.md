@@ -3,11 +3,11 @@
 One section per prompt, in lecture order. The
 code blocks are **plain text**: no `>` marker, no indentation, so you can
 select a block and paste it straight into Claude Code. Slash commands
-(`/data-diagnostics ...`, `/goal ...`) are typed as shown.
+(`/deqn-accuracy ...`, `/goal ...`) are typed as shown.
 
 All prompts assume the demo project built by `setup_demo_project.sh`: `demo/` at the
-root of this repository (git-ignored, with its own git history), holding the data in
-`data/`, `brock_mirman_reference.py`, the DEQN scaffold (`deqn/`, `tests/`,
+root of this repository (git-ignored, with its own git history), holding
+`brock_mirman_reference.py`, the DEQN scaffold (`deqn/`, `tests/`,
 `reference/`), `CLAUDE.md` from `CLAUDE_md_demo.md` and `.claude/`. Every session of
 the lecture runs in `demo/`.
 
@@ -26,8 +26,7 @@ the lecture runs in `demo/`.
 | 11 | D4, WT 6 | The `/goal` that builds the stochastic solver, and its template |
 | 12 | | Headless: `claude -p`, a headless goal, the fresh-context shell loop |
 | 13 | D5 | One prompt → table + figure (four loss kernels) |
-| 14 | | The full pipeline: six prompts, the DEQN at rho_hat, `verify.py` and `run_all.py` |
-| 15 | | Replication |
+| 14 | | Replication |
 
 D = live demo (five), WT = walk-through badge on the slides (seven); the same
 crosswalk is at the top of `WALKTHROUGH.md`.
@@ -40,8 +39,8 @@ crosswalk is at the top of `WALKTHROUGH.md`.
 What is in this directory? Summarise the structure, the two rules of CLAUDE.md and the docstring of deqn/common.py. Do not write anything yet.
 ```
 
-A healthy answer lists the files, reads `CLAUDE.md`, names the two rules (the truth
-file; `tests/` and `reference/` are the exam), notes that `deqn/stochastic.py` is a
+A healthy answer lists the files, reads `CLAUDE.md`, names the two rules (`tests/`
+and `reference/` are the exam; `data/raw/` is off limits), notes that `deqn/stochastic.py` is a
 stub whose tests fail with `NotImplementedError`, and writes nothing.
 
 ## 2. The feedback loop
@@ -64,7 +63,7 @@ max |s - alpha beta| = 4.9e-4, 3 s).
 ## 3. A Level-3 prompt: the port of Step 1
 
 ```text
-Port deqn/source/deqn_tf_deterministic.py (TensorFlow) to deqn/deterministic.py in PyTorch, same recipe: delta = 1, beta = 0.99, K ~ U[0.1, 1], 64 states per step, Adam 1e-3, 2000 steps; a 1-32-32-1 tanh network for the savings rate, built with deqn.common.make_net(1).
+Role: computational macroeconomist. Port deqn/source/deqn_tf_deterministic.py (TensorFlow) to deqn/deterministic.py in PyTorch, same recipe: delta = 1, beta = 0.99, K ~ U[0.1, 1], 64 states per step, Adam 1e-3, 2000 steps; a 1-32-32-1 tanh network for the savings rate, built with deqn.common.make_net(1).
 - float64; torch.manual_seed(42) before the network
 - the loss is the mean squared relative Euler error, as in the original; do NOT put the closed form in the loss
 - save results/deqn_deterministic.pt via common.save_policy
@@ -76,7 +75,7 @@ is 1e-2); `results/deqn_deterministic.pt` and its `.json` sidecar written.
 
 ## 4. Live demo 2: Step 1 in plan mode
 
-Press Shift+Tab until the prompt shows `[plan]`, then paste:
+Press Shift+Tab until the status line shows plan mode (sessions start in auto mode, so it takes three presses), then paste:
 
 ```text
 Step 1 of the DEQN build. deqn/source/deqn_tf_deterministic.py is a TensorFlow notebook flattened to a script: a neural network for the savings rate of the deterministic growth model with delta = 1, trained on the Euler residual. The answer is known: s* = alpha*beta. Without writing anything yet, tell me how you would port it. Then:
@@ -147,7 +146,7 @@ and recipe of the goal in §11):
 ```text
 [ROLE] You are a computational macroeconomist.
 [CONTEXT] deqn/deterministic.py (Step 1) is verified against the closed form. Now the stochastic model of CLAUDE.md: Y = z K^alpha, log z AR(1); alpha 0.36, delta 0.10, sigma 0.04, beta 0.96, rho 0.9. No closed form; the reference is brock_mirman_reference.solve(0.96, 0.9). deqn/common.py has the parameters, gh_nodes, make_net, encode_state, save_policy and simulate_path; read its docstring first.
-[TASK] Write deqn/stochastic.py with solve(seed=42, steps=2000): state (log z / sd_z, log K - log K*); network 2-32-32-1 tanh, sigmoid output, s_init = s*; loss = mean squared Euler residual beta C E[(1 - delta + r') / C'] - 1 with the 5 Gauss-Hermite nodes; 128 fresh states per step, log z ~ N(0, sd_z), log K ~ U(log K* +- 0.5); Adam 1e-3.
+[TASK] Write deqn/stochastic.py with solve(seed=42, steps=2000): state (log z / sd_z, log K - log K*); network 2-32-32-1 tanh, sigmoid output, s_init = s*; loss = mean squared Euler residual beta C E[(1 - delta + R') / C'] - 1 with the 5 Gauss-Hermite nodes; 128 fresh states per step, log z ~ N(0, sd_z), log K ~ U(log K* +- 0.5); Adam 1e-3.
 [CONSTRAINTS] torch, float64, torch.manual_seed(seed) first. Never use the reference policy in a loss or an initialisation. Do not modify deqn/common.py, tests/ or reference/.
 [OUTPUT] results/deqn_stochastic.pt with its JSON sidecar; solve returns {"s": callable (log_z, log_K) -> s, numpy in and out, "net", "wall"}.
 [VERIFY] Simulate 2,000 periods with the network's own policy (common.simulate_path). Report mean |residual| there, max |s - s_ref| at those states, E[s] against the reference, and whether log K stayed inside [log K* - 0.5, log K* + 0.5]. Then run python3 -m pytest -q tests/ and show the output.
@@ -203,7 +202,7 @@ Do NOT invent any citations. Only cite papers already in paper/references.bib. I
 ### Template 5: translate legacy code, and prove it
 
 ```text
-Port deqn/source/deqn_tf_stochastic.py (TensorFlow) to deqn/stochastic_port.py. Do NOT change the algorithm, only the language. Then write deqn/test_port.py: the residual has shape (n, 1) for n states; the Gauss-Hermite weights sum to 1; at sigma = 0 the residual equals the one of deqn/deterministic.py at the same states (within 1e-12). Run pytest on it. Report every deviation from the original with the line that causes it.
+Port deqn/source/deqn_tf_stochastic.py (TensorFlow) to deqn/stochastic_port.py. Do NOT change the algorithm, only the language. Then write deqn/test_port.py: the residual has shape (n, 1) for n states; the Gauss-Hermite weights sum to 1; at sigma = 0, delta = 1 and beta = 0.99 the residual equals the one of deqn/deterministic.py at the same states (within 1e-12). Run pytest on it. Report every deviation from the original with the line that causes it.
 ```
 
 The original has `expectation = tf.zeros((n_data, dim_state))`, shape (n, 2) instead
@@ -229,7 +228,7 @@ Summarise this project and what I should work on next.
 ```
 
 The agent answers from `CLAUDE.md` alone: the growth-model sandbox, the two rules
-(the truth file; `tests/` and `reference/` are the exam), the DEQN notation, the stub
+(`tests/` and `reference/` are the exam; `data/raw/` is off limits), the DEQN notation, the stub
 in `deqn/stochastic.py` whose tests fail, and the status line. Then the correction loop:
 
 ```text
@@ -248,18 +247,12 @@ The skill of Step 3, on the policy that Step 1 saved (5 s):
 Use the verifier subagent to check the claims in the accuracy report it just wrote under notes/.
 ```
 
-The data skill, on the panel:
-
-```text
-/data-diagnostics data/bm_panel.csv
-```
-
 A specialist, once the stochastic policy exists (after §11, or after copying
 `code/deqn/solution/deqn_stochastic.py` over `deqn/stochastic.py` and running
 `python3 -c "from deqn.stochastic import solve; solve()"`):
 
 ```text
-Use the solution-accuracy-checker subagent on results/deqn_stochastic.pt. Reference: brock_mirman_reference.solve(0.96, 0.9).
+Use the solution-accuracy-checker subagent on the accuracy report under notes/ and on results/deqn_stochastic.json (the sidecar of the policy). Reference: brock_mirman_reference.solve(0.96, 0.9).
 ```
 
 ```text
@@ -302,7 +295,7 @@ claude
 Then paste as one block (including the `/goal`):
 
 ```text
-/goal `python3 -m pytest -q tests/` in this project exits 0 with 5 passed. To get there, implement solve(seed, steps) in deqn/stochastic.py: a DEQN for the stochastic growth model of CLAUDE.md. State (log z / sd_z, log K - log K*) via common.encode_state; network common.make_net(2, s_init=s*); loss = mean squared Euler residual beta C E[(1 - delta + r') / C'] - 1 with common.gh_nodes(5); 128 fresh states per step, log z ~ N(0, sd_z), log K ~ U(log K* +- 0.5); Adam 1e-3, 2000 steps, torch.manual_seed(seed) first, float64. solve returns {"s": callable (log_z, log_K) -> savings rate, numpy in and out, "net", "wall"} and saves results/deqn_stochastic.pt via common.save_policy. Each turn: run the tests and show the output, fix one thing, commit. Never edit tests/ or reference/. Report ALL_TESTS_PASS when pytest exits 0. Stop after 6 turns (count your commits in git log) and write notes/blocked.md instead.
+/goal `python3 -m pytest -q tests/` in this project exits 0 with 5 passed. To get there, implement solve(seed, steps) in deqn/stochastic.py: a DEQN for the stochastic growth model of CLAUDE.md. State (log z / sd_z, log K - log K*) via common.encode_state; network common.make_net(2, s_init=s*); loss = mean squared Euler residual beta C E[(1 - delta + R') / C'] - 1 with common.gh_nodes(5); 128 fresh states per step, log z ~ N(0, sd_z), log K ~ U(log K* +- 0.5); Adam 1e-3, 2000 steps, torch.manual_seed(seed) first, float64. solve returns {"s": callable (log_z, log_K) -> savings rate, numpy in and out, "net", "wall"} and saves results/deqn_stochastic.pt via common.save_policy. Each turn: run the tests and show the output, fix one thing, commit. Never edit tests/ or reference/. Report ALL_TESTS_PASS when pytest exits 0. Stop after 6 turns (count your commits in git log) and write notes/blocked.md instead.
 ```
 
 `/goal` keeps the session working turn after turn; after every turn a separate
@@ -367,7 +360,7 @@ done
 
 ## 13. Live demo 5: one prompt → table + figure
 
-Step 7a, the loss kernel. Needs the verified solver of §11 (or the copied solution).
+Step 7, the loss kernel. Needs the verified solver of §11 (or the copied solution).
 
 ```text
 Role: computational macroeconomist. Code: deqn/stochastic.py (the verified solver), deqn/common.py. Task: train the solver four times with the loss kernel changed and nothing else: MSE, MAE, Huber (delta 1e-2), log-cosh on the Euler residual; seed 42, 2000 steps each. Evaluate each on the path its own policy generates (common.simulate_path): |residual| mean, p99, max; E[s]; max |s - s_ref| from brock_mirman_reference.solve(0.96, 0.9). Outputs: 1) outputs/deqn_kernel_table.tex -- booktabs: kernel, training loss, the three residual columns, E[s], max |s - s_ref|, seconds. 2) outputs/deqn_kernel_figure.pdf -- s(z = 1, K) per kernel vs the reference; histogram of on-path |residual|, log axis; serif. Constraints: do NOT modify deqn/common.py or tests/. Verify: assert every E[s] is within 5e-3 of the reference value; print which kernel has the smallest mean |residual|.
@@ -379,44 +372,7 @@ each other, on-path mean |residual| between 1.0e-4 and 1.7e-4; the training-loss
 column (3e-4 for MAE, 2e-7 for Huber) is in different units per row and says nothing
 about which is more accurate.
 
-## 14. The full pipeline, six prompts
-
-Step 7, second half. One prompt per step; each step writes a file the next step reads.
-The truth file is read once, at the end. Step 3 is the SMM estimate with the reference
-solver; the DEQN enters at step 4 as the closing check.
-
-```text
-Step 1. Read data/bm_panel.csv (do NOT read data/bm_panel_truth.csv). Write notes/report.md: columns, shape, periods per economy, missing values, summary statistics per economy.
-```
-(or simply `/data-diagnostics data/bm_panel.csv`)
-
-```text
-Step 2. Write code/moments.py: for each economy compute Std(dlog C), Autocorr(dlog C), Autocorr(log Y) with brock_mirman_reference.moments (do not re-implement it); save results/moments.json. Run it.
-```
-
-```text
-Step 3. Write code/estimate_rho.py: for each economy estimate rho by the simulated method of moments. Simulate 10 x 500 periods per candidate rho with brock_mirman_reference.solve and .simulate, common random numbers across candidates, a grid of 15 points on [0.3, 0.99] then minimize_scalar on the best bracket. Weight the three moments by the inverse of their bootstrap variance from results/moments.json. Save results/rho_hat.json with rho_hat, the criterion on the grid, and the fitted moments. Fix every seed. Run it; it should take under 3 minutes.
-```
-
-```text
-Step 4. Write code/check_deqn.py: for each economy, train the DEQN of deqn/stochastic.py at rho = rho_hat from results/rho_hat.json (solve(seed=42, steps=2000) with rho passed through deqn.common.PARAMS; do not modify deqn/common.py, copy the dict), save results/deqn_rho_hat_<economy>.pt, and run the check of .claude/skills/deqn-accuracy/accuracy.py against brock_mirman_reference.solve(0.96, rho_hat). Save the five verdicts to results/deqn_verdicts.json. About 10 s per economy.
-```
-
-```text
-Step 5. Write code/plot_criterion.py (one panel per economy, the SMM criterion against rho on the grid, log axis, the minimum marked; serif font, 12 x 2.6 inches, 300 DPI; figures/criterion.pdf) and code/make_table.py (paper/tables/tab_rho.tex, booktabs, one row per economy: rho_hat, the three data moments, the three fitted moments, the criterion value, the DEQN verdict; raw LaTeX, no preamble).
-```
-
-```text
-Step 6. The verification step has been reached: write verify.py in the project root (not under code/). It reads data/bm_panel_truth.csv, prints |rho_hat - rho| per economy, and passes if every value is below 0.05 (about two Monte Carlo standard deviations at T = 500). Run it. Then write notes/results.md: 300 words describing the estimates, every number traced to a file in results/.
-```
-
-```text
-Write run_all.py that chains steps 1-5 and then verify.py, with a --dry-run flag that prints what each step would do. grep truth code/ must return nothing: only verify.py reads the truth file.
-```
-
-Expected: every |rho_hat - rho| below 0.05; economy 4 lands near 0.92 at T = 500; every DEQN verdict ACCURATE. One network with rho as a third input, as the inner solver of the estimation, is the natural extension and is not part of the lecture.
-
-## 15. Replication
+## 14. Replication
 
 The paper-replication slide follows Hans and Bilionis (2026, arXiv:2607.02134), who replicate papers from
 the LaTeX source alone with a coding-agent skill (Apache 2.0):

@@ -28,7 +28,7 @@ git clone https://github.com/sischei/agentic_programming_munich_1126.git
 cd agentic_programming_munich_1126
 python3 -m venv .venv
 source .venv/bin/activate              # Windows: .venv\Scripts\activate
-pip install -r requirements.txt        # numpy, scipy, pandas, matplotlib, torch, pytest
+pip install -r requirements.txt        # numpy, scipy, matplotlib, torch, pytest
 ```
 
 Claude Code itself: `curl -fsSL https://claude.ai/install.sh | bash` (macOS: `brew install --cask claude-code`),
@@ -52,16 +52,16 @@ python3 code/deqn/stochastic_box.py                   # the silent failure: lowe
 python3 code/deqn/accuracy.py code/deqn/outputs/deqn_stochastic.pt --plot check.pdf   # verdict and figure
 ```
 
-Cost: a Pro subscription covers every demo; on the API, about a dollar on Sonnet, a few on Opus.
+Cost: a Pro subscription covers every demo; on the API, a few dollars on Opus, about half that on Sonnet.
 
 ## 3. What is in this repository
 
 | Path | What |
 |---|---|
-| [`slides/Agentic_Programming_Munich.pdf`](slides/Agentic_Programming_Munich.pdf) | the deck, 78 pages, the last one an appendix (LaTeX source and figures next to it) |
+| [`slides/Agentic_Programming_Munich.pdf`](slides/Agentic_Programming_Munich.pdf) | the deck, 77 pages, the last one an appendix (LaTeX source and figures next to it) |
 | [`code/WALKTHROUGH.md`](code/WALKTHROUGH.md), [`code/prompts.md`](code/prompts.md) | every file and every prompt, in lecture order |
 | [`code/deqn/`](code/deqn/README.md) | the lead example: scripts, the five tests, the reference, the committed numbers and figures |
-| `code/brock_mirman_reference.py`, `code/data/` | the reference solver (the known answer) and five simulated economies |
+| `code/brock_mirman_reference.py` | the reference solver: the known answer |
 | `code/skills/`, `code/agents/`, `code/hooks/`, `code/CLAUDE_md_*.md` | the skills, eight subagents, the settings file with deny rules and hooks, two `CLAUDE.md` files |
 | `code/setup_demo_project.sh` | builds `demo/` (git-ignored) from the pieces above |
 | `code/extras/`, `code/euler_check_demo.py` | material from earlier versions, not on the slides |
@@ -72,13 +72,13 @@ Cost: a Pro subscription covers every demo; on the API, about a dollar on Sonnet
 |---|---|
 | Intro | Why now; what "agentic" means; today's plan |
 | I | Mental models: tiers, the context window, the workflow; the running example and its seven steps |
-| II | Setting up: Claude Code, models and effort, git, the demo project (demo 1) |
+| II | Setting up: Claude Code, models and effort, open-weight models, git, the demo project (demo 1) |
 | III | The core loop on Step 1; the same task in plan mode (demo 2); notebooks, parallel sessions, context |
 | IV | Prompt engineering: the six-component prompt, constraints, templates, failure modes |
 | V | Project memory: `CLAUDE.md` |
 | VI | Skills, subagents, deny rules and hooks, MCP (demo 3: the accuracy skill, then a verifier subagent) |
 | VII | Autonomous loops: `/goal` builds the solver against five tests (demo 4); the verification figure; guardrails |
-| VIII | From plan to table and figure: the reconciled plan, the silent failure, four loss kernels (demo 5), the pipeline |
+| VIII | From plan to table and figure: the reconciled plan, the silent failure, four loss kernels (demo 5), paper replication |
 | IX | Verification, disclosure, referees and supervisors, replication packages, data governance |
 | Wrap-up | Quick reference, takeaways, conclusion, references |
 
@@ -87,10 +87,9 @@ Block 1 is Parts I–IV, Block 2 Parts V–IX, with a break in between. Five liv
 ## 5. The lead example
 
 The stochastic Brock–Mirman growth model. A deep equilibrium net (DEQN; [Azinovic, Gaegauf and
-Scheidegger, 2022](https://onlinelibrary.wiley.com/doi/abs/10.1111/iere.12575)) learns the savings rate by gradient descent on the Euler residual. Three known
-answers grade it: the closed form of the deterministic case (Step 1), a conventional grid-based reference
-solver (Steps 2–7), and a truth file with the hidden persistence of five simulated economies, read
-once at the end. Every concept of the lecture is introduced on this example; Part VIII shows a run
+Scheidegger, 2022](https://onlinelibrary.wiley.com/doi/abs/10.1111/iere.12575)) learns the savings rate by gradient descent on the Euler residual. Two known
+answers grade it: the closed form of the full-depreciation case (Step 1) and a conventional grid-based
+reference solver (Steps 2 and 4–7). Every concept of the lecture is introduced on this example; Part VIII shows a run
 whose loss converged while the policy was wrong, and the check that caught it. Details and every
 number: [`code/deqn/README.md`](code/deqn/README.md).
 
@@ -116,7 +115,7 @@ number: [`code/deqn/README.md`](code/deqn/README.md).
 * Schluntz, E. and B. Zhang (2024). Building effective agents. Anthropic engineering blog.
 * Anthropic (2026). [Claude Code documentation](https://code.claude.com/docs).
 
-The full list, with the sources behind every slide, is on the last two slides of the deck.
+The full list, with the sources behind every slide, is on the two reference slides at the end of the deck.
 
 ## 7. Author
 

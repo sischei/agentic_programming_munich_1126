@@ -18,7 +18,7 @@ toward zero and capital grows past the golden rule. The transversality condition
 that branch out; a loss built from the Euler residual alone does not. Inside the box the
 wrong network saves 0.73 to 0.82 of output, rising in K (the reference policy falls from 0.33
 to 0.16), and its residual there is as small as the good run's: mean |r| 3.8e-4 on the
-box, squared 2.7e-7. Gradient descent had found a solution of the equation, just not
+box, mean squared residual 2.7e-7. Gradient descent had found a solution of the equation, just not
 the equilibrium one. Simulated with its own policy, the economy leaves the box within a
 few periods and settles at five to ten times the steady-state capital (K between 23 and
 41 against K* = 4.3, golden rule K = 7.4), where the residual is 0.1.

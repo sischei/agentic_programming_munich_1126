@@ -122,10 +122,15 @@ def plot(o: dict, path: str | Path) -> Path:
     plt.rcParams.update({"font.family": "serif", "font.size": 9})
     pn, stoch = o["panel"], o["model"] == "stochastic"
     fig, ax = plt.subplots(1, 3, figsize=(7.0, 2.4))
+    short = ["low $z$", "$z = 1$", "high $z$"]
     for i, (lab, s_net, s_ref) in enumerate(pn["curves"]):
         ax[0].plot(pn["K"], s_ref, "k--", lw=0.8, label="reference" if i == 0 else None)
-        ax[0].plot(pn["K"], s_net, lw=1.1, label=f"network {lab}".strip())
-    ax[0].set_xlabel("$K$"); ax[0].set_ylabel("savings rate"); ax[0].legend(frameon=False, fontsize=7, loc="upper right")
+        ax[0].plot(pn["K"], s_net, lw=1.1, color=f"C{i}", label="network" if i == 0 else None)
+        if stoch:                                   # name the three curves at their right end, not in the legend
+            ax[0].text(pn["K"][-1] * 1.015, s_net[-1], short[i], fontsize=6, va="center", color=f"C{i}")
+    if stoch:
+        ax[0].set_xlim(pn["K"][0], pn["K"][-1] * 1.22)
+    ax[0].set_xlabel("$K$"); ax[0].set_ylabel("savings rate"); ax[0].legend(frameon=False, fontsize=7, loc="best")
     ax[0].set_title("policy vs reference", fontsize=9)
     r = pn["r"]
     ax[1].semilogy(np.arange(len(r)), r + 1e-16, lw=0.5, color="0.3")
@@ -144,7 +149,7 @@ def plot(o: dict, path: str | Path) -> Path:
         ax[2].plot(pn["path"], lw=0.9, label="$\\log K_t$ from $K_0 = 0.5$")
         ax[2].set_ylabel("$\\log K$")
     ax[2].set_xlabel("period"); ax[2].set_title("where the policy goes", fontsize=9)
-    if stoch: ax[2].set_ylim(lo - 0.3, hi + 0.75)
+    if stoch: ax[2].set_ylim(min(lo, pn["path"].min()) - 0.3, max(hi, pn["path"].max()) + 0.75)
     ax[2].legend(frameon=False, fontsize=7, loc="upper right")
     fig.suptitle(f"{Path(o['file']).name}: verdict {o['verdict']}", fontsize=9, x=0.01, ha="left")
     fig.tight_layout()

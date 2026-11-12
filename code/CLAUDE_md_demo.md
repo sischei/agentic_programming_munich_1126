@@ -3,13 +3,12 @@
 ## Project Overview
 - **Model:** stochastic Brock-Mirman growth model: log utility, Y = z K^alpha,
   K' = (1 - delta) K + s Y, log z AR(1) with persistence rho; alpha 0.36, delta 0.10,
-  sigma 0.04, beta 0.96, rho 0.9 for the DEQN (hidden in the estimation data). The
-  household chooses the savings rate s. Step 1 of the DEQN build uses the course
-  notebook's calibration, delta = 1 and beta = 0.99, where the closed form is s* = alpha beta.
-- **Purpose:** a sandbox with known answers for working with an AI coding agent. Two
-  threads: (1) a deep equilibrium net (DEQN) for the model is built step by step in
-  `deqn/`, checked against a closed form and against the reference solver; (2) five
-  simulated economies differ only in rho, which is hidden, and rho is estimated from them.
+  sigma 0.04, beta 0.96, rho 0.9. The household chooses the savings rate s. Step 1 of the
+  DEQN build uses the course notebook's calibration, delta = 1 and beta = 0.99, where the
+  closed form is s* = alpha beta.
+- **Purpose:** a sandbox with known answers for working with an AI coding agent: a deep
+  equilibrium net (DEQN) for the model is built step by step in `deqn/`, checked against
+  a closed form and against the reference solver.
 - **Stage:** exploration; nothing here is a paper.
 
 ## Repository Structure
@@ -25,22 +24,19 @@ deqn/
   source/                  <- the original TensorFlow notebooks as scripts; legacy input, never run
 tests/                     <- the five acceptance tests of deqn/stochastic.py. THE EXAM: never edit.
 reference/                 <- the reference policy on simulated states + baseline.md. THE EXAM: never edit.
-data/
-  bm_panel.csv             <- observed panel: economy, t, Y, C, K, s (5 x 500 rows)
-  bm_panel_truth.csv       <- VERIFICATION FILE. See the first rule.
-  raw/                     <- stands in for confidential raw data: never read, never edit
+data/raw/                  <- stands in for confidential raw data: never read, never edit
 results/                   <- saved policies (*.pt with a *.json sidecar), JSON and CSV outputs
 scripts/  figures/  notes/ <- analysis scripts, PDF figures, session notes and reports
 ```
 
 ## The two rules of this project
-1. `data/bm_panel_truth.csv` holds the hidden rho of each economy. Do not open it, print it,
-   grep it or load it, in any step, unless the prompt explicitly says the verification step
-   has been reached. Estimates are produced without it; it is read once, at the end, to grade them.
-2. `reference/` holds the reference solver's policy on simulated states and `tests/` the
-   acceptance tests. Never load the reference into a loss, an initialisation or a fit; it
-   is compared with, once, in the verification step. Never edit `tests/` or `reference/`
-   (a hook refuses; the permission rules deny reading `reference/`, pytest may read it).
+1. `reference/` holds the reference solver's policy on simulated states and `tests/` the
+   acceptance tests: together they are the exam. Never load the reference into a loss, an
+   initialisation or a fit; the tests and the accuracy check compare with it. Never edit
+   `tests/` or `reference/` (a hook refuses; the permission rules deny reading
+   `reference/`, pytest may read it).
+2. `data/raw/` stands in for confidential data. Never read it and never edit it (the
+   permission rules deny reading it; a hook refuses edits).
 
 ## DEQN notation and standards
 - Policy: a network s_theta(x) for the savings rate, sigmoid output; state transform
@@ -56,19 +52,18 @@ scripts/  figures/  notes/ <- analysis scripts, PDF figures, session notes and r
 
 ## Reference solver API (brock_mirman_reference.py)
 - `steady_state(beta)`, `solve(beta, rho)`, `simulate(policy, beta, rho, T, seed)`,
-  `euler_error(policy, beta, rho, z, K)`, `moments(Y, C, K)`. Read the docstring first.
-  Use `moments` instead of re-implementing moments; `solve(beta, rho)(z, K)` is the savings rate.
+  `euler_error(policy, beta, rho, z, K)`. Read the docstring first;
+  `solve(beta, rho)(z, K)` is the savings rate.
 
 ## Coding Standards
-- Python 3.10+, numpy/scipy/pandas/matplotlib, torch as above; type hints on signatures.
+- Python 3.10+, numpy/scipy/matplotlib, torch as above; type hints on signatures.
 - `pathlib.Path` for all file I/O; paths relative to the project root; seeds are arguments
   with a default, never hard-coded inside functions.
 - Figures: PDF, serif font, no gridlines. Tables: raw LaTeX with booktabs, no preamble.
 
 ## Notation
 - K capital, z productivity, s = 1 - C/Y savings rate, rho persistence of log z, beta discount
-  factor, K* and s* the deterministic steady state. Moments: Std(dlog C), Autocorr(dlog C),
-  Autocorr(log Y), mean s.
+  factor, K* and s* the deterministic steady state.
 
 ## Current Status
 **UPDATE THIS EVERY SESSION**
@@ -78,4 +73,4 @@ scripts/  figures/  notes/ <- analysis scripts, PDF figures, session notes and r
 
 ## Do Not Touch
 - `brock_mirman_reference.py`, `deqn/common.py`, `deqn/source/`, `tests/`, `reference/`,
-  `data/bm_panel.csv`, `data/raw/`
+  `data/raw/`

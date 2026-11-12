@@ -6,15 +6,14 @@ capital share ALPHA, depreciation DELTA, and an AR(1) for log productivity,
     Y_t = z_t K_t**ALPHA,   K_{t+1} = (1 - DELTA) K_t + s_t Y_t,   C_t = (1 - s_t) Y_t,
     log z_{t+1} = rho log z_t + SIGMA eps_{t+1},   eps ~ N(0, 1).
 
-The discount factor beta and the persistence rho are arguments of every function, because
-the estimation examples treat them as the parameters to be estimated.
+The discount factor beta and the persistence rho are arguments of every function, so the
+solver can be re-run at another calibration.
 
-Four functions are exported:
+Three functions are exported:
 
     solve(beta, rho)                      -> Policy, consumption as a function of cash on hand
     simulate(policy, beta, rho, T)        -> Y, C, K paths after a burn-in
     euler_error(policy, beta, rho, z, K)  -> relative Euler-equation errors at given states
-    moments(Y, C, K)                      -> the moment vector used for the simulated method of moments
 
 The solver iterates on the Euler equation with cash on hand m = Y + (1 - DELTA) K as the
 state (Carroll, 2006): on a grid of next-period capital K', the right-hand side of the Euler
@@ -30,8 +29,6 @@ ALPHA, DELTA, SIGMA = 0.36, 0.10, 0.04
 N_GH = 5
 _gh_x, _gh_w = np.polynomial.hermite.hermgauss(N_GH)
 GH_NODES, GH_WEIGHTS = _gh_x * np.sqrt(2.0), _gh_w / np.sqrt(np.pi)
-
-MOMENT_NAMES = ["Std(dlog C)", "Autocorr(dlog C)", "Autocorr(log Y)", "Mean savings rate"]
 
 
 def steady_state(beta):
@@ -146,22 +143,3 @@ def euler_error(policy, beta, rho, z, K):
     m = cash_on_hand(z, K)
     c = policy.consumption(z, m)
     return 1.0 - 1.0 / (c * _rhs(policy.consumption, beta, rho, np.log(z), m - c))
-
-
-def _autocorr(x):
-    x0, x1 = x[:-1] - x[:-1].mean(), x[1:] - x[1:].mean()
-    return float(np.sum(x0 * x1) / np.sqrt(np.sum(x0 ** 2) * np.sum(x1 ** 2)))
-
-
-def moments(Y, C, K):
-    """[Std(dlog C), Autocorr(dlog C), Autocorr(log Y), mean investment share] for one path,
-    or one row per column if Y, C, K are 2-d arrays (time along axis 0)."""
-    Y, C, K = (a.reshape(-1, 1) if a.ndim == 1 else a for a in (Y, C, K))
-    dlc = np.diff(np.log(C), axis=0)
-    ly = np.log(Y)
-    inv_share = 1.0 - C / Y
-    out = np.column_stack([dlc.std(axis=0),
-                           [_autocorr(dlc[:, j]) for j in range(dlc.shape[1])],
-                           [_autocorr(ly[:, j]) for j in range(ly.shape[1])],
-                           inv_share.mean(axis=0)])
-    return out[0] if out.shape[0] == 1 else out

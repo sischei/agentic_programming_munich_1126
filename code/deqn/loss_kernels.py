@@ -1,4 +1,4 @@
-"""Step 5 of the lecture, one prompt -> table + figure: four loss kernels on the same recipe.
+"""Step 7 of the lecture, one prompt -> table + figure: four loss kernels on the same recipe.
 
 Trains the stochastic DEQN four times (MSE, MAE, Huber, log-cosh on the Euler residual),
 everything else as in solution/deqn_stochastic.py, and reports each on the path the

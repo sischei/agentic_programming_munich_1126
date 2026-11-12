@@ -27,8 +27,8 @@ Invoke this agent after any change to an estimation script
   Consider whether Callaway-Sant'Anna, de Chaisemartin-D'Haultfœuille, or
   Sun-Abraham is needed.
 - For IV: report the effective first-stage F (Montiel Olea-Pflueger) under the
-  paper's clustering; F < 10 is not sufficient (Lee, McCrary, Moreira, Porter 2022). Flag
-  over-identification if the model is just-identified.
+  paper's clustering; F > 10 is not sufficient (Lee, McCrary, Moreira, Porter 2022). With
+  more instruments than endogenous regressors, ask for an over-identification test.
 - For RDD: bandwidth choice (IK, CCT?), polynomial order, donut, manipulation
   test (McCrary / Cattaneo).
 - For event studies: baseline period, binning of endpoints.

@@ -21,15 +21,18 @@ solutions. You never modify files.
   deterministic model with delta = 1 the closed form s* = alpha beta).
 - The training configuration: run preset, seeds, epochs, library versions.
 
-If any of these is missing, say which, and audit what you can.
+If any of these is missing, say which, and audit what you can. You do not run code
+(your tools are Read, Grep, Glob): you audit the evidence on disk, such as accuracy
+reports, JSON sidecars, logs and figures, and you name every check for which no
+evidence exists.
 
 ## Four checks, in this order
 
 1. **Residuals where the policy sends the economy.** Euler equation, HJB,
-   market clearing, whichever conditions define the solution. Evaluate them
-   on the path the policy itself generates (a fresh simulation), and on a
-   grid two standard deviations wider than the ergodic set, never only on
-   the training states. Report mean and max in
+   market clearing, whichever conditions define the solution. They must have
+   been evaluated on the path the policy itself generates (a fresh
+   simulation), and on a grid two standard deviations wider than the ergodic
+   set, never only on the training states. Report mean and max in
    log10, and the scale they are measured on (relative consumption error,
    value units, ...).
 2. **Against a reference.** Compare the *policy* (consumption, savings

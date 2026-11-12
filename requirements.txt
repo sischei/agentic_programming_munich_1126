@@ -2,7 +2,6 @@
 # Python 3.10-3.12, CPU only:  python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt
 numpy>=1.26
 scipy>=1.11
-pandas>=2.0
 matplotlib>=3.8
 torch>=2.2
 pytest>=8.0
