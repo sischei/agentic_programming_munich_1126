@@ -3,7 +3,7 @@
 The port of source/deqn_tf_deterministic.py, same recipe: delta = 1, beta = 0.99, the
 network maps K to the savings rate, K ~ U[0.1, 1], 64 states per step, Adam 1e-3,
 2000 steps. Two changes the Level-3 prompt asks for: float64 with a fixed seed, and a
-tanh network of width 32 built with common.make_net (default initialisation: the closed form
+tanh network of width 32 built with common.make_net (default initialization: the closed form
 is used in the check only, nowhere else).
 
 What the notebook never printed: the error against the closed form, s* = alpha beta.

@@ -22,7 +22,7 @@ they appear, and what they are checked against:
 | 3 | VI | the `/deqn-accuracy` skill: the on-path check of a saved policy | reference policy / closed form | `code/deqn/accuracy.py` |
 | 4 | VII | `/goal` builds the stochastic solver against five tests | `code/deqn/tests/`, `reference/` | `code/deqn/solution/` |
 | 5 | VIII | the plan of Step 4 and its reconciliation | measured numbers | `code/deqn/plan_deqn.md` |
-| 6 | VIII | the silent failure: the recipe without the bias initialisation | on-path check | `code/deqn/stochastic_box.py`, `silent_failure.md` |
+| 6 | VIII | the silent failure: the recipe without the bias initialization | on-path check | `code/deqn/stochastic_box.py`, `silent_failure.md` |
 | 7 | VIII | four loss kernels → table + figure | the reference solver | `code/deqn/loss_kernels.py` |
 
 ## How the numbering fits together
@@ -33,7 +33,7 @@ section (§) of `prompts.md`.
 
 | Demo | Walk-through | Prompt | What happens |
 |---|---|---|---|
-| D1 | WT 1 | §1 | stack check; the demo project is built and summarised |
+| D1 | WT 1 | §1 | stack check; the demo project is built and summarized |
 | D2 | | §4 | Step 1 in plan mode: port, check, figure, note |
 | D3 | WT 3, WT 4 | §9 | the accuracy skill on the Step-1 policy, then the verifier subagent |
 | D4 | WT 6 | §11 | `/goal` builds the stochastic solver against five tests |
@@ -52,7 +52,7 @@ section (§) of `prompts.md`.
 | 4 | WT 1 | II | `code/setup_demo_project.sh`, then `demo/` | Run the script, open the tree: `CLAUDE.md` (from `code/CLAUDE_md_demo.md`), `deqn/common.py`, `deqn/source/`, the stub `deqn/stochastic.py`, `tests/`, `reference/`, `data/raw/`, `.claude/`. `python3 -m pytest -q tests/` fails with `NotImplementedError`. Then `claude` and §1. |
 | 5 | | II | `code/deqn/source/deqn_tf_deterministic.py` | `compute_cost`, lines 51–64: the relative Euler error of the course notebook, in TensorFlow. This is what Step 1 ports. (Not run: TensorFlow is not a requirement.) |
 | 6 | | III | `code/deqn/deterministic.py` | The port, as the feedback-loop transcript and the Level-3 prompt produce it: `residual()` (lines 31–41), `solve()`, `check()`. `python3 code/deqn/deterministic.py` (3 s) prints the max error against alpha beta, 4.9e-4, and writes `outputs/deqn_deterministic.{pt,json}` and `deqn_step1_figure.pdf`. |
-| 7 | | III | §4, plan mode | **D2.** Read the plan aloud before approving: closed form only in the check, `make_net` reused, torch seeded first, "solved" judged by the max error. Afterwards `git diff HEAD`, `cat notes/deqn_step1.md`, open `figures/deqn_step1.pdf`. Expected numbers in §4. |
+| 7 | | III | §4, plan mode | **D2.** Read the plan aloud before approving: closed form only in the check, `make_net` reused, torch seeded first, "solved" judged by the max error. Afterward `git diff HEAD`, `cat notes/deqn_step1.md`, open `figures/deqn_step1.pdf`. Expected numbers in §4. |
 | 8 | | IV | `code/prompts.md` §7 | The before/after prompt (Step 2), the constraint lines and the six templates. Point at the `[VERIFY]` line: the network's own path, the reference, the window; the training loss is not in it. Template 5: the shape bug in `code/deqn/source/deqn_tf_stochastic.py`, line 66. |
 
 ## Block 2 (70 min)
@@ -79,7 +79,7 @@ section (§) of `prompts.md`.
 
 | Clock | Part | Minutes | Content |
 |---|---|---|---|
-| 0:00 | Intro | 5 | Title, why now, the red thread (one model, seven steps, the tool each step introduces) |
+| 0:00 | Intro | 5 | Title, why now, the running example (one model, seven steps, the tool each step introduces) |
 | 0:05 | I | 15 | Tiers, context window, where the agent helps, workflow, the running example and the step ladder |
 | 0:20 | II | 10 | Stack, commands, models and effort, open-weight models, git, **D1** + WT 1 |
 | 0:30 | III | 25 | Feedback loop on Step 1, prompt levels, the Level-3 port, **D2 (12 min)**, notebooks, parallel, context |

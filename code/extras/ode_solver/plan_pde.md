@@ -68,7 +68,7 @@ default first, see the boundary halo, then add `--hard-bc` to remove it.
 ## Critical files
 
 - `solver_pde.py`, training script (both BC modes).
-- `plot_pde.py`, three-panel visualisation (mirror `--hard-bc`).
+- `plot_pde.py`, three-panel visualization (mirror `--hard-bc`).
 - `train_pde.log`, full training log of the most recent run.
 
 ## Verification

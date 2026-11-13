@@ -30,14 +30,14 @@ asks "does this actually work?"
    - **Replications:** default 1000 unless the estimator is slow.
    - **Outcomes to record:** bias, RMSE, empirical size at $\alpha = 0.05$,
      empirical power against a fixed alternative.
-   - **Parallelisation:** joblib or multiprocessing; target runtime $< 10$ min.
+   - **Parallelization:** joblib or multiprocessing; target runtime $< 10$ min.
 
 3. On approval, write `simulations/mc_<estimator>.py` that:
    - uses a fixed master seed derived from `hashlib.sha256(plan).hexdigest()`
    - streams results to a `parquet` file under `simulations/results/`
    - logs each cell's runtime
 
-4. Generate two artefacts:
+4. Generate two artifacts:
    - `outputs/tables/mc_<estimator>.tex` --- booktabs table with bias / size / power
      by (DGP, N).
    - `outputs/figures/mc_<estimator>.pdf` --- power curves across DGPs.

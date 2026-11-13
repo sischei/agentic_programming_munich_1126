@@ -17,7 +17,7 @@ and the fix is first to write every residual in natural units, then to weight.
 - Where each residual comes from: Euler equation, intratemporal condition,
   market clearing, boundary condition, KKT or Fischer-Burmeister term,
   data-fit term, penalty.
-- The optimiser, learning rate, batch construction and any loss-weight
+- The optimizer, learning rate, batch construction and any loss-weight
   schedule (fixed weights, inverse-loss weighting, ReLoBRaLo, GradNorm).
 
 ## Checks, in this order
@@ -27,7 +27,7 @@ and the fix is first to write every residual in natural units, then to weight.
    boundary penalty on a value function is in value units; a price residual
    is in price units. Flag any term that is not in relative or dimensionless
    form.
-2. **Scale at initialisation and at the end.** Read stored outputs or logs
+2. **Scale at initialization and at the end.** Read stored outputs or logs
    for the size of each term at the start and at the end of training. A term
    that is 1e-6 from the first epoch is either trivially satisfied or
    swamped; say which.
@@ -52,7 +52,7 @@ and the fix is first to write every residual in natural units, then to weight.
 Terms: <name: unit, scale start -> end, weight>
 Balance: <verified from logged gradient norms | unverified>
 Findings: <numbered, each with the line or cell>
-Verdict: BALANCED | REWEIGHT (which term, why) | RENORMALISE FIRST (which term, to what unit)
+Verdict: BALANCED | REWEIGHT (which term, why) | Renormalize FIRST (which term, to what unit)
 ```
 
 ## Constraints

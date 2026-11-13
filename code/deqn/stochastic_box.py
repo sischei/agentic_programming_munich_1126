@@ -1,6 +1,6 @@
 """The silent failure of Part VIII: the Step-4 recipe with one argument changed.
 
-Identical to solution/deqn_stochastic.py except that the output bias is not initialised
+Identical to solution/deqn_stochastic.py except that the output bias is not initialized
 at the steady-state savings rate (s_init=None, the course notebook's default). The
 training loss ends LOWER than in the good run; the policy saves 0.94 of output instead
 of 0.25: gradient descent landed on the over-saving branch of the Euler equation, which

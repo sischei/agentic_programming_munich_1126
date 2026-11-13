@@ -67,7 +67,7 @@ def make_net(n_in: int, width: int = 32, act: str = "tanh", s_init: float | None
 
     s_init: if given, the output bias is set so that the untrained network returns
     s_init on average. Step 1 (delta = 1) does not need it. Step 4 (delta < 1) does:
-    the Euler equation also has an over-saving branch, and the initialisation decides
+    the Euler equation also has an over-saving branch, and the initialization decides
     which branch gradient descent lands on (see silent_failure.md).
     """
     acts = {"tanh": torch.nn.Tanh, "silu": torch.nn.SiLU, "relu": torch.nn.ReLU}

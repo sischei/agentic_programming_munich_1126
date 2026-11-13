@@ -1,10 +1,10 @@
 # Agentic Programming for Economic Research
 
-![Agentic Programming for Economic Research, CES Munich, 18 November 2026](fig/theme.png)
+![Agentic Programming for Economic Research, CES Munich, November 18, 2026](fig/theme.png)
 
 > **AI coding agents can now take on much of the computational work of economic research. This lecture shows how to put them to work, and how to keep every result verifiable.**
 
-**A 150-minute lecture at the [Center for Economic Studies (CES)](https://www.en.ces.econ.uni-muenchen.de/), LMU Munich, 18 November 2026.**
+**A 150-minute lecture at the [Center for Economic Studies (CES)](https://www.en.ces.econ.uni-muenchen.de/), LMU Munich, November 18, 2026.**
 One example runs through the whole lecture: a neural solver for a growth model, built step by step *with* the agent
 and graded at every step against a known answer. You leave with a working solver, a prompt discipline that transfers
 to your own projects, and a repository that replays everything at home.
@@ -70,7 +70,7 @@ Cost: a Pro subscription covers every demo; on the API, a few dollars on Opus, a
 
 | Part | Topic |
 |---|---|
-| Intro | Why now; what "agentic" means; the red thread of the lecture |
+| Intro | Why now; what "agentic" means; the running example of the lecture |
 | I | Mental models: tiers, the context window, the workflow; the running example and its seven steps |
 | II | Setting up: Claude Code, models and effort, open-weight models, git, the demo project (demo 1) |
 | III | The core loop on Step 1; the same task in plan mode (demo 2); notebooks, parallel sessions, context |
@@ -103,15 +103,15 @@ number: [`code/deqn/README.md`](code/deqn/README.md).
 
 * Korinek, A. (2023). Generative AI for economic research: use cases and implications for economists. *Journal of Economic Literature* 61(4), 1281–1317.
 * Hans, A. and I. Bilionis (2026). Coding-agents can replicate scientific machine learning papers. [arXiv:2607.02134](https://arxiv.org/abs/2607.02134); the skill: [paper-replication-paper](https://github.com/PredictiveScienceLab/paper-replication-paper).
-* Bilionis, I. (2026). We asked an AI agent to replicate three research papers. [*Democratizing Science with AI*](https://ebilionis.substack.com/p/we-asked-an-ai-agent-to-replicate) (Substack), 5 March 2026.
+* Bilionis, I. (2026). We asked an AI agent to replicate three research papers. [*Democratizing Science with AI*](https://ebilionis.substack.com/p/we-asked-an-ai-agent-to-replicate) (Substack), March 5, 2026.
 * Schwartz, M., I. Andrews and J. M. Shapiro (2026). An LLM workflow that reproduces, improves, and extends published economics research. [NBER Working Paper 35782](https://www.nber.org/papers/w35782).
 * Galiani, S., F. A. López and R. A. Sosa (2026). AI agents and prompt engineering in econometric coding. [NBER Working Paper 35588](https://www.nber.org/papers/w35588).
 
 **Working with Claude Code**
 
-* Goldsmith-Pinkham, P. (2026). Getting started with Claude Code: a researcher's setup guide. [*paulgp.substack.com*](https://paulgp.substack.com/p/getting-started-with-claude-code), 29 March 2026.
-* Cherny, B. (2026). Ten tips from the Claude Code team. [Thread on X](https://x.com/bcherny/status/2017742741636321619), 31 January 2026.
-* Osmani, A. (2026). Which Claude model should you build with? Fable, Opus, Sonnet, or Haiku. [claude.dev blog](https://claude.dev/blog/which-claude-model-should-you-build-with/), 9 November 2026.
+* Goldsmith-Pinkham, P. (2026). Getting started with Claude Code: a researcher's setup guide. [*paulgp.substack.com*](https://paulgp.substack.com/p/getting-started-with-claude-code), March 29, 2026.
+* Cherny, B. (2026). Ten tips from the Claude Code team. [Thread on X](https://x.com/bcherny/status/2017742741636321619), January 31, 2026.
+* Osmani, A. (2026). Which Claude model should you build with? Fable, Opus, Sonnet, or Haiku. [claude.dev blog](https://claude.dev/blog/which-claude-model-should-you-build-with/), November 9, 2026.
 * Schluntz, E. and B. Zhang (2024). Building effective agents. Anthropic engineering blog.
 * Anthropic (2026). [Claude Code documentation](https://code.claude.com/docs).
 
@@ -124,4 +124,4 @@ The full list, with the sources behind every slide, is on the two reference slid
 * Department of Economics, HEC, University of Lausanne; Grantham Research Institute, London School of Economics
 * Website: [sischei.github.io](https://sischei.github.io/)
 * Lecture material: [github.com/sischei/agentic_programming_munich_1126](https://github.com/sischei/agentic_programming_munich_1126)
-* Licence of this repository: [CC0 1.0](LICENCE).
+* License of this repository: [CC0 1.0](License).

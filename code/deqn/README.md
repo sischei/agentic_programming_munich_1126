@@ -6,7 +6,7 @@ for the savings rate, and the grid iteration by gradient descent on the mean squ
 Euler residual at sampled states. The lecture builds one step by step with the agent,
 checking every step against a known answer. This folder holds our reference versions
 of what the agent is asked to produce, the tests the `/goal` demo works against, and
-the artefacts the slides show. Source material: the course notebooks in `source/`.
+the artifacts the slides show. Source material: the course notebooks in `source/`.
 
 | Step | Lecture | File | Checked against | Run time |
 |---|---|---|---|---|
@@ -30,7 +30,7 @@ Everything runs on a laptop CPU in float64 with fixed seeds (`common.py` pins 4 
 The last row is the silent failure of Part VIII: the lower training loss belongs to the
 wrong solution, the over-saving branch of the Euler equation (`silent_failure.md`).
 `accuracy.py` says ACCURATE / ACCURATE / WRONG for the three. Step 1 uses the default
-initialisation: the closed form enters only the check.
+initialization: the closed form enters only the check.
 
 `loss_kernels.py` (MSE, MAE, Huber, log-cosh, same recipe): all four give E[s] within
 3e-4 of each other and on-path mean |r| between 1.0e-4 and 1.7e-4. The training-loss
@@ -59,7 +59,7 @@ loss_kernels.py      writes outputs/deqn_kernel_table.tex and deqn_kernel_figure
 plot_silent_failure.py   writes slides/figures/agentic_deqn_silent_{bad,good}.pdf
 plan_deqn.md         the plan of Step 4 as shown on the Part VIII slide, with the reconciliation
 silent_failure.md    what went wrong in stochastic_box.py and how it was found
-outputs/             the committed artefacts the slides show
+outputs/             the committed artifacts the slides show
 ```
 
 Run from `code/` (the project root of the repository copy): `python3 deqn/deterministic.py`,

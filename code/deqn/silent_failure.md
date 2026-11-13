@@ -23,10 +23,10 @@ the equilibrium one. Simulated with its own policy, the economy leaves the box w
 few periods and settles at five to ten times the steady-state capital (K between 23 and
 41 against K* = 4.3, golden rule K = 7.4), where the residual is 0.1.
 
-Why the initialisation matters. The untrained network returns s about 0.5 everywhere;
+Why the initialization matters. The untrained network returns s about 0.5 everywhere;
 from there, descent lands on the over-saving branch. Starting the output bias at the
 steady-state savings rate puts the untrained policy next to the equilibrium branch, and
-descent stays on it. The initialisation selects the branch; the loss cannot.
+descent stays on it. The initialization selects the branch; the loss cannot.
 
 Why nothing in the training loop revealed it. The loss went down, faster than in the
 good run. Nothing in the loop looks at where the policy sends the economy.

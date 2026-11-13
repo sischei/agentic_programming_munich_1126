@@ -5,7 +5,7 @@ shown on the slides of Part VII; stochastic_box.py calls train() with s_init=Non
 is the silent failure of Part VIII.
 
 Recipe: state x = (log z / sd_z, log K - log K*); network 2-32-32-1 tanh with a sigmoid
-output for the savings rate, output bias initialised at logit(s*); loss = mean squared
+output for the savings rate, output bias initialized at logit(s*); loss = mean squared
 Euler residual at 128 fresh training states per step, log z ~ N(0, sd_z),
 log K ~ U(log K* +- 0.5); 5 Gauss-Hermite nodes; Adam 1e-3; 2000 steps; seed 42; float64.
 """

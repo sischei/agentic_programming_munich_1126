@@ -20,7 +20,7 @@ consumption. Known answer: the reference policy, `brock_mirman_reference.solve(0
 ## Recipe
 - State transform x = (log z / sd_z, log K - log K*), `common.encode_state`.
 - Network 2-32-32-1 tanh, sigmoid output, `common.make_net(2)` with the course
-  notebook's initialisation (the untrained policy saves about half of output).
+  notebook's initialization (the untrained policy saves about half of output).
 - Expectation: 5 Gauss-Hermite nodes, `common.gh_nodes(5)`.
 - Training states: 128 fresh draws per step, log z ~ N(0, sd_z), log K ~ U(log K* +- 0.5).
 - Adam 1e-3, 2000 steps, seed 42 (`torch.manual_seed` before the network), float64.

@@ -30,7 +30,7 @@
 ## The two rules of this project
 1. `reference/` holds the reference solver's policy on simulated states and `tests/` the
    acceptance tests: together they are the exam. Never load the reference into a loss, an
-   initialisation or a fit; the tests and the accuracy check compare with it. Never edit
+   initialization or a fit; the tests and the accuracy check compare with it. Never edit
    `tests/` or `reference/` (a hook refuses; the permission rules deny reading
    `reference/`, pytest may read it).
 2. `data/raw/` stands in for confidential data. Never read it and never edit it (the

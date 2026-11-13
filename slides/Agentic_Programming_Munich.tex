@@ -149,9 +149,9 @@
    live/.style={fill=harvardcrimson, text=white, rounded corners=1.5pt, inner sep=1.6pt, font=\tiny\bfseries},
    grade/.style={font=\scriptsize, text=darkgreen, align=center, text width=1.64cm, anchor=north, inner sep=0pt}]
   \ifnum#1=0
-    \node[stage] (m) at (1.27, 2.08) {\textbf{\textcolor{uzhblue}{The model}}\\Brock--Mirman growth:\\how much to save?};
-    \node[stage] (d) at (6.07, 2.08) {\textbf{\textcolor{uzhblue}{The method}}\\deep learning: a network\\learns the savings rule};
-    \node[stage] (v) at (10.87, 2.08) {\textbf{\textcolor{uzhblue}{The standard}}\\every step graded against\\an answer we already know};
+    \node[stage] (m) at (1.27, 2.08) {\textbf{\textcolor{uzhblue}{The model}}\\the Brock--Mirman\\growth model};
+    \node[stage] (d) at (6.07, 2.08) {\textbf{\textcolor{uzhblue}{The method}}\\a neural network\\learns the policy};
+    \node[stage] (v) at (10.87, 2.08) {\textbf{\textcolor{uzhblue}{The standard}}\\every step checked against\\an answer we already know};
     \draw[-{Stealth[length=2.5mm]}, very thick, uzhblue] (m) -- (d);
     \draw[-{Stealth[length=2.5mm]}, very thick, uzhblue] (d) -- (v);
   \fi
@@ -159,16 +159,16 @@
   \draw[harvardcrimson, line width=2pt, -{Stealth[length=3mm]}] (-0.8, 0) -- (12.95, 0);
   \node[circle, draw=harvardcrimson, fill=white, line width=1.2pt, minimum size=1.5em, inner sep=0pt] at (0, 0) {};
   \node[work] at (0, 0.32) {Set up the\\project};
-  \node[tool] at (0, -0.32) {git, the\\demo folder};
+  \node[tool] at (0, -0.32) {Git, the\\demo project};
   \node[part] at (0, -1.2) {Part II};
   \foreach \i/\w/\tl/\p in {
      1/{Port a course\\notebook}/{plan\\mode}/III,
-     2/{Add shocks:\\the full model}/{six prompt\\components}/IV,
-     3/{Audit the\\solution}/{a skill,\\a subagent}/VI,
-     4/{A loop builds\\the solver}/{\texttt{/goal} and\\five tests}/VII,
-     5/{Plan it, then\\compare}/{a plan with\\targets}/VIII,
+     2/{Add shocks\\to the model}/{six prompt\\components}/IV,
+     3/{Audit the\\solution}/{a skill and\\a subagent}/VI,
+     4/{Solve it\\in a loop}/{\texttt{/goal} and\\five tests}/VII,
+     5/{Plan first,\\then compare}/{a plan with\\targets}/VIII,
      6/{Find the\\silent failure}/{the on-path\\check}/VIII,
-     7/{Compare loss\\functions}/{one prompt:\\table, figure}/VIII}{
+     7/{Compare loss\\kernels}/{a prompt for\\table, figure}/VIII}{
      \node[station] at (\i*1.68, 0) {\i};
      \node[work] at (\i*1.68, 0.32) {\w};
      \node[tool] at (\i*1.68, -0.32) {\tl};
@@ -178,12 +178,12 @@
   \ifnum#1=1
     \foreach \i/\g in {1/{closed\\form}, 2/{reference\\solver}, 3/{closed\\form}, 4/{reference\\solver}, 5/{reference\\solver}, 6/{reference\\solver}, 7/{reference\\solver}}{
        \node[grade] at (\i*1.68, -1.45) {\g};}
-    \node[font=\scriptsize, text=darkgreen, align=center, text width=1.64cm, anchor=north, inner sep=0pt] at (0, -1.45) {graded\\by:};
+    \node[font=\scriptsize, text=darkgreen, align=center, text width=1.64cm, anchor=north, inner sep=0pt] at (0, -1.45) {checked\\against};
     \node[draw=uzhgreydark!40, dashed, rounded corners=3pt, font=\scriptsize, text=uzhgreydark, minimum width=13.6cm, minimum height=0.44cm, inner sep=1pt] at (6.07, -2.42)
-       {Underneath every step: git, \texttt{CLAUDE.md}, deny rules and hooks (Parts II, V, VI) \ $\cdot$ \ To close: disclosure and governance (Part IX)};
+       {In every step: Git, \texttt{CLAUDE.md}, deny rules, and hooks (Parts II, V, VI) \ $\cdot$ \ At the end: disclosure and governance (Part IX)};
   \else
     \node[draw=uzhgreydark!40, dashed, rounded corners=3pt, font=\scriptsize, text=uzhgreydark, minimum width=13.6cm, minimum height=0.44cm, inner sep=1pt] at (6.07, -1.74)
-       {Underneath every step: git, \texttt{CLAUDE.md}, deny rules and hooks (Parts II, V, VI) \ $\cdot$ \ To close: disclosure and governance (Part IX)};
+       {In every step: Git, \texttt{CLAUDE.md}, deny rules, and hooks (Parts II, V, VI) \ $\cdot$ \ At the end: disclosure and governance (Part IX)};
   \fi
 \end{tikzpicture}}
 % \chip{n}{text}: a numbered pill, used for the demo row on the plan slide.
@@ -227,7 +227,7 @@
 \subtitle{AI coding agents in the research workflow: from prompt to verified result}
 \author{Simon Scheidegger}
 \institute[HEC Lausanne \& LSE]{HEC, University of Lausanne\\Grantham Research Institute, London School of Economics}
-\date{Lecture at the Center for Economic Studies (CES), LMU Munich\\18 November 2026}
+\date{Lecture at the Center for Economic Studies (CES), LMU Munich\\November 18, 2026}
 
 \begin{document}
 
@@ -240,10 +240,10 @@
 \titlepage
 \vspace{-0.2cm}
 \begin{center}
-{\footnotesize Slides, code and every file shown today: \url{https://github.com/sischei/agentic_programming_munich_1126}}
+{\footnotesize Slides, code, and every file shown today: \url{https://github.com/sischei/agentic_programming_munich_1126}}
 \end{center}
 \vfill
-{\scriptsize\textcolor{uzhgreydark}{The lecture draws on Korinek (2023, \emph{JEL}); Schluntz \& Zhang (2024); Cherny (2026); Bilionis (2026);\\ Goldsmith-Pinkham (2026); Hans \& Bilionis (2026); and the Claude Code documentation (November 2026).}}
+{\scriptsize\textcolor{uzhgreydark}{The lecture draws on Korinek (2023, \emph{JEL}), Schluntz and Zhang (2024), Cherny (2026), Bilionis (2026),\\ Goldsmith-Pinkham (2026), Hans and Bilionis (2026), and the Claude Code documentation (November 2026).}}
 \end{frame}
 }
 
@@ -254,35 +254,34 @@
 \renewcommand{\arraystretch}{1.15}
 \begin{tabular}{@{}>{\raggedright\arraybackslash}p{1.1cm} >{\raggedright\arraybackslash}p{10cm}@{}}
 \multicolumn{2}{@{}l}{\textbf{Block 1 (70 min): working with the agent}} \\
-\textbf{I} & Orientation and mental models; the running example \\
-\textbf{II} & Setting up: Claude Code, git, the demo project \\
-\textbf{III} & The core interaction loop; a task in plan mode \\
+\textbf{I} & Orientation, mental models, and the running example \\
+\textbf{II} & Setting up Claude Code, Git, and the demo project \\
+\textbf{III} & The core interaction loop, with a task in plan mode \\
 \textbf{IV} & Prompt engineering for research \\
  & \emph{Break, 10 minutes} \\[4pt]
 \multicolumn{2}{@{}l}{\textbf{Block 2 (70 min): extending and trusting the agent}} \\
-\textbf{V} & Project memory: \texttt{CLAUDE.md} \\
-\textbf{VI} & Skills, subagents, hooks, MCP \\
-\textbf{VII} & Autonomous loops: \texttt{/goal} \\
+\textbf{V} & Project memory in \texttt{CLAUDE.md} \\
+\textbf{VI} & Skills, subagents, hooks, and MCP \\
+\textbf{VII} & Autonomous loops with \texttt{/goal} \\
 \textbf{VIII} & From plan to table and figure \\
-\textbf{IX} & Verification, reproducibility and governance \\
- & Wrap-up: quick reference, takeaways, conclusion \\
+\textbf{IX} & Verification, reproducibility, and governance \\
+ & Wrap-up with a quick reference, takeaways, and the conclusion \\
 \end{tabular}
 
 \vspace{0.6em}
-{\footnotesize Live demos in Parts II, III, VI, VII and VIII. Nothing to install today.}
+{\footnotesize There are live demos in Parts II, III, VI, VII, and VIII. You do not need to install anything today.}
 \end{frame}
 
 % --- Why now, what it is ---
-\begin{frame}{The Bottleneck Is Now Specification and Verification}
+\begin{frame}{The bottleneck is now specification and verification}
 \begin{columns}[T]
 \column{0.50\textwidth}
-\textbf{The bottleneck has shifted}
 \begin{itemize}\itemsep6pt
-  \item Old: can you \emph{write} the code?
-  \item New: can you \emphc{specify} what you want, and \emphc{verify} what you get?
+  \item The question used to be whether you could \emph{write} the code.
+  \item It is now whether you can \emphc{specify} what you want and \emphc{verify} what you get.
 \end{itemize}
 \vspace{0.7em}
-Both are the economist's own skills: which question, which moment, which residual must be zero.
+Both are skills economists already have: choosing the question, the moment condition, and the residual that must be zero.
 \column{0.46\textwidth}
 \begin{center}
 \begin{tikzpicture}[scale=0.78, every node/.style={font=\small}]
@@ -298,54 +297,54 @@ Both are the economist's own skills: which question, which moment, which residua
 \end{columns}
 
 \vspace{0.9em}
-\begin{block}{Agentic programming}
-An AI system that reads your project, edits and runs code, inspects the output and iterates towards a goal.
+\begin{block}{Definition: agentic programming}
+An AI system reads your project, edits and runs code, inspects the output, and iterates toward a goal.
 \end{block}
 \end{frame}
 
-\begin{frame}{Two Traps: Hype and Dismissal}
+\begin{frame}{Both hype and dismissal misjudge these tools}
 \begin{columns}[T]
 \column{0.46\textwidth}
 \begin{alertblock}{Hype}
-Experienced developers were 19\,\% \emph{slower} while feeling faster (Becker et al., 2025, the METR study).
+Experienced developers were 19\% \emph{slower} with AI tools while believing they were faster (Becker et al., 2025, the METR study).
 \end{alertblock}
 \column{0.46\textwidth}
 \begin{alertblock}{Dismissal}
-``Just autocomplete'': agents plan, run and debug for hours.
+The tools are more than ``autocomplete.'' Agents plan, run, and debug for hours.
 \end{alertblock}
 \end{columns}
 \end{frame}
 
 % --- Today's plan ---
-\begin{frame}{The Red Thread: One Growth Model, Solved With an AI Agent}
+\begin{frame}{We solve one growth model with an AI agent, step by step}
 \small
-We solve one economic model with deep learning, and build the solver with an AI agent: seven steps, one new tool each.
+We solve one economic model with deep learning and build the solver with an AI agent, in seven steps that each introduce one new tool.
 \begin{center}
 \redthread{0}
 \end{center}
 \vspace{-0.3em}
 \begin{center}
-\textbf{Above the thread:} the work on the model. \quad \textbf{Below, in blue:} the agent tool it introduces.\\[3pt]
-The marker \raisebox{-0.25em}{\stepmarker{3}} on a slide shows where we are.
+The work on the model is shown above the line, and the agent tool that each step introduces below it, in blue.\\[3pt]
+The marker \raisebox{-0.25em}{\stepmarker{3}} on a slide shows the current step.
 \end{center}
 \end{frame}
 
-\begin{frame}{What You Leave With}
+\begin{frame}{What you take away from the lecture}
 \begin{enumerate}\itemsep16pt
   \item A \textbf{verified solver}
-  \item A \textbf{prompt discipline}
-  \item A \textbf{repository} that replays everything
+  \item A \textbf{routine for writing prompts}
+  \item A \textbf{repository} that reproduces everything shown
 \end{enumerate}
 \end{frame}
 
 % ============================================================================
 % PART I: ORIENTATION & MENTAL MODELS
 % ============================================================================
-\partcard{I}{Orientation and Mental Models}{An agent is a fast RA who never checks economic sense}
+\partcard{I}{Orientation, mental models, and the running example}{An agent works like a fast research assistant who does not ask whether a result makes economic sense}
 
 % --- Chatbox vs agentic + hierarchy ---
-\begin{frame}{From Tier 3 On, the Agent Does the Work}
-Same models, different scaffolding: a chatbot answers, an agent works in your project.
+\begin{frame}{From Tier 3 onward, the agent does the work itself}
+The language models are the same across tiers, but the scaffolding differs: a chatbot answers questions, whereas an agent works inside your project.
 \begin{center}
 \small
 \renewcommand{\arraystretch}{1.3}
@@ -353,24 +352,24 @@ Same models, different scaffolding: a chatbot answers, an agent works in your pr
 \toprule
 \textbf{Tier} & \textbf{Capability} & \textbf{Examples (November 2026)} \\
 \midrule
-\textbf{0--1} & Browser chatbot; the task lives in your head & ChatGPT, Claude.ai, Gemini \\
-\textbf{2} & Inline IDE assistant: edits the file you have open & Copilot, Cursor \\
+\textbf{0--1} & Chatbot in the browser; you keep track of the task yourself & ChatGPT, Claude.ai, Gemini \\
+\textbf{2} & Assistant inside the code editor (IDE) that edits the open file & Copilot, Cursor \\
 \rowcolor{softblue!10}
-\textbf{3} & \textbf{Terminal agent}: reads and writes files, runs code, uses git & \textbf{Claude Code}, Codex CLI, Gemini CLI \\
+\textbf{3} & \textbf{Terminal agent} that reads and writes files, runs code, and uses Git & \textbf{Claude Code}, Codex CLI, Gemini CLI \\
 \rowcolor{softblue!10}
-\textbf{4} & + external tools via MCP (Model Context Protocol) & + Zotero, GitHub, databases, HPC \\
+\textbf{4} & Tier 3 with external tools via MCP (Model Context Protocol) & Zotero, GitHub, databases, computing clusters (HPC) \\
 \textbf{5} & Closed-loop autonomy with a verifier & \texttt{/goal}, headless (batch) runs \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 \vspace{0.4em}
-From Tier 3 on, the agent \emph{does} the work: a fast junior RA who never asks whether a result makes economic sense.
+From Tier 3 onward, the agent \emph{does} the work. It behaves like a fast research assistant (RA) who does not ask whether a result makes economic sense.
 \end{frame}
 
 % --- Context Window ---
-\begin{frame}[fragile]{Every Turn Resends Everything; Keep the Context Focused}
-A model has \emphc{no memory}: every turn, the whole conversation is sent again as one document, the \emphc{context window}.
+\begin{frame}[fragile]{The whole conversation is resent at every turn}
+A language model has \emphc{no memory}. At every turn, the whole conversation is sent again as one document, the \emphc{context window}.
 
 \vspace{0.7em}
 \begin{center}
@@ -388,44 +387,44 @@ A model has \emphc{no memory}: every turn, the whole conversation is sent again 
     \fill[uzhgreylight] (7.5,0) rectangle (\barwidth,\barheight);
     \node[font=\scriptsize, text=uzhgreydark] at (8.75,0.45) {Free};
     \draw[thick] (0,0) rectangle (\barwidth,\barheight);
-    \node[font=\scriptsize, anchor=west, text=uzhgreydark] at (0,-0.35) {1M tokens on the current models: roughly half a million words};
+    \node[font=\scriptsize, anchor=west, text=uzhgreydark] at (0,-0.35) {The current models hold 1M tokens, roughly half a million words};
     \draw[decorate, decoration={brace, amplitude=3pt}, thick, harvardcrimson]
         (0.8,\barheight+0.1) -- (7.5,\barheight+0.1)
-        node[midway, above=3pt, font=\scriptsize, text=harvardcrimson] {grows over the session; what sits in the middle is used worst (Liu et al., 2024)};
+        node[midway, above=3pt, font=\scriptsize, text=harvardcrimson] {grows during the session; material in the middle is used least reliably (Liu et al., 2024)};
 \end{tikzpicture}
 \end{center}
 
 \vspace{0.7em}
-\begin{alertblock}{A common failure pattern: kitchen-sink sessions}
-Unrelated tasks in one session: every later turn re-reads, and pays for, all of them. A focused context gets better answers and costs less.
+\begin{alertblock}{Caveat: sessions that mix unrelated tasks}
+When unrelated tasks share one session, every later turn rereads all of them and is billed for them. A focused context gives better answers at lower cost.
 \end{alertblock}
 \end{frame}
 
-\begin{frame}{Keep the Context Focused: What the Tool Does, What You Do}
+\begin{frame}{Keep the context focused on one task}
 \begin{columns}[T]
 \column{0.47\textwidth}
-\textbf{What Claude Code does about it}
+\textbf{What Claude Code does}
 \begin{itemize}\itemsep8pt
-  \item Compacts the conversation on its own before the window fills
-  \item \texttt{/context}: what is loaded right now
-  \item Subagents: noisy reading stays out of your session (Part VI)
+  \item It compacts the conversation automatically before the context window fills.
+  \item \texttt{/context} shows what is currently loaded.
+  \item Subagents keep long reading tasks out of your session (Part VI).
 \end{itemize}
 \column{0.47\textwidth}
-\textbf{What you do about it}
+\textbf{What you do}
 \begin{itemize}\itemsep8pt
-  \item \texttt{/clear} between unrelated tasks
-  \item \texttt{/compact} with a focus when a long session drifts
-  \item State on disk, not in the conversation
-  \item \boristip{7} Context usage in the status line
+  \item Run \texttt{/clear} between unrelated tasks.
+  \item Run \texttt{/compact} with a focus when a long session drifts.
+  \item Keep the state of the work on disk rather than in the conversation.
+  \item \boristip{7} Show the context usage in the status line.
 \end{itemize}
 \end{columns}
 
 \vspace{1.2em}
-{\small\textcolor{uzhgreydark}{With 1M-token windows you rarely run out; you still pay for, and are distracted by, context you do not need.}}
+{\small\textcolor{uzhgreydark}{With context windows of 1M tokens, the window rarely fills, but unneeded context still costs money and lowers the quality of the answers.}}
 \end{frame}
 
 % --- Task Taxonomy ---
-\begin{frame}{Excellent at Known Methods, Poor at Checking Its Own Work}
+\begin{frame}{Agents excel at known methods but check their own work poorly}
 \begin{center}
 \small
 \renewcommand{\arraystretch}{1.22}
@@ -433,43 +432,43 @@ Unrelated tasks in one session: every later turn re-reads, and pays for, all of 
 \toprule
 \textbf{Task} & \textbf{Quality} & \textbf{Evidence or caveat} \\
 \midrule
-Data work, standard econometrics & \textcolor{darkgreen}{\textbf{Excellent}} & 97\,\% success on 40 tasks when it may run and revise its code$^{1}$ \\
+Data work and standard econometrics & \textcolor{darkgreen}{\textbf{Excellent}} & 97\% success on 40 tasks when the agent may run and revise its code$^{1}$ \\
 Auditing replication packages at scale & \textcolor{darkgreen}{\textbf{Excellent}} & 4,452 packages audited; discrepancies flagged and verified in 3,460$^{2}$ \\
-Debugging; porting a notebook & \textcolor{darkgreen}{\textbf{Excellent}} & Step 1 today \\
+Debugging and porting a notebook & \textcolor{darkgreen}{\textbf{Excellent}} & Step 1 today \\
 \midrule
-Methods outside its training data & \textcolor{softorange}{\textbf{Moderate}} & hours per paper, every claim gated$^{3}$ \\
-Numerical choices: grids, tolerances & \textcolor{softorange}{\textbf{Moderate}} & runs cleanly either way \\
-Novel theory & \textcolor{softorange}{\textbf{Moderate}} & a proof can compile and miss the question \\
+Methods outside its training data & \textcolor{softorange}{\textbf{Moderate}} & Hours per paper, with every claim checked$^{3}$ \\
+Numerical choices such as grids and tolerances & \textcolor{softorange}{\textbf{Moderate}} & The code runs without error either way \\
+Novel theory & \textcolor{softorange}{\textbf{Moderate}} & A proof can compile and still miss the question \\
 \midrule
-``Small residual, wrong answer'' & \textcolor{darkred}{\textbf{Poor}} & you decide (Part VIII) \\
-Verifying its own work & \textcolor{darkred}{\textbf{Poor}} & \emphc{never skip human review} \\
+Recognizing a wrong answer behind a small residual & \textcolor{darkred}{\textbf{Poor}} & You have to decide (Part VIII) \\
+Judging its own work without a test & \textcolor{darkred}{\textbf{Poor}} & \emphc{Human review is always required} \\
 \bottomrule
 \end{tabular}
 \end{center}
 \vspace{-0.3em}
-{\scriptsize\textcolor{uzhgreydark}{$^{1}$ Galiani, L\'opez and Sosa (2026); most of the failures that remain are silent. $^{2}$ Schwartz, Andrews and Shapiro (2026); 11\,\% of the packages reproduce every number. $^{3}$ Hans and Bilionis (2026).}}
+{\scriptsize\textcolor{uzhgreydark}{$^{1}$ Galiani, L\'opez, and Sosa (2026); most of the failures that remain are silent. $^{2}$ Schwartz, Andrews, and Shapiro (2026); 11\% of the packages reproduce every number. $^{3}$ Hans and Bilionis (2026).}}
 \end{frame}
 
-\begin{frame}{The Working Picture: A Very Fast Second-Year PhD Student}
+\begin{frame}{A useful comparison is a very fast second-year PhD student}
 \begin{center}
-{\large A \emphc{very fast second-year PhD student}:\\[5pt] excellent at known methods, mediocre at novel ones.}
+{\large An agent resembles a \emphc{very fast second-year PhD student}:\\[5pt] excellent at known methods and mediocre at novel ones.}
 \end{center}
 
 \vspace{1.6em}
 \begin{center}
 \begin{minipage}{0.84\textwidth}
-\small\textcolor{uzhgreydark}{The evidence behind the picture: three replications by an agent, one of them outside its training distribution.}
+\small\textcolor{uzhgreydark}{The comparison rests on three replications by an agent, one of which lay outside its training distribution.}
 
 \vspace{0.4em}
 {\itshape ``All replications, except BNN (the only one out of distribution), succeeded.''}\\[2pt]
-\hspace*{\fill}Bilionis (2026)
+\hspace*{\fill}Bilionis (2026); BNN is the post's label for one of the three papers
 \end{minipage}
 \end{center}
 \end{frame}
 
 % --- Master workflow ---
-\begin{frame}{Explore, Plan, Implement, Commit: Energy Goes Into the Plan}
-Four phases for every non-trivial task.
+\begin{frame}{Work in four phases and put the effort into the plan}
+A nontrivial task goes through four phases.
 
 \vspace{1.0em}
 \begin{center}
@@ -487,7 +486,7 @@ Four phases for every non-trivial task.
     \node[font=\scriptsize, text=uzhgreydark, align=center] at (0,-1.1)
         {read files, ask questions};
     \node[font=\scriptsize, text=uzhgreydark, align=center] at (4.2,-1.1)
-        {\textbf{plan mode} (Shift+Tab):\\read, not write};
+        {\textbf{plan mode} (Shift+Tab):\\the agent only reads};
     \node[font=\scriptsize, text=uzhgreydark, align=center] at (8.4,-1.1)
         {run it, run the tests};
     \node[font=\scriptsize, text=uzhgreydark, align=center] at (12.6,-1.1)
@@ -496,30 +495,30 @@ Four phases for every non-trivial task.
 \end{center}
 
 \vspace{1.2em}
-\boristip{2} \textbf{Pour energy into the plan.} If the work goes sideways, go \emph{back} to plan mode.
+\boristip{2} \textbf{Put most of the effort into the plan.} If the work goes wrong, return to plan mode.
 \end{frame}
 
-\begin{frame}{Plan Mode: Nothing on Disk Changes Until You Approve}
-\textbf{Plan mode:} the agent reads and proposes; nothing on disk changes until you approve.
+\begin{frame}{In plan mode, nothing on disk changes until you approve}
+In plan mode, the agent only reads the project and proposes a plan.
 
 \vspace{1.5em}
 \begin{columns}[T]
 \column{0.42\textwidth}
-\begin{block}{Skip the plan}
+\begin{block}{When to skip the plan}
 For one-line fixes.
 \end{block}
 \column{0.52\textwidth}
-\begin{block}{Always plan}
-For more than two files, any change to a model or a loss, anything that goes into a paper.
+\begin{block}{When to plan}
+For changes to more than two files, for any change to an economic model or a loss function, and for anything that goes into a paper.
 \end{block}
 \end{columns}
 \end{frame}
 
 % --- The running example ---
-\begin{frame}{The Growth Model: A Household Chooses How Much to Save}
-A household with log utility chooses consumption and capital: the stochastic growth model of Brock and Mirman (1972), here with partial depreciation.
+\begin{frame}{In the growth model, a household chooses how much to save}
+A household with log utility chooses consumption and capital. This is the stochastic growth model of Brock and Mirman (1972), here with partial depreciation.
 \[
-\max_{\{C_t,\,K_{t+1}\}}\ \mathbb{E}_0 \sum_{t=0}^{\infty} \beta^{t} \ln C_t
+\max_{\{C_t,\,K_{t+1}\}}\ \mathbb{E}_0 \sum_{t=0}^{\infty} \beta^{t} \log C_t
 \qquad\text{s.t.}\qquad
 C_t + K_{t+1} = z_t K_t^{\alpha} + (1-\delta) K_t
 \]
@@ -531,12 +530,12 @@ $\alpha = 0.36$, \quad $\delta = 0.10$, \quad $\sigma = 0.04$, \quad $\beta = 0.
 \end{center}
 
 \vspace{0.5em}
-We write the choice as a \emphc{savings rate} $s_t$ out of output $Y_t = z_t K_t^{\alpha}$:
+We express the choice as a \emphc{savings rate} $s_t$ out of output $Y_t = z_t K_t^{\alpha}$:
 \[ C_t = (1 - s_t)\,Y_t, \qquad K_{t+1} = (1-\delta)K_t + s_t Y_t \]
 \end{frame}
 
-\begin{frame}{The Growth Model: One Euler Equation to Solve}
-\begin{block}{The first-order condition: the Euler equation}
+\begin{frame}{Solving the model means solving one Euler equation}
+\begin{block}{First-order condition: the Euler equation}
 \[
 \frac{1}{C_t} \;=\; \beta\,\mathbb{E}_t\!\left[\frac{1-\delta+\alpha z_{t+1}K_{t+1}^{\alpha-1}}{C_{t+1}}\right]
 \qquad\Longrightarrow\qquad
@@ -546,26 +545,26 @@ We write the choice as a \emphc{savings rate} $s_t$ out of output $Y_t = z_t K_t
 
 \vspace{0.9em}
 \begin{itemize}\itemsep8pt
-  \item Necessary for the optimum; sufficient together with the transversality condition
-  \item Today's checks ask how far the residual is from zero, and \emph{where}
-  \item \textbf{The unknown is a function}, the policy $s(z, K)$. Next: a neural network for it
+  \item The Euler equation is necessary for the optimum and, together with the transversality condition, sufficient.
+  \item The checks in this lecture ask how far the residual is from zero, and at \emph{which states}.
+  \item \textbf{The unknown is a function}, the policy $s(z, K)$, which we approximate with a neural network.
 \end{itemize}
-\filebox{code/brock\_mirman\_reference.py, code/deqn/README.md (every step, script and number)}
+\filebox{code/brock\_mirman\_reference.py, code/deqn/README.md (every step, script, and number)}
 \end{frame}
 
-\begin{frame}{A DEQN Trains a Network Until the Euler Equation Holds}
-Deep equilibrium nets (DEQN; Azinovic, Gaegauf and Scheidegger, 2022, \emph{IER}): train a neural network until the equilibrium conditions hold.
+\begin{frame}{A DEQN trains a network until the Euler equation holds}
+Deep equilibrium nets (DEQN; Azinovic, Gaegauf, and Scheidegger, 2022, \emph{IER}) train a neural network until the equilibrium conditions hold.
 
 \vspace{0.9em}
 \begin{columns}[T]
 \column{0.54\textwidth}
 \begin{enumerate}\itemsep8pt
-  \item \textbf{The unknown is a function.} A small network $s_\theta(z, K)$ for the savings rate.
-  \item \textbf{The equilibrium condition is the loss.} Gradient descent on the mean squared Euler residual at sampled states.
-  \item \textbf{No grid.} States are sampled where the economy lives, so the method scales to many state variables.
+  \item \textbf{The unknown is a function.} A small network $s_\theta(z, K)$ represents the savings rate.
+  \item \textbf{The equilibrium condition is the loss.} Gradient descent minimizes the mean squared Euler residual at sampled states.
+  \item \textbf{There is no grid.} States are sampled where the economy spends its time, so the method scales to many state variables.
 \end{enumerate}
 \column{0.42\textwidth}
-\begin{block}{The loss: the mean of $r^2$ over sampled states}
+\begin{block}{Loss: the mean of $r^2$ over sampled states}
 \[
 r = \beta\, C\, \mathbb{E}\!\left[\frac{1-\delta+\alpha z' K'^{\alpha-1}}{C'}\right] - 1
 \]
@@ -573,62 +572,62 @@ r = \beta\, C\, \mathbb{E}\!\left[\frac{1-\delta+\alpha z' K'^{\alpha-1}}{C'}\ri
 \end{columns}
 \end{frame}
 
-\begin{frame}{Why This Example, and Today's Shortcut}
+\begin{frame}{Reasons for this example and a shortcut taken today}
 \textbf{Why this example}
 \begin{itemize}\itemsep8pt
-  \item A known answer at every step
-  \item A way to be wrong that \emph{looks} right
-  \item Eleven seconds per run
+  \item It has a known answer at every step.
+  \item It can be wrong in a way that \emph{looks} right.
+  \item One run takes 11 seconds.
 \end{itemize}
 
 \vspace{1.1em}
-\begin{block}{Today's shortcut}
-Training states come from a fixed window around the steady state $K^*$, not from simulation as in the paper. Part VIII shows what that costs, and the check that repairs it.
+\begin{block}{Shortcut taken today}
+Training states are drawn from a fixed training window around the steady state $K^*$ and are not simulated as in the paper. Part VIII shows the cost of this shortcut and the on-path check that detects the resulting error. On-path means on the path simulated with the network's own policy.
 \end{block}
-\filebox{Azinovic, Gaegauf \& Scheidegger (2022), International Economic Review 63(4); code/deqn/README.md}
+\filebox{Azinovic, Gaegauf, and Scheidegger (2022), International Economic Review 63(4); code/deqn/README.md}
 \end{frame}
 
-\begin{frame}{Two Known Answers Grade Every Step}
+\begin{frame}{Two known answers allow us to check every step}
 \begin{columns}[T]
 \column{0.47\textwidth}
 \begin{block}{1. A closed form}
-With $\delta = 1$ the savings rate is constant: $s^* = \alpha\beta = 0.3564$ at $\beta = 0.99$.
+With $\delta = 1$, the savings rate is constant, $s^* = \alpha\beta = 0.3564$ at $\beta = 0.99$.
 
 \vspace{0.6em}
-It grades the port of the notebook.
+We use it to check the notebook port.
 \end{block}
 \column{0.47\textwidth}
 \begin{block}{2. A reference solver}
-A grid-based solver in the repository: the policy in two seconds, Euler errors of $10^{-9}$ at our calibration.
+A grid-based solver in the repository returns the policy in two seconds, with Euler residuals of about $10^{-9}$ at our calibration.
 
 \vspace{0.6em}
-It grades the full model ($\delta = 0.10$), which has no closed form.
+We use it to check the full model ($\delta = 0.10$), which has no closed form.
 \end{block}
 \end{columns}
 
 \vspace{1.5em}
-\textbf{The pattern to take home.} Build the twin with a known answer before you let an agent loose on your real problem: the cheapest verifier you will ever own.
+\textbf{Recommendation.} Before using an agent on the actual problem, build a twin problem with a known answer. It is the cheapest verifier available.
 \end{frame}
 
-\begin{frame}{Back on the Thread: Seven Steps, Each Graded by a Known Answer}
+\begin{frame}{Each of the seven steps is checked against a known answer}
 \small
-Now that the model is on the table: the same thread, with the known answer that grades each step.
+With the model in place, the same diagram now shows the known answer against which each step is checked.
 \begin{center}
 \redthread{1}
 \end{center}
 \vspace{-0.2em}
-Step 2 is written as a prompt and runs as Step 4.
+Step 2 is written as a prompt and is run as Step 4.
 \filebox{code/deqn/ (scripts, tests, outputs); code/prompts.md (every prompt, in order)}
 \end{frame}
 
 % ============================================================================
 % PART II: SETTING UP
 % ============================================================================
-\partcard{II}{Setting Up: Claude Code, Git, the Demo Project}{Set up once; git makes everything reversible}
+\partcard{II}{Setting up Claude Code, Git, and the demo project}{The setup is done once, and Git makes every change reversible}
 
 % --- Core Stack ---
-\begin{frame}[fragile]{Install Once; What the Agent Reads Goes to the API~\livedemo[1]}
-\begin{exampleblock}{Install (macOS / Linux / Windows), then check}
+\begin{frame}[fragile]{Installing Claude Code and where it runs~\livedemo[1]}
+\begin{exampleblock}{Install (macOS, Linux, or Windows) and check the installation}
 \begin{lstlisting}[style=bash, basicstyle=\footnotesize\ttfamily]
 curl -fsSL https://claude.ai/install.sh | bash   # or brew / winget
 claude --version && claude doctor                # then /login
@@ -637,23 +636,23 @@ claude --version && claude doctor                # then /login
 
 \vspace{0.9em}
 \begin{columns}[T]
-\column{0.55\textwidth}
+\column{0.56\textwidth}
 \textbf{Where it runs}
 \begin{itemize}\itemsep5pt
-  \item \textbf{Terminal:} \texttt{claude} in the project folder (today)
-  \item \textbf{VS Code, JetBrains:} the same agent, diffs in the editor
-  \item \textbf{Desktop app:} local or cloud
-  \item \textbf{\texttt{claude.ai/code}:} cloud; your repository is cloned to the vendor
+  \item In the terminal, with \texttt{claude} in the project folder (as today)
+  \item In VS Code and JetBrains, as the same agent with diffs in the editor
+  \item In the desktop app, locally or in the cloud
+  \item At \texttt{claude.ai/code}, in the cloud, where your repository is cloned to the vendor's servers
 \end{itemize}
-\column{0.41\textwidth}
-\begin{block}{Privacy, first thing}
-Whatever the agent \emph{reads} is sent to the API. What to keep out, and how: Parts VI and IX.
+\column{0.40\textwidth}
+\begin{block}{Privacy}
+Whatever the agent \emph{reads} is sent to the API. Parts VI and IX show what to keep out and how.
 \end{block}
 \end{columns}
 \end{frame}
 
 % --- Commands, models, cost ---
-\begin{frame}[fragile]{A Dozen Commands, and Above All How to Interrupt}
+\begin{frame}[fragile]{Of a dozen commands, the interrupt matters most}
 \begin{columns}[T]
 \column{0.40\textwidth}
 \begin{lstlisting}[style=bash, basicstyle=\footnotesize\ttfamily]
@@ -669,46 +668,46 @@ claude   # launch in the project
 \renewcommand{\arraystretch}{1.25}
 \begin{tabular}{@{}l>{\raggedright\arraybackslash}p{5.6cm}@{}}
 \toprule
-\texttt{/clear} & fresh context for a new task \\
-\texttt{/compact} & summarise the conversation \\
-\texttt{/context} & what is in the window now \\
-\texttt{/rewind} & restore code and conversation \\
-\texttt{/goal} & work until a condition holds (Part VII) \\
-\texttt{Shift+Tab} & cycle the permission mode \\
-\texttt{Esc} & stop the turn; twice on an empty prompt: rewind \\
+\texttt{/clear} & Start a new task with an empty context \\
+\texttt{/compact} & Summarize the conversation \\
+\texttt{/context} & Show what the context window holds \\
+\texttt{/rewind} & Restore code and conversation \\
+\texttt{/goal} & Work until a condition holds (Part VII) \\
+\texttt{Shift+Tab} & Cycle through the permission modes \\
+\texttt{Esc} & Stop the turn; pressed twice on an empty prompt, rewind \\
 \bottomrule
 \end{tabular}
 \end{center}
 \end{columns}
 
 \vspace{0.7em}
-\begin{block}{The most important skill: how to interrupt}
-\texttt{Esc} early, steer, continue. After two failed corrections: \texttt{/clear} and a better prompt.
+\begin{block}{Recommendation: interrupt early}
+Press \texttt{Esc} early, correct the direction, and continue. After two failed corrections, run \texttt{/clear} and write a better prompt.
 \end{block}
 \end{frame}
 
-\begin{frame}{Four Permission Modes; Cost Is a Research Input}
+\begin{frame}{Permission modes and the cost of a session}
 \begin{center}
 \renewcommand{\arraystretch}{1.5}
 \begin{tabular}{@{}ll@{}}
 \toprule
-\textbf{Permission mode} & \textbf{What it does} \\
+\textbf{Permission mode} & \textbf{Behavior} \\
 \midrule
-\emph{auto} & a classifier screens each action; the start-up mode \\
-\emph{default} & asks \\
-\emph{accept edits} & file edits go through without a prompt \\
-\emph{plan} & read-only \\
+\emph{auto} & A classifier screens each action; this is the mode at start-up \\
+\emph{default} & The agent asks before it acts \\
+\emph{accept edits} & File edits are applied without a prompt \\
+\emph{plan} & The agent only reads \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 \vspace{1.2em}
-\textbf{Cost is a research input.} Today's demos together: a few dollars on Opus, about half on Sonnet.
+\textbf{Cost} should be budgeted like any other research input. All of today's demos together cost a few dollars on Opus and about half of that on Sonnet.
 \end{frame}
 
 % --- Which model, which effort (source: Osmani, claude.dev blog, 9 Nov 2026) ---
-\begin{frame}[fragile]{Default to Opus at Medium Effort; Escalate on Failure}
-\textbf{The four current models} (list prices per million tokens, November 2026)
+\begin{frame}[fragile]{Use Opus at medium effort as the default}
+The four current models, with list prices per million tokens (November 2026):
 \begin{center}
 \small
 \renewcommand{\arraystretch}{1.3}
@@ -716,72 +715,72 @@ claude   # launch in the project
 \toprule
 \textbf{Model} & \texttt{/model} & \textbf{Built for} & \textbf{\$ in\,/\,out} \\
 \midrule
-Haiku 5.5 & \texttt{haiku} & high volume, cheap; side-task subagents & 0.10 / 0.50 \\
-Sonnet 5.5 & \texttt{sonnet} & well-scoped work: a bug fix, a table, a plot & 2 / 10 \\
-Opus 5.5 & \texttt{opus} & \textbf{the default}: everyday coding and debugging & 4 / 20 \\
-Fable 5.2 & \texttt{fable} & the hardest projects; long unattended runs & 8 / 40 \\
+Haiku 5.5 & \texttt{haiku} & High-volume, cheap work; subagents for side tasks & 0.10 / 0.50 \\
+Sonnet 5.5 & \texttt{sonnet} & Well-scoped work such as a bug fix, a table, or a plot & 2 / 10 \\
+Opus 5.5 & \texttt{opus} & \textbf{The default} for everyday coding and debugging & 4 / 20 \\
+Fable 5.2 & \texttt{fable} & The hardest projects and long unattended runs & 8 / 40 \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 \vspace{0.3em}
-\emphc{Effort} (\texttt{low} to \texttt{max}) is how long a model thinks before acting.
+The \emphc{effort} setting (\texttt{low} to \texttt{max}) controls how long a model reasons before it acts.
 
 \vspace{0.5em}
-\textbf{For economists:} Opus at medium effort by default; Fable for the week-long RA task; Haiku for verifiers.
+\textbf{For economists:} use Opus at medium effort by default, Fable for a task that would take an RA a week, and Haiku for verifier subagents.
 
 \vspace{0.6em}
-{\scriptsize\textcolor{uzhgreydark}{Source: Osmani, A.\ (9 November 2026), \url{https://claude.dev/blog/which-claude-model-should-you-build-with/}. Haiku: prompts up to 100K tokens.}}
+{\scriptsize\textcolor{uzhgreydark}{Source: Osmani (November 9, 2026), \url{https://claude.dev/blog/which-claude-model-should-you-build-with/}. The Haiku price applies to prompts of up to 100K tokens.}}
 \end{frame}
 
-\begin{frame}{Not Good Enough? Verify First, Then Effort, Then Model}
-\textbf{When the output is not good enough}, in this order:
+\begin{frame}{If the output falls short, add a check before a larger model}
+When the output is not good enough, proceed in this order:
 \begin{enumerate}\itemsep8pt
-  \item \textbf{Make the task verifiable:} a test, a known answer the agent can run itself.
-  \item \textbf{Raise effort one level.}
-  \item \textbf{Move up one model}, at a lower effort than before.
+  \item \textbf{Make the task verifiable} with a test or a known answer that the agent can run itself.
+  \item \textbf{Raise the effort} by one level.
+  \item \textbf{Move up one model}, starting at a lower effort than before.
 \end{enumerate}
 
 \vspace{1.0em}
-\begin{block}{Cost per finished task, not per token}
-Opus at low effort, failures re-run at high: about 97\,\% of tasks at about \$0.17 each. All at high: 95.3\,\% at \$0.29 (a SWE-bench Pro subset). A cheap first pass plus a test wins.
+\begin{block}{Cost per finished task}
+With Opus at low effort and failures rerun at high effort, about 97\% of tasks succeed at about \$0.17 each. With high effort throughout, 95.3\% succeed at \$0.29 (a SWE-bench Pro subset). A cheap first pass followed by a test does better on both counts.
 \end{block}
 \vspace{0.3em}
 {\scriptsize\textcolor{uzhgreydark}{Source: Osmani (2026).}}
 \end{frame}
 
 % --- Open-weight models ---
-\begin{frame}[fragile]{Open-Weight Models: Close Behind, Sometimes the Right Choice}
-\textbf{Open weights:} the model file is public and runs on hardware you control.
+\begin{frame}[fragile]{Open-weight models are close behind the closed ones}
+\textbf{Open weights} means that the weights are public and the model can run on hardware you control.
 \begin{center}
 \small
 \renewcommand{\arraystretch}{1.25}
 \begin{tabular}{@{}lllr@{}}
 \toprule
-\textbf{Model} & \textbf{Licence} & \textbf{Runs on} & \textbf{SWE-bench Verified} \\
+\textbf{Model} & \textbf{License} & \textbf{Runs on} & \textbf{SWE-bench Verified} \\
 \midrule
-DeepSeek V4 Pro & MIT & a GPU server & 80.6 \\
-Kimi K2.6 (Moonshot) & MIT, modified & a GPU server & 80.2 \\
-Qwen3.6 27B (Alibaba) & Apache 2.0 & one 48 GB GPU & 77.2 \\
-Qwen3.5 397B (Alibaba) & Apache 2.0 & a multi-GPU node & 76.4 \\
-Gemma 4 31B (Google) & Apache 2.0 & one GPU or a 64 GB Mac & 52.0$^{\dagger}$ \\
+DeepSeek V4 Pro & MIT & A GPU server & 80.6 \\
+Kimi K2.6 (Moonshot) & MIT, modified & A GPU server & 80.2 \\
+Qwen3.6 27B (Alibaba) & Apache 2.0 & One 48 GB GPU & 77.2 \\
+Qwen3.5 397B (Alibaba) & Apache 2.0 & A multi-GPU node & 76.4 \\
+Gemma 4 31B (Google) & Apache 2.0 & One GPU or a 64 GB Mac & 52.0$^{\dagger}$ \\
 \midrule
-\multicolumn{4}{@{}l}{\textit{Closed models of the same season:} Claude Opus 4.6 80.8 $\cdot$ Gemini 3.1 Pro 80.6 $\cdot$ GPT-5.2 80.0} \\
+\multicolumn{4}{@{}l}{\textit{Closed models of the same period:} Claude Opus 4.6 80.8 $\cdot$ Gemini 3.1 Pro 80.6 $\cdot$ GPT-5.2 80.0} \\
 \bottomrule
 \end{tabular}
 \end{center}
 \vspace{-0.3em}
-{\scriptsize\textcolor{uzhgreydark}{Share of real GitHub issues an agent fixes; from the model cards, December 2025 to April 2026, each on the vendor's own scaffold. $^{\dagger}$ Measured by Alibaba (Qwen3.6 card), not by Google. ``Runs on'': our estimate for quantized weights. Check the date.}}
+{\scriptsize\textcolor{uzhgreydark}{SWE-bench Verified is the share of real GitHub issues that an agent resolves. The scores come from the model cards (December 2025 to April 2026), each on the vendor's own scaffold. $^{\dagger}$ Measured by Alibaba (Qwen3.6 model card), not by Google. The ``Runs on'' column is our estimate for quantized weights. Check the date before citing.}}
 \end{frame}
 
-\begin{frame}[fragile]{When to Run an Open Model, and How}
+\begin{frame}[fragile]{When and how to run an open-weight model}
 \begin{columns}[T]
 \column{0.50\textwidth}
-\textbf{What it means}
+\textbf{What the table means}
 \begin{itemize}\itemsep8pt
-  \item Best open models: level with same-season closed ones
-  \item Single-GPU models: fine coders, weaker autonomous agents
-  \item Use one for data that may not leave the building, not for price
+  \item The best open-weight models match closed models of the same period.
+  \item Models that fit on one GPU code well but are weaker as autonomous agents.
+  \item Use an open-weight model when the data must stay on your own hardware. Saving money is a weak reason.
 \end{itemize}
 \column{0.46\textwidth}
 \textbf{How to run one}
@@ -789,18 +788,18 @@ Gemma 4 31B (Google) & Apache 2.0 & one GPU or a 64 GB Mac & 52.0$^{\dagger}$ \\
 ollama launch claude --model gemma4:31b
 \end{lstlisting}
 \vspace{0.4em}
-Claude Code on a local model: not supported by Anthropic; never a \texttt{:cloud} tag for restricted data.
+Running Claude Code on a local model is not supported by Anthropic. Do not use a \texttt{:cloud} tag with restricted data.
 \end{columns}
 
 \vspace{1.5em}
 \begin{center}
-\textbf{Whichever model you run: the same verification.}
+\textbf{The verification is the same whichever model you run.}
 \end{center}
 \end{frame}
 
 % --- Git ---
-\begin{frame}[fragile]{Git: Your Safety Net}
-AI-generated changes that are not version-controlled \emphc{cannot be rolled back reliably}.
+\begin{frame}[fragile]{Git makes every change by the agent reversible}
+AI-generated changes that are not under version control \emphc{cannot be rolled back reliably}.
 
 \vspace{0.8em}
 \begin{columns}[T]
@@ -814,7 +813,7 @@ git diff HEAD              # read it all
 git add -p && git commit   # hunk by hunk
 \end{lstlisting}
 \vspace{0.9em}
-The agent's work arrives as a diff: review it like a junior colleague's pull request.
+The agent's work arrives as a diff. Review it as you would review a pull request from an RA.
 \column{0.44\textwidth}
 \begin{center}
 \begin{tikzpicture}[
@@ -837,25 +836,25 @@ The agent's work arrives as a diff: review it like a junior colleague's pull req
 \end{columns}
 \end{frame}
 
-\begin{frame}[fragile]{When a Session Goes Off the Rails: Park, Discard or Rewind}
+\begin{frame}[fragile]{Undoing the work of a session that went wrong}
 \begin{lstlisting}[style=bash, basicstyle=\small\ttfamily]
-# If it went off the rails
+# If the session went wrong
 git stash                  # park the changes
 git checkout -- .          # or discard them
 \end{lstlisting}
 
 \vspace{1.3em}
 \begin{itemize}\itemsep9pt
-  \item Inside a session, \texttt{/rewind} restores an earlier turn
-  \item The whole git routine: thirty seconds per session
+  \item Inside a session, \texttt{/rewind} restores an earlier turn.
+  \item The whole Git routine takes about 30 seconds per session.
 \end{itemize}
 \end{frame}
 
 % --- Walk-through 1: the demo project ---
-\begin{frame}[fragile]{\walkthrough~1: One Command Builds the Demo Project~\livedemo[1]}
+\begin{frame}[fragile]{\walkthrough~1: One command builds the demo project~\livedemo[1]}
 \begin{columns}[T]
 \column{0.42\textwidth}
-\textbf{One script scaffolds the project every demo runs in:}
+\textbf{One script creates the project in which every demo runs:}
 \begin{lstlisting}[style=bash, basicstyle=\footnotesize\ttfamily]
 $ bash code/setup_demo_project.sh
 # -> demo/: data, solver, CLAUDE.md,
@@ -863,7 +862,7 @@ $ bash code/setup_demo_project.sh
 $ cd demo && claude
 \end{lstlisting}
 \column{0.55\textwidth}
-\textbf{What is in it}
+\textbf{Contents of the project}
 \begin{lstlisting}[style=md, basicstyle=\footnotesize\ttfamily]
 demo/
  CLAUDE.md             memory, two rules
@@ -881,24 +880,24 @@ demo/
 \filebox{code/setup\_demo\_project.sh, code/CLAUDE\_md\_demo.md (installed as demo/CLAUDE.md)}
 \end{frame}
 
-\begin{frame}[fragile]{The First Prompt Reads, and Writes Nothing~\livedemo[1]}
-\textbf{Live, the first prompt:}
+\begin{frame}[fragile]{The first prompt asks the agent only to read~\livedemo[1]}
+\textbf{The first prompt, run live:}
 \begin{lstlisting}[style=prompt, basicstyle=\small\ttfamily]
-> What is in this directory? Summarise
+> What is in this directory? Summarize
   the structure, the two rules of CLAUDE.md
   and deqn/common.py. Write nothing yet.
 \end{lstlisting}
 
 \vspace{1.3em}
-\begin{block}{A healthy answer}
-Lists the files, names the two rules, notes the stub, and writes nothing.
+\begin{block}{Expected answer}
+The agent lists the files, names the two rules, notes the stub, and writes nothing.
 \end{block}
 \end{frame}
 
-\begin{frame}[fragile]{The Course Notebook Never Checks Its Answer}
+\begin{frame}[fragile]{The course notebook does not check its own answer}
 \begin{columns}[T]
 \column{0.56\textwidth}
-\texttt{deqn/source/deqn\_tf\_deterministic.py}, the loss cell of the notebook ($\delta = 1$):
+The loss cell of the notebook ($\delta = 1$), from \texttt{deqn/source/deqn\_tf\_deterministic.py}:
 \begin{lstlisting}[basicstyle=\footnotesize\ttfamily]
 @tf.function
 def compute_cost(X, nn):
@@ -917,13 +916,13 @@ def compute_cost(X, nn):
 \end{lstlisting}
 \column{0.41\textwidth}
 \begin{itemize}\itemsep7pt
-  \item \textbf{It computes} the relative Euler error: zero where the first-order condition holds.
-  \item \textbf{It does} train for 2,000 steps and print the loss.
-  \item \textbf{It never} compares the policy with the closed form $s^* = \alpha\beta$.
+  \item \textbf{It computes} the relative Euler error, which is zero where the first-order condition holds.
+  \item \textbf{It trains} for 2,000 steps and prints the loss.
+  \item \textbf{It does not compare} the policy with the closed form $s^* = \alpha\beta$.
 \end{itemize}
 \vspace{0.5em}
 \begin{block}{Step 1}
-Port it to PyTorch with a fixed seed, and add the check the notebook lacks.
+Port the notebook to PyTorch with a fixed seed, and add the check that it lacks.
 \end{block}
 \end{columns}
 \filebox{code/deqn/source/ (both notebooks flattened to scripts; TensorFlow, not run here)}
@@ -932,10 +931,10 @@ Port it to PyTorch with a fixed seed, and add the check the notebook lacks.
 % ============================================================================
 % PART III: THE CORE INTERACTION LOOP
 % ============================================================================
-\partcard{III}{The Core Interaction Loop}{Steer by checking the answer, not the loss}
+\partcard{III}{The core interaction loop, with a task in plan mode}{Steer by checking the answer rather than the loss}
 
 % --- Feedback loop + transcript ---
-\begin{frame}{The Loop: You Describe, the Agent Works, You Inspect and Steer}
+\begin{frame}{An interaction is a loop between you and the agent}
 \begin{center}
 \begin{tikzpicture}[
     arr/.style={-{Stealth[length=3mm]}, very thick, uzhblue},
@@ -955,15 +954,15 @@ Port it to PyTorch with a fixed seed, and add the check the notebook lacks.
 
 \vspace{0.7em}
 \begin{center}
-\boristip{5} Say \emph{what} and \emph{how you will know}; let the agent choose \emph{how}.
+\boristip{5} State \emph{what} you want and \emph{how you will know} that it is done, and let the agent choose \emph{how}.
 \end{center}
 \end{frame}
 
-\begin{frame}[fragile]{``The Loss Converged'' Is the Agent's Stop, Not Yours}
+\begin{frame}[fragile]{A converged loss is where the agent stops, not where we should}
 \hfill\stepmarker{1}\par\vspace{0.1em}
 \begin{columns}[T]
 \column{0.53\textwidth}
-Step 1 without a plan, condensed. Red \texttt{>} is what you type.
+Step 1 without a plan, as a condensed transcript. Lines that start with a red \texttt{>} are typed by the user.
 \begin{lstlisting}[style=prompt, basicstyle=\footnotesize\ttfamily]
 > Port deqn/source/deqn_tf_deterministic.py
   to PyTorch. Print the loss.
@@ -980,16 +979,16 @@ Done: the loss has converged.
 \end{lstlisting}
 \column{0.43\textwidth}
 \vspace{1.3em}
-\begin{block}{The lesson}
-Steer with the question you would ask an RA. Here the error is $4.9\times10^{-4}$; in Part VIII the same stopping point hides a savings rate of 0.94 instead of 0.25.
+\begin{block}{What the transcript shows}
+Steer with the question you would ask an RA. Here the error is $4.9\times10^{-4}$. In Part VIII, stopping at the same point leaves a savings rate of 0.94 instead of 0.25 undetected.
 \end{block}
 \end{columns}
-\filebox{code/prompts.md, \S 2 (every prompt of the lecture, ready to paste)}
+\filebox{code/prompts.md, \S 2 (every prompt in the lecture, ready to paste)}
 \end{frame}
 
 % --- Prompt Quality ---
-\begin{frame}[fragile]{Each Prompt Level Removes a Guess}
-The same request four times (Step 1). \emphc{Level 3 is always the goal.}
+\begin{frame}[fragile]{Each prompt level removes something the agent must guess}
+The same request is written four times (Step 1). \emphc{Level 3 is the one to aim for.}
 
 \vspace{0.5em}
 \begin{center}
@@ -999,23 +998,23 @@ The same request four times (Step 1). \emphc{Level 3 is always the goal.}
 \toprule
 \textbf{Level} & \textbf{Adds} & \textbf{The prompt, abridged} \\
 \midrule
-\textcolor{darkred}{\textbf{0}} & nothing & \texttt{Port this notebook to PyTorch} \\
-\textbf{1} & files and recipe & \texttt{Port deqn/source/deqn\_tf\_deterministic.py to deqn/deterministic.py, same recipe} \\
-\textbf{2} & context & \texttt{delta = 1, so the answer is known: s* = alpha*beta. Use make\_net from deqn/common.py} \\
+\textcolor{darkred}{\textbf{0}} & Nothing & \texttt{Port this notebook to PyTorch} \\
+\textbf{1} & Files and recipe & \texttt{Port deqn/source/deqn\_tf\_deterministic.py to deqn/deterministic.py, same recipe} \\
+\textbf{2} & Context & \texttt{delta = 1, so the answer is known: s* = alpha*beta. Use make\_net from deqn/common.py} \\
 \rowcolor{softgreen!10}
-\textcolor{darkgreen}{\textbf{3}} & \textbf{role, constraints, output, verification} & \texttt{Role: computational macroeconomist. float64, seed 42. Closed form NOT in the loss. Verify: max |s - alpha*beta| < 1e-2; print it} \\
+\textcolor{darkgreen}{\textbf{3}} & \textbf{Role, constraints, output, and verification} & \texttt{Role: computational macroeconomist. float64, seed 42. Closed form NOT in the loss. Verify: max |s - alpha*beta| < 1e-2; print it} \\
 \bottomrule
 \end{tabular}
 \end{center}
 \end{frame}
 
-\begin{frame}{Level 3 Leaves Nothing to Guess}
-\textbf{Level 3 leaves nothing to guess:}
+\begin{frame}{A Level 3 prompt leaves nothing to guess}
+A Level 3 prompt states:
 \begin{itemize}\itemsep8pt
-  \item which files
-  \item what not to do
+  \item which files are involved
+  \item what must not be done
   \item where the output goes
-  \item how it is checked
+  \item how the result is checked
 \end{itemize}
 
 \vspace{1.1em}
@@ -1023,7 +1022,7 @@ The same request four times (Step 1). \emphc{Level 3 is always the goal.}
 \end{frame}
 
 % --- Level 3 in detail + response ---
-\begin{frame}[fragile]{A Complete Prompt Returns the Result With Its Grade}
+\begin{frame}[fragile]{A complete prompt returns the result together with its check}
 \hfill\stepmarker{1}\par\vspace{0.1em}
 \begin{columns}[T]
 \column{0.56\textwidth}
@@ -1043,7 +1042,7 @@ The same request four times (Step 1). \emphc{Level 3 is always the goal.}
   points of [0.1, 1] < 1e-2; print it.
 \end{lstlisting}
 \column{0.41\textwidth}
-\textbf{The response} (condensed; the numbers are the committed script's)
+\textbf{The response}, condensed, with the numbers from the provided script
 \begin{lstlisting}[style=bash, basicstyle=\footnotesize\ttfamily]
 [Read the source, common.py]
 [Wrote deqn/deterministic.py]
@@ -1054,16 +1053,16 @@ assert < 1e-2: OK
 \end{lstlisting}
 \vspace{0.4em}
 \begin{block}{Why this is Level 3}
-Nothing to re-prompt: check, file and seed were specified up front. The answer arrives with its own grade.
+Nothing needs a second prompt, because the check, the file, and the seed were specified at the start. The answer arrives together with its check.
 \end{block}
 \end{columns}
 \filebox{code/deqn/deterministic.py; the prompt: code/prompts.md, \S 3}
 \end{frame}
 
 % --- Live demo: plan mode ---
-\begin{frame}[fragile]{Plan Mode: Audit the Plan Before Any File Changes~\livedemo[2]}
+\begin{frame}[fragile]{In plan mode, review the plan before any file changes~\livedemo[2]}
 \hfill\stepmarker{1}\par\vspace{0.1em}
-\textbf{Shift+Tab} until the status line shows \emph{plan mode}: the agent reads, and writes nothing until you approve the plan.
+Press \textbf{Shift+Tab} until the status line shows \emph{plan mode}. The agent then reads, and it writes nothing until you approve the plan.
 
 \vspace{0.6em}
 \begin{lstlisting}[style=prompt, basicstyle=\footnotesize\ttfamily]
@@ -1076,21 +1075,21 @@ Nothing to re-prompt: check, file and seed were specified up front. The answer a
   4. notes/deqn_step1.md: three sentences: is it solved, and how can you tell
   Do NOT use the closed form outside the check. Do NOT modify deqn/common.py.
 \end{lstlisting}
-\filebox{code/prompts.md, \S 4; our version: code/deqn/deterministic.py}
+\filebox{code/prompts.md, \S 4; the provided version: code/deqn/deterministic.py}
 \end{frame}
 
-\begin{frame}{Read the Plan Before You Approve It}
+\begin{frame}{What to check in a plan before approving it}
 \hfill\stepmarker{1}\par\vspace{0.1em}
 \begin{columns}[T]
 \column{0.49\textwidth}
-\textbf{Read the plan before approving it}
+\textbf{Questions to ask of the plan}
 \begin{itemize}\itemsep7pt
-  \item Every file it will create, and nothing else?
-  \item The closed form only in the check, not in the loss?
-  \item ``Solved'' judged by the max error, or by the loss?
+  \item Does it create the files you asked for and nothing else?
+  \item Is the closed form used only in the check and not in the loss?
+  \item Is ``solved'' judged by the policy error or by the loss?
 \end{itemize}
 \vspace{0.8em}
-\textbf{A good run:} four files and the saved policy in one pass; max error $4.9\times10^{-4}$, threshold $10^{-2}$.
+\textbf{A good run} produces the four files and the saved policy in one pass, with a policy error of $4.9\times10^{-4}$ against a threshold of $10^{-2}$.
 \column{0.48\textwidth}
 \begin{center}
 \includegraphics[width=\linewidth]{figures/agentic_deqn_step1.pdf}
@@ -1099,40 +1098,40 @@ Nothing to re-prompt: check, file and seed were specified up front. The answer a
 \end{frame}
 
 % --- Agents and notebooks ---
-\begin{frame}[fragile]{Agents Run Notebooks; the Paper Runs From Scripts}
-\textbf{What the agent does with an \texttt{.ipynb}}
+\begin{frame}[fragile]{Agents can run notebooks, but the paper's results need scripts}
+\textbf{What the agent does with an \texttt{.ipynb} file}
 \begin{itemize}\itemsep5pt
-  \item Reads the cells \emph{and the stored outputs}
-  \item Edits one cell at a time
-  \item Runs it headless, as a batch job:
+  \item It reads the cells \emph{and the stored outputs}.
+  \item It edits one cell at a time.
+  \item It runs the notebook headless, as a batch job:
 \end{itemize}
 \begin{lstlisting}[style=bash, basicstyle=\footnotesize\ttfamily]
 jupyter nbconvert --to notebook --execute --output out.ipynb estimation.ipynb
 \end{lstlisting}
 
 \vspace{0.9em}
-\begin{block}{Better still}
-Port the notebook into a tested script, as Step 1 did. Explore in the notebook; the paper runs from the script.
+\begin{block}{Recommendation}
+Port the notebook into a tested script, as in Step 1. Explore in the notebook, and produce the paper's results from the script.
 \end{block}
 \filebox{code/prompts.md, \S 5 (the headless-run prompt)}
 \end{frame}
 
-\begin{frame}{Three Habits for Notebook Sessions}
+\begin{frame}{Habits for sessions that work on notebooks}
 \begin{enumerate}\itemsep14pt
-  \item \emphc{One notebook per session}; \texttt{/clear} between them
-  \item \emphc{Fix the budget first}: smoke-test settings, sample sizes in the first cell
-  \item \emphc{Compare with the stored result}: a ``stored vs fresh'' table, never ``it works''
+  \item \emphc{Use one notebook per session}, and run \texttt{/clear} between notebooks.
+  \item \emphc{Set the budget first}, with smoke-test settings and sample sizes in the first cell.
+  \item \emphc{Compare with the stored result} in a table of stored and fresh values, and do not accept ``it works.''
 \end{enumerate}
 \end{frame}
 
 % --- Parallel sessions ---
-\begin{frame}[fragile]{Parallel Sessions Need Separate Worktrees}
-\boristip{1} \textbf{Do more in parallel}, says the Claude Code team.
+\begin{frame}[fragile]{Parallel sessions need separate worktrees}
+\boristip{1} The Claude Code team recommends doing more in parallel.
 
 \vspace{0.7em}
 \begin{columns}[T]
 \column{0.50\textwidth}
-A \emphc{worktree} is a second checkout of the repository on its own branch. One session each:
+A \emphc{worktree} is a second checkout of the repository on its own branch. Each session gets one:
 \begin{lstlisting}[style=bash, basicstyle=\footnotesize\ttfamily]
 git worktree add ../a -b data-clean
 git worktree add ../b -b estimation
@@ -1156,20 +1155,20 @@ cd ../b && claude    # terminal 2
 \end{columns}
 \end{frame}
 
-\begin{frame}{Parallel Sessions: Scope Each One, and Time Yourself}
+\begin{frame}{Give each parallel session a scope and time yourself}
 \begin{itemize}\itemsep11pt
-  \item \textbf{Shortcut:} \texttt{claude -w data-clean}
-  \item \textbf{Give each session a scope:} ``only modify files under \texttt{code/}''
-  \item \textcolor{darkred}{\textbf{Cost:}} parallel sessions use quota in parallel
-  \item \textbf{Evidence} on AI speed-ups in general is mixed (Brynjolfsson et al., 2025; Becker et al., 2025): time yourself
+  \item The shortcut \texttt{claude -w data-clean} starts a session in its own worktree.
+  \item Give each session a scope, for example ``only modify files under \texttt{code/}.''
+  \item Parallel sessions consume the usage quota in parallel.
+  \item The evidence on speedups from AI is mixed (Brynjolfsson et al., 2025; Becker et al., 2025), so time yourself.
 \end{itemize}
 \end{frame}
 
 % --- Context management in practice ---
-\begin{frame}[fragile]{Keep Session State on Disk, Never in the Conversation}
+\begin{frame}[fragile]{Keep the state of a session on disk}
 \begin{columns}[T]
 \column{0.48\textwidth}
-\textbf{The state file}, at the end of a session:
+At the end of a session, write a state file:
 \begin{lstlisting}[style=prompt, basicstyle=\footnotesize\ttfamily]
 > Write notes/session_state.md:
   1. What we have done so far
@@ -1178,33 +1177,33 @@ cd ../b && claude    # terminal 2
   4. Design decisions and why
 \end{lstlisting}
 \vspace{0.4em}
-\textbf{Next session:}
+At the start of the next session:
 \begin{lstlisting}[style=prompt, basicstyle=\footnotesize\ttfamily]
 > Read notes/session_state.md and
   continue from where we left off.
 \end{lstlisting}
 \column{0.48\textwidth}
-\begin{block}{The principle}
-What a new RA should know on Monday morning goes into a file, and into git.
+\begin{block}{Principle}
+Whatever a new RA would need to know on Monday morning belongs in a file, and the file belongs in Git.
 \end{block}
 \vspace{0.9em}
-Or resume the conversation itself: \texttt{claude -{}-continue}, \texttt{claude -{}-resume}.
+Alternatively, resume the conversation itself with \texttt{claude -{}-continue} or \texttt{claude -{}-resume}.
 \end{columns}
 \filebox{code/prompts.md, \S 6}
 \end{frame}
 
-\begin{frame}{How Long Is the Session? That Decides What to Do}
+\begin{frame}{How to manage the context of a session}
 \begin{center}
 \renewcommand{\arraystretch}{1.6}
 \begin{tabular}{@{}ll@{}}
 \toprule
 \textbf{Situation} & \textbf{Action} \\
 \midrule
-Under 5 turns & just work \\
-5 to 15 turns & state file at the end \\
-A long session that drifts & \texttt{/compact} with a focus + state file \\
-New task & \texttt{/clear} or a new session \\
-Heavy reading & a \emphc{subagent}; only its summary returns \\
+Fewer than 5 turns & No special measures \\
+5 to 15 turns & Write a state file at the end \\
+A long session that drifts & Run \texttt{/compact} with a focus and write a state file \\
+A new task & Run \texttt{/clear} or start a new session \\
+Heavy reading & Use a \emphc{subagent}; only its summary returns \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -1213,44 +1212,44 @@ Heavy reading & a \emphc{subagent}; only its summary returns \\
 % ============================================================================
 % PART IV: PROMPT ENGINEERING FOR RESEARCH
 % ============================================================================
-\partcard{IV}{Prompt Engineering for Research}{Six components; verification is the one the agent cannot supply}
+\partcard{IV}{Prompt engineering for research}{A prompt has six components, and only you can supply the verification}
 
 % --- Anatomy + before/after ---
-\begin{frame}{Six Components; the Missing One Predicts the Failure}
+\begin{frame}{The missing component of a prompt predicts how it fails}
 \begin{center}
 \small
 \renewcommand{\arraystretch}{1.35}
-\begin{tabular}{@{}c l >{\raggedright\arraybackslash}p{4.6cm} >{\raggedright\arraybackslash}p{4.6cm}@{}}
+\begin{tabular}{@{}c l >{\raggedright\arraybackslash}p{4.8cm} >{\raggedright\arraybackslash}p{4.6cm}@{}}
 \toprule
 \textbf{\#} & \textbf{Component} & \textbf{What it does} & \textbf{Failure if missing} \\
 \midrule
-1 & \textbf{Role} & who the agent is here & generic output \\
-2 & \textbf{Context} & what it needs to know & asks too many questions \\
-3 & \textbf{Task} & what you want done & invents another task \\
-4 & \textbf{Constraints} & must / must not & ``AI's code'', not yours \\
-5 & \textbf{Output} & deliverable, format, location & wrong format, extra junk \\
-6 & \textbf{Verification} & how to check it & plausible but wrong \\
+1 & \textbf{Role} & States who the agent is & Generic output \\
+2 & \textbf{Context} & States what the agent needs to know & Too many questions \\
+3 & \textbf{Task} & States what you want done & The agent invents another task \\
+4 & \textbf{Constraints} & State what must and must not be done & Code that ignores your conventions \\
+5 & \textbf{Output} & Names the deliverable, its format, and its location & Wrong format and unrequested extras \\
+6 & \textbf{Verification} & States how the result is checked & A plausible but wrong result \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 \vspace{0.7em}
-\begin{block}{The meta-rule}
-When something goes wrong, ask: which of the six did I omit? That is almost always the fix.
+\begin{block}{Diagnosis}
+When a result is wrong, check which of the six components the prompt lacked. Supplying it almost always solves the problem.
 \end{block}
 \end{frame}
 
-\begin{frame}[fragile]{Before: One Line, All Six Components Missing}
-\textbf{Before} (Level 0, everything missing):
+\begin{frame}[fragile]{A one-line prompt leaves almost everything unstated}
+A Level 0 prompt gives a bare task and none of the other components:
 \begin{lstlisting}[style=prompt, basicstyle=\normalsize\ttfamily]
 > Add productivity shocks to the solver.
 \end{lstlisting}
 
 \vspace{1.5em}
-\textbf{After:} the same task with all six (next slide, Step 2). A Level-3 prompt has all six.
+The next slide shows the same task with all six components (Step 2). A Level 3 prompt contains all six.
 \end{frame}
 
-\begin{frame}[fragile]{Step 2's Prompt: Only You Can Write the Verification}
+\begin{frame}[fragile]{The prompt for the full model has all six components}
 \hfill\stepmarker{2}\par\vspace{0.3em}
 \begin{lstlisting}[style=md, basicstyle=\scriptsize\ttfamily]
 [ROLE]        You are a computational macroeconomist.
@@ -1261,7 +1260,7 @@ When something goes wrong, ask: which of the six did I omit? That is almost alwa
               log K - log K*); network 2-32-32-1 tanh, sigmoid output, s_init = s*; loss = mean
               squared Euler residual with the 5 Gauss-Hermite nodes; 128 fresh states per step.
 [CONSTRAINTS] torch, float64, torch.manual_seed(seed) first. Never use the reference policy in
-              a loss or an initialisation. Do not modify deqn/common.py, tests/ or reference/.
+              a loss or an initialization. Do not modify deqn/common.py, tests/ or reference/.
 [OUTPUT]      results/deqn_stochastic.pt with its JSON sidecar; solve returns {"s", "net", "wall"}.
 [VERIFY]      Simulate 2,000 periods with the network's own policy. Report mean |residual| there,
               max |s - s_ref| at those states, E[s] against the reference, and whether log K stayed inside
@@ -1270,27 +1269,27 @@ When something goes wrong, ask: which of the six did I omit? That is almost alwa
 \filebox{code/prompts.md, \S 7 (this prompt and the six templates, ready to paste)}
 \end{frame}
 
-\begin{frame}{Verification Is the Part the Agent Cannot Invent}
+\begin{frame}{The verification component of a prompt must come from you}
 \hfill\stepmarker{2}\par\vspace{0.6em}
 \begin{center}
-{\large \textbf{Verification} is the part the agent cannot invent:\\[5pt] \emphc{you} say what ``solved'' means.}
+{\large \textbf{Verification} is the one component the agent cannot supply,\\[5pt] because \emphc{you} define what ``solved'' means.}
 \end{center}
 
 \vspace{1.5em}
 \begin{itemize}\itemsep9pt
-  \item \textbf{Not run now:} it returns as the \texttt{/goal} of Step 4 and the plan of Step 5
-  \item \textbf{Why \texttt{s\_init = s*}:} Step 6
+  \item \textbf{The prompt is not run now.} It is used again as the \texttt{/goal} in Step 4 and as the plan in Step 5.
+  \item \textbf{The reason for \texttt{s\_init = s*}} is the subject of Step 6.
 \end{itemize}
 \end{frame}
 
 % --- Constraints ---
-\begin{frame}[fragile]{Constraints Turn ``AI's Code'' Into Your Code}
-The constraint lines of Step 2, by kind:
+\begin{frame}[fragile]{Constraints make the agent's code conform to your project}
+The constraint lines in the Step 2 prompt are of three kinds.
 
 \vspace{0.7em}
 \begin{columns}[T]
 \column{0.30\textwidth}
-\textbf{\textcolor{darkred}{Negative}}: what NOT to do
+\textbf{\textcolor{darkred}{Negative}} (what not to do)
 \begin{lstlisting}[style=prompt, basicstyle=\footnotesize\ttfamily]
 Do NOT use reference/ in
   a loss, an init or a fit.
@@ -1300,7 +1299,7 @@ Do NOT report the training
   loss as accuracy.
 \end{lstlisting}
 \column{0.30\textwidth}
-\textbf{\textcolor{darkgreen}{Positive}}: what to do
+\textbf{\textcolor{darkgreen}{Positive}} (what to do)
 \begin{lstlisting}[style=prompt, basicstyle=\footnotesize\ttfamily]
 Use deqn/common.py:
   make_net, encode_state,
@@ -1311,7 +1310,7 @@ Notation of CLAUDE.md:
   K, z, s, rho, K*, s*.
 \end{lstlisting}
 \column{0.35\textwidth}
-\textbf{\textcolor{uzhblue}{Scope}}: boundaries
+\textbf{\textcolor{uzhblue}{Scope}} (the boundaries)
 \begin{lstlisting}[style=prompt, basicstyle=\footnotesize\ttfamily]
 Only write deqn/stochastic.py
   and results/.
@@ -1324,31 +1323,31 @@ Stop and report after each
 \filebox{code/prompts.md, \S 7 (the constraint lines, ready to append)}
 \end{frame}
 
-\begin{frame}{Think Before You Code: Ask for the Plan First}
-\begin{block}{The ``think before you code'' pattern}
+\begin{frame}{Ask for a plan before the agent writes code}
+\begin{block}{The ``think before you code'' prompt}
 ``Before writing code: describe your plan, list the files you will modify, list the risks. Wait for my go-ahead.''
 \end{block}
 
 \vspace{1.3em}
-Plan mode does this for you; the sentence works in any tool.
+Plan mode does this for you, and the sentence works in any other tool as well.
 \end{frame}
 
 % --- Templates I ---
-\begin{frame}{Four Reusable Prompts: Each Names Its Files and Its Output}
-Four prompts you will type more than once; the full text is in the repository.
+\begin{frame}{Prompt templates name their files and their output}
+These are prompts you will use repeatedly. The full text is in the repository.
 
 \vspace{0.8em}
-\begin{block}{1. Replication check, code vs paper}
+\begin{block}{1. Replication check of code against paper}
 ``Does \texttt{code/estimate.py} match Section 3 of the paper? One line per item: \checkmark{} matches, $\times$ paper says X / code does Y, ? unclear.''
 \end{block}
 \vspace{0.5em}
 \begin{block}{2. Robustness table}
 ``Three checks on the baseline: one script each, one JSON each, then one booktabs table with all four columns.''
 \end{block}
-\filebox{code/prompts.md, \S 7, templates 1--4 (verbatim)}
+\filebox{code/prompts.md, \S 7, Templates 1--4 (verbatim)}
 \end{frame}
 
-\begin{frame}{Reusable Prompts 3 and 4: A Stop Rule and a Citation Rule}
+\begin{frame}{Templates 3 and 4 add a cap on retries and a citation rule}
 \begin{block}{3. Autonomous session}
 ``Implement \texttt{plan.md}; commit after each step. Stuck after 3 attempts: write \texttt{notes/blocked.md} and STOP.''
 \end{block}
@@ -1359,50 +1358,50 @@ Four prompts you will type more than once; the full text is in the repository.
 \end{frame}
 
 % --- Templates II ---
-\begin{frame}{Turn ``Is This Right?'' Into a Number}
-\begin{block}{5. Translate legacy code, and prove it}
+\begin{frame}{Template 5 turns a correctness question into a number}
+\begin{block}{5. Translate legacy code and test the translation}
 ``Port the TensorFlow notebook to PyTorch; do NOT change the algorithm. Then test: the residual has shape $(n, 1)$; the quadrature weights sum to 1; at $\sigma = 0$, $\delta = 1$ it reduces to Step 1's Euler equation.''
 \end{block}
 
 \vspace{1.1em}
-The first test catches a shape bug the original carried unnoticed.
-\filebox{code/prompts.md, \S 7, templates 5--6}
+The first test catches a shape bug that the original code carried unnoticed.
+\filebox{code/prompts.md, \S 7, Templates 5--6}
 \end{frame}
 
-\begin{frame}{A Derivation Checked by Computer Algebra Must Print Zero}
+\begin{frame}{Template 6 checks a derivation by computer algebra}
 \begin{block}{6. Check a derivation with computer algebra}
 ``Derive the Euler equation and the steady state $(K^*, s^*)$. Verify each step with SymPy: the residual at the steady state must print 0. If it does not, say so; do not adjust the derivation.''
 \end{block}
 
 \vspace{0.6em}
-Expected: $K^* = 4.294$, $s^* = 0.254$.
+The expected values are $K^* = 4.294$ and $s^* = 0.254$.
 
 \vspace{1.1em}
-\textbf{The pattern.} Both templates turn ``is this right?'' into a number that is zero when it is. That makes an agent safe to use on a model.
+Both templates turn the question ``is this right?'' into a number that is zero when the answer is yes. With such a check, the agent's work on an economic model can be verified.
 \end{frame}
 
 % --- Failure modes ---
-\begin{frame}{Give the Agent a Verifier and Most Failures Disappear}
+\begin{frame}{Most failures disappear once the agent can run a check}
 \begin{center}
 \small
 \renewcommand{\arraystretch}{1.3}
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{4.2cm} >{\raggedright\arraybackslash}p{3.4cm} >{\raggedright\arraybackslash}p{5.2cm}@{}}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{4.0cm} >{\raggedright\arraybackslash}p{3.6cm} >{\raggedright\arraybackslash}p{5.4cm}@{}}
 \toprule
-\textbf{Failure} & \textbf{Cause} & \textbf{Fix} \\
+\textbf{Failure} & \textbf{Cause} & \textbf{Remedy} \\
 \midrule
-``Invents'' results & vague output spec & an explicit verification step \\
-Edits the wrong files & no scope & name the files it may touch \\
-Long session drifts & unfocused context & \texttt{/clear}, or \texttt{/compact} with a focus \\
-Loops on one error & no retry limit & ``after 3 attempts, stop and report'' \\
-Wrong method & no domain context & name the method and the paper section \\
-Loss converges, solution wrong & only the loss was checked & on-path residual and reference (Part VIII) \\
+Invented results & Vague output specification & Add an explicit verification step \\
+Edits to the wrong files & No scope & Name the files the agent may touch \\
+Drift in a long session & Unfocused context & Run \texttt{/clear}, or \texttt{/compact} with a focus \\
+Repeated attempts at one error & No cap on retries & ``After 3 attempts, stop and report'' \\
+Wrong method & No domain context & Name the method and the section of the paper \\
+Converged loss, wrong solution & Only the loss was checked & Check the on-path residual and the reference (Part VIII) \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 \vspace{0.6em}
-\begin{block}{The highest-leverage fix}
-\emphc{Give the agent a way to verify its own work}: tests, expected outputs, a twin problem with a known answer. The theme of Block 2.
+\begin{block}{The most effective remedy}
+\emphc{Give the agent a check that it can run itself}, such as tests, expected outputs, or a twin problem with a known answer. This is the theme of Block 2.
 \end{block}
 \end{frame}
 
@@ -1414,7 +1413,7 @@ Loss converges, solution wrong & only the loss was checked & on-path residual an
 \begin{center}
 {\Huge \textcolor{uzhblue}{\textbf{Break}}}\\[12pt]
 {\LARGE 10 minutes}\\[16pt]
-{\small Block 2: extending the agent with \texttt{CLAUDE.md}, skills, subagents, hooks and MCP;\\closing the loop with \texttt{/goal}; from plan to table and figure; verification, reproducibility and governance.}
+{\small Block 2 extends the agent with \texttt{CLAUDE.md}, skills, subagents, hooks, and MCP, closes the loop with \texttt{/goal},\\goes from a plan to a table and a figure, and ends with verification, reproducibility, and governance.}
 \end{center}
 \vfill
 \end{frame}
@@ -1422,46 +1421,45 @@ Loss converges, solution wrong & only the loss was checked & on-path residual an
 % ============================================================================
 % PART V: PROJECT MEMORY & CLAUDE.md
 % ============================================================================
-\partcard{V}{Project Memory: \texttt{CLAUDE.md}}{Memory lives in a file you keep current}
+\partcard{V}{Project memory in \texttt{CLAUDE.md}}{The memory of the project is a file that you keep current}
 
 % --- What is CLAUDE.md ---
-\begin{frame}{Keep \texttt{CLAUDE.md} Short and Current; Hard Rules Go in Hooks}
-\texttt{CLAUDE.md} is read \emphc{automatically} at session start: the project's memory for a capable but amnesiac RA.
+\begin{frame}{\texttt{CLAUDE.md} holds what the agent cannot infer from the code}
+\texttt{CLAUDE.md} is read \emphc{automatically} at the start of a session. It is the memory of the project for an assistant that remembers nothing between sessions.
 
 \vspace{0.9em}
 \begin{columns}[T]
 \column{0.52\textwidth}
-\textbf{Where it lives}
+\textbf{Where the file is stored}
 \begin{itemize}\itemsep5pt
-  \item \texttt{\textasciitilde/.claude/CLAUDE.md}: you, all projects
-  \item \texttt{./CLAUDE.md}: the project, in git
-  \item \texttt{.claude/rules/*.md}: more rules, optionally scoped to paths
+  \item \texttt{\textasciitilde/.claude/CLAUDE.md} applies to you in all projects.
+  \item \texttt{./CLAUDE.md} applies to the project and is kept in Git.
+  \item \texttt{.claude/rules/*.md} hold further rules, optionally scoped to paths.
 \end{itemize}
 \column{0.44\textwidth}
-\textbf{What goes in:} only what the agent cannot work out from the code
+\textbf{What belongs in it}
 \begin{itemize}\itemsep5pt
   \item The command that checks the work
   \item Read-only and legacy paths
-  \item Conventions, notation, decisions made
-  \item Current status; anything you corrected twice
+  \item Conventions, notation, and decisions made
+  \item The current status, and anything you have corrected twice
 \end{itemize}
 \end{columns}
 
 \vspace{0.9em}
-{\small\textcolor{uzhgreydark}{\texttt{/init} writes a first draft from your repository; from there the work is mostly removing lines. \texttt{/memory} opens the files.}}
+{\small\textcolor{uzhgreydark}{\texttt{/init} writes a first draft from your repository, and most of the remaining work is removing lines. \texttt{/memory} opens the files.}}
 \end{frame}
 
-\begin{frame}{Three Rules for \texttt{CLAUDE.md}, and One Habit}
+\begin{frame}{Keep \texttt{CLAUDE.md} short and current}
 \begin{columns}[T]
 \column{0.52\textwidth}
-\textbf{Three rules}
 \begin{itemize}\itemsep9pt
-  \item Under 200 lines: it is in every turn's context
-  \item Preferences here; \emphc{critical} rules in hooks: a text file is a request, not a guarantee
-  \item Update it every session
+  \item Keep it under 200 lines, because it is part of the context at every turn.
+  \item Put preferences here and \emphc{critical} rules in hooks. The agent usually follows the file, but nothing enforces it.
+  \item Update it in every session.
 \end{itemize}
 \column{0.44\textwidth}
-\boristip{3} After every correction:
+\boristip{3} After every correction, end with:
 \begin{center}
 \fcolorbox{harvardcrimson}{red!5}{%
 \parbox{5.8cm}{\centering\itshape
@@ -1471,10 +1469,10 @@ Loss converges, solution wrong & only the loss was checked & on-path residual an
 \end{frame}
 
 % --- Walk-through 2: CLAUDE_md_template ---
-\begin{frame}[fragile]{\walkthrough~2: A Stale Line in \texttt{CLAUDE.md} Misleads Every Session}
+\begin{frame}[fragile]{\walkthrough~2: A stale line in \texttt{CLAUDE.md} misleads the agent}
 \begin{columns}[T]
 \column{0.60\textwidth}
-A fictional paper under revision:
+The \texttt{CLAUDE.md} of a fictional paper under revision:
 \begin{lstlisting}[style=md, basicstyle=\footnotesize\ttfamily]
 # CLAUDE.md -- Fiscal Multipliers in a HANK Model
 ## Project Overview
@@ -1492,21 +1490,21 @@ A fictional paper under revision:
 \end{lstlisting}
 \column{0.37\textwidth}
 \vspace{1.3em}
-\begin{alertblock}{Spot the stale line}
-Its decision log says JAX; its package list (not shown) still says TensorFlow. The agent believes whichever it reads last. Update the file every session.
+\begin{alertblock}{The stale line}
+The decision log says JAX, while the package list (not shown) still says TensorFlow. The agent follows whichever statement it reads last, so update the file in every session.
 \end{alertblock}
 \end{columns}
 \filebox{code/CLAUDE\_md\_template.md (71 lines); prompt: code/prompts.md, \S 8}
 \end{frame}
 
-\begin{frame}[fragile]{The Demo Project's Own \texttt{CLAUDE.md}: Two Rules, One Standard}
-The demo project's own file, the part that governs the solver:
+\begin{frame}[fragile]{The demo project's \texttt{CLAUDE.md} states two rules}
+The part of the demo project's file that governs the solver:
 \begin{center}
 \begin{minipage}{0.62\textwidth}
 \begin{lstlisting}[style=md, basicstyle=\footnotesize\ttfamily]
 ## The two rules of this project
 1. reference/ and tests/ are the exam. Never load
-   the reference into a loss or an initialisation;
+   the reference into a loss or an initialization;
    never edit either (a hook refuses).
 2. data/raw/ stands in for confidential data.
    Never read it, never edit it (a deny rule
@@ -1526,34 +1524,34 @@ The demo project's own file, the part that governs the solver:
 % ============================================================================
 % PART VI: SKILLS, SUBAGENTS, HOOKS, MCP
 % ============================================================================
-\partcard{VI}{Skills, Subagents, Hooks, MCP}{Package prompts, specialists and rules as files}
+\partcard{VI}{Skills, subagents, hooks, and MCP}{Prompts, specialists, and rules are packaged as files}
 
 % --- The map ---
-\begin{frame}{Four Mechanisms, All Plain Files in Your Repository}
+\begin{frame}{Four mechanisms extend the agent through plain files}
 \begin{center}
 \renewcommand{\arraystretch}{1.5}
 \begin{tabular}{@{}l >{\raggedright\arraybackslash}p{6.2cm} >{\raggedright\arraybackslash}p{4.6cm}@{}}
 \toprule
-\textbf{Mechanism} & \textbf{What it is} & \textbf{Use when} \\
+\textbf{Mechanism} & \textbf{What it is} & \textbf{Use it when} \\
 \midrule
-\emphc{Skill} & a workflow in a Markdown file, run as a slash command & you repeat the same steps \\
-\emphc{Subagent} & a specialist with its own prompt, tools and context & you need an independent check \\
-\emphc{Hook} & a shell command fired around tool calls & a rule must hold every time \\
-\emphc{MCP server} & an external service that offers tools & data or actions live outside the project \\
+\emphc{Skill} & A workflow in a Markdown file, run as a slash command & You repeat the same steps \\
+\emphc{Subagent} & A specialist with its own prompt, tools, and context & You need an independent check \\
+\emphc{Hook} & A shell command that runs before or after tool calls & A rule must hold every time \\
+\emphc{MCP server} & An external service that offers tools & Data or actions lie outside the project \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 \vspace{0.7em}
-\textbf{Rule of thumb.} Skills package prompts; subagents package specialists; hooks enforce rules; MCP connects the outside world.
+In short, skills hold prompts, subagents hold specialist roles, hooks enforce rules, and MCP connects services outside the project.
 \end{frame}
 
-\begin{frame}{Where Each Mechanism Lives}
+\begin{frame}{Where each mechanism is stored}
 \begin{center}
 \renewcommand{\arraystretch}{1.8}
 \begin{tabular}{@{}ll@{}}
 \toprule
-\textbf{Mechanism} & \textbf{Lives at} \\
+\textbf{Mechanism} & \textbf{Location} \\
 \midrule
 \emphc{Skill} & \texttt{.claude/skills/<name>/SKILL.md} \\
 \emphc{Subagent} & \texttt{.claude/agents/<name>.md} \\
@@ -1565,7 +1563,7 @@ The demo project's own file, the part that governs the solver:
 \end{frame}
 
 % --- Walk-through 3: skills ---
-\begin{frame}[fragile]{\walkthrough~3: Turn a Repeated Check Into a Skill~\livedemo[3]}
+\begin{frame}[fragile]{\walkthrough~3: A repeated check becomes a skill~\livedemo[3]}
 \hfill\stepmarker{3}\par\vspace{0.1em}
 \begin{columns}[T]
 \column{0.54\textwidth}
@@ -1587,22 +1585,22 @@ description: Audit a saved DEQN policy on the
   the training loss as accuracy.
 \end{lstlisting}
 \column{0.42\textwidth}
-\boristip{4} \textbf{Done more than once a day? Make it a skill}: a Markdown file of instructions, invoked by name.
+\boristip{4} \textbf{If you do something more than once a day, turn it into a skill}, a Markdown file of instructions that is invoked by name.
 
 \vspace{0.9em}
-\texttt{/deqn-accuracy}, the on-path check of a saved policy (abridged).
+The listing shows \texttt{/deqn-accuracy}, the on-path check of a saved policy (abridged).
 
 \vspace{0.9em}
-The \texttt{description} tells the agent when to use the skill on its own.
+The \texttt{description} field tells the agent when to use the skill on its own initiative.
 \end{columns}
 \filebox{code/skills/deqn-accuracy/SKILL.md}
 \end{frame}
 
-\begin{frame}[fragile]{The Skill at Work: One Command, One Verdict~\livedemo[3]}
+\begin{frame}[fragile]{The skill returns a verdict from one command~\livedemo[3]}
 \hfill\stepmarker{3}\par\vspace{0.1em}
 \begin{columns}[T]
 \column{0.53\textwidth}
-\textbf{Live:}
+\textbf{Run live:}
 \begin{lstlisting}[style=prompt, basicstyle=\footnotesize\ttfamily]
 > /deqn-accuracy results/deqn_deterministic.pt
 \end{lstlisting}
@@ -1617,13 +1615,13 @@ verdict: ACCURATE
 \end{lstlisting}
 \column{0.43\textwidth}
 \vspace{1.6em}
-The script, \texttt{accuracy.py}, also draws the figures on these slides: one check, written once.
+The script \texttt{accuracy.py} also draws the figures on these slides, so the check is written only once.
 \end{columns}
 \filebox{code/deqn/accuracy.py; prompts: code/prompts.md, \S 9}
 \end{frame}
 
 % --- Walk-through 4: subagents ---
-\begin{frame}[fragile]{\walkthrough~4: Let a Different Agent Do the Checking~\livedemo[3]}
+\begin{frame}[fragile]{\walkthrough~4: A separate agent does the checking~\livedemo[3]}
 \hfill\stepmarker{3}\par\vspace{0.1em}
 \begin{columns}[T]
 \column{0.52\textwidth}
@@ -1631,7 +1629,7 @@ The script, \texttt{accuracy.py}, also draws the figures on these slides: one ch
 \begin{lstlisting}[style=md, basicstyle=\footnotesize\ttfamily]
 ---
 name: verifier
-description: Read-only sceptic: is a claimed
+description: Read-only skeptic: is a claimed
   result supported by files and outputs?
 model: haiku
 tools: Read, Grep, Glob
@@ -1645,38 +1643,38 @@ tools: Read, Grep, Glob
   declare success without evidence.
 \end{lstlisting}
 \column{0.44\textwidth}
-\boristip{8} \textbf{Use subagents}: more compute on the problem, and a clean main context.
+\boristip{8} \textbf{Use subagents.} They apply more computation to the problem and keep the main context clean.
 
 \vspace{0.8em}
-\textbf{The frontmatter}
+\textbf{Fields of the frontmatter}
 \begin{itemize}\itemsep4pt
-  \item \texttt{description}: when the main agent delegates
-  \item \texttt{model}: pay for what the role needs
-  \item \texttt{tools}: read-only means no \texttt{Bash}, \texttt{Edit}, \texttt{Write}
-  \item Its own context window; only a summary returns
+  \item \texttt{description} states when the main agent delegates.
+  \item \texttt{model} lets you pay only for what the role needs.
+  \item \texttt{tools} without \texttt{Bash}, \texttt{Edit}, and \texttt{Write} makes the subagent read-only.
+  \item The subagent has its own context window, and only a summary returns.
 \end{itemize}
 \end{columns}
 \filebox{code/agents/*.md (8 files), installed to demo/.claude/agents/}
 \end{frame}
 
-\begin{frame}[fragile]{One Job per Subagent: A Different Agent Checks~\livedemo[3]}
+\begin{frame}[fragile]{Give each subagent one job~\livedemo[3]}
 \hfill\stepmarker{3}\par\vspace{0.3em}
-\textbf{Live:}
+\textbf{Run live:}
 \begin{lstlisting}[style=prompt, basicstyle=\small\ttfamily]
 > Use the verifier subagent to check the claims in
   the accuracy report under notes/.
 \end{lstlisting}
 
 \vspace{1.2em}
-\begin{block}{Golden rule}
-One job per subagent. The main session builds; a \emph{different} agent with a \emph{different} prompt checks.
+\begin{block}{Recommendation}
+Give each subagent one job. The main session builds, and a \emph{different} agent with a \emph{different} prompt checks.
 \end{block}
 \filebox{prompts: code/prompts.md, \S 9}
 \end{frame}
 
 % --- Specialists ---
-\begin{frame}[fragile]{Specialists, Not Generic Reviewers}
-A generic reviewer checks that code runs. A specialist knows what \emph{runs cleanly and is still wrong}.
+\begin{frame}[fragile]{Subagents are most useful as specialists}
+A generic reviewer checks that the code runs. A specialist knows where code \emph{runs without error and the result is still wrong}.
 
 \vspace{0.4em}
 \begin{columns}[T]
@@ -1695,7 +1693,7 @@ A generic reviewer checks that code runs. A specialist knows what \emph{runs cle
 Verdict: ACCURATE / DEGRADED / WRONG
 \end{lstlisting}
 \column{0.46\textwidth}
-\texttt{solution-accuracy-checker}: is a solved model actually solved?
+The \texttt{solution-accuracy-checker} asks whether a model reported as solved is in fact solved.
 
 \vspace{0.9em}
 \begin{lstlisting}[style=prompt, basicstyle=\footnotesize\ttfamily]
@@ -1706,10 +1704,10 @@ Verdict: ACCURATE / DEGRADED / WRONG
 \filebox{code/agents/solution\_accuracy\_checker.md; prompts: code/prompts.md, \S 9}
 \end{frame}
 
-\begin{frame}[fragile]{The Applied Economist's Checklist, as a Subagent}
+\begin{frame}[fragile]{A subagent can carry the applied economist's checklist}
 \begin{columns}[T]
 \column{0.54\textwidth}
-\texttt{econometrics-reviewer}: the applied economist's checklist
+The \texttt{econometrics-reviewer}'s checklist:
 \begin{lstlisting}[style=md, basicstyle=\footnotesize\ttfamily]
 ### A. Identification
 - The identifying assumption, one sentence.
@@ -1724,28 +1722,28 @@ Verdict: APPROVE / REQUEST CHANGES / BLOCK
 \column{0.42\textwidth}
 \vspace{1.3em}
 \begin{block}{Why specialists}
-A converged loss next to a wrong policy, a weak first stage behind a significant coefficient: both \emph{run cleanly}.
+A converged loss with a wrong policy and a weak first stage behind a significant coefficient have one thing in common: the code \emph{runs without error} in both cases.
 \end{block}
 \end{columns}
 \filebox{code/agents/econometrics\_reviewer.md}
 \end{frame}
 
 % --- Walk-through 5: deny rules and hooks ---
-\begin{frame}{\walkthrough~5: \texttt{CLAUDE.md} Asks; Deny Rules and Hooks Enforce}
+\begin{frame}{\walkthrough~5: Deny rules and hooks enforce the two rules}
 \begin{columns}[T]
 \column{0.47\textwidth}
-\textbf{Deny rules:} what the agent may not \emph{read}. Here \texttt{data/raw/} and the reference policy. They reduce leakage; they are not airtight (Part IX).
+\textbf{Deny rules} state what the agent may not \emph{read}, here \texttt{data/raw/} and the reference policy. They reduce leakage but are not airtight (Part IX).
 \column{0.47\textwidth}
-\textbf{Hooks:} shell commands around tool calls. A \texttt{PreToolUse} hook that exits 2 \emph{blocks} the call. Here: no edits under \texttt{data/raw/}, \texttt{reference/}, \texttt{tests/}.
+\textbf{Hooks} are shell commands that run before or after tool calls. A \texttt{PreToolUse} hook that exits with code 2 \emph{blocks} the call, here any edit under \texttt{data/raw/}, \texttt{reference/}, or \texttt{tests/}.
 \end{columns}
 
 \vspace{1.5em}
-\begin{block}{The point}
-\texttt{CLAUDE.md} asks; the rule enforces. Preferences in text, rules in code.
+\begin{block}{Requests and rules}
+Instructions in \texttt{CLAUDE.md} are requests, whereas deny rules and hooks are enforced. Put preferences in text and binding rules in code.
 \end{block}
 \end{frame}
 
-\begin{frame}[fragile]{The Settings File: Deny Rules and One Guard}
+\begin{frame}[fragile]{The settings file with the deny rules and the hook}
 \begin{center}
 \begin{minipage}{0.66\textwidth}
 \begin{lstlisting}[style=json, basicstyle=\footnotesize\ttfamily]
@@ -1764,13 +1762,13 @@ A converged loss next to a wrong policy, a weak first stage behind a significant
 \end{minipage}
 \end{center}
 \vspace{0.3em}
-\textbf{Live (optional):} ask it to relax a test threshold (the hook refuses); ask it to show \texttt{reference/baseline.md} (the deny rule refuses).
+\textbf{Optional live check:} ask the agent to relax a test threshold, which the hook blocks, and to show \texttt{reference/baseline.md}, which the deny rule blocks.
 \filebox{code/hooks/settings.json (abridged here; needs jq), installed as demo/.claude/settings.json}
 \end{frame}
 
 % --- MCP ---
-\begin{frame}[fragile]{MCP Adds Tools; Whatever They Return Enters the Call}
-The \textbf{Model Context Protocol} connects the agent to services outside the project: Tier 3 becomes Tier 4.
+\begin{frame}[fragile]{MCP adds external tools, and their output enters the context}
+The \textbf{Model Context Protocol} (MCP) connects the agent to services outside the project, which turns a Tier 3 agent into a Tier 4 agent.
 
 \vspace{0.3em}
 \begin{columns}[T]
@@ -1781,11 +1779,11 @@ The \textbf{Model Context Protocol} connects the agent to services outside the p
   ones not yet in paper/references.bib
 \end{lstlisting}
 \vspace{0.4em}
-\boristip{9} With a database server, the agent pulls and analyses the data itself: ``Personally, I haven't written a line of SQL in 6+ months.''
+\boristip{9} With a database server, the agent retrieves and analyzes the data itself: ``Personally, I haven't written a line of SQL in 6+ months.''
 
 \vspace{0.6em}
 \begin{alertblock}{Privacy}
-Whatever a tool \emph{returns} enters the context, and so the API call (Part IX).
+Whatever a tool \emph{returns} enters the context and is therefore sent to the API (Part IX).
 \end{alertblock}
 \column{0.50\textwidth}
 \begin{center}
@@ -1805,7 +1803,7 @@ Whatever a tool \emph{returns} enters the context, and so the API call (Part IX)
 \end{columns}
 \end{frame}
 
-\begin{frame}[fragile]{Adding an MCP Server Takes One Command}
+\begin{frame}[fragile]{Adding an MCP server takes one command}
 \begin{lstlisting}[style=bash, basicstyle=\small\ttfamily]
 # a remote server (token header: see docs)
 claude mcp add --transport http github \
@@ -1821,11 +1819,11 @@ claude mcp list     # /mcp inside a session
 % ============================================================================
 % PART VII: AUTONOMOUS LOOPS
 % ============================================================================
-\partcard{VII}{Autonomous Loops}{Let a verifier, not a person, end the loop}
+\partcard{VII}{Autonomous loops with \texttt{/goal}}{A test ends the loop, and an evaluator reads the result}
 
 % --- Closing the loop: the pattern and three mechanisms ---
-\begin{frame}{Close the Loop Only When a Verifier Can Decide ``Done''}
-So far a human was in the loop. Now we \emphc{close it}: a verifier, not a person, decides when the task is done.
+\begin{frame}{Close the loop only when a verifier can judge the result}
+So far a person has been in the loop. We now \emphc{close} it, so that a verifier rather than a person decides when the task is done.
 
 \vspace{0.7em}
 \begin{center}
@@ -1843,28 +1841,28 @@ So far a human was in the loop. Now we \emphc{close it}: a verifier, not a perso
 \end{center}
 
 \vspace{0.9em}
-\textcolor{darkred}{\textbf{Do not close the loop}} on anything without an automatic verifier: without a hard stop it spins at your expense.
+\textcolor{darkred}{\textbf{Do not close the loop}} on a task that has no automatic verifier. Without a cap, the loop keeps running at your expense.
 \end{frame}
 
-\begin{frame}{Three Ways to Close a Loop}
+\begin{frame}{Ways to close the loop}
 \begin{center}
 \small
 \renewcommand{\arraystretch}{1.5}
 \begin{tabular}{@{}>{\raggedright\arraybackslash}p{3.7cm} >{\raggedright\arraybackslash}p{2.9cm} >{\raggedright\arraybackslash}p{2.9cm} >{\raggedright\arraybackslash}p{3.4cm}@{}}
 \toprule
-\textbf{Mechanism} & \textbf{Next turn starts when} & \textbf{Context} & \textbf{Stops when} \\
+\textbf{Approach} & \textbf{Next turn starts when} & \textbf{Context} & \textbf{Stops when} \\
 \midrule
-\emphc{\texttt{/goal <condition>}} (today) & the previous turn ends & same session & an evaluator model says the condition holds \\
-\texttt{/loop [interval] <prompt>} & a timer fires & same session & you stop it, or the session ends \\
-a shell loop over \texttt{claude -p} (the ``Ralph loop'') & your script calls it again & a fresh process; disk is the memory & your test passes \\
+\emphc{\texttt{/goal <condition>}} (used today) & The previous turn ends & Same session & An evaluator model judges that the condition holds \\
+\texttt{/loop [interval] <prompt>} & A timer fires & Same session & You stop it or the session ends \\
+A shell loop over \texttt{claude -p} (the ``Ralph loop'') & Your script calls it again & A fresh process, with the disk as memory & Your test passes \\
 \bottomrule
 \end{tabular}
 \end{center}
 \end{frame}
 
 % --- /goal: the mechanism ---
-\begin{frame}{\texttt{/goal}: A Separate Evaluator Decides When You Are Done}
-\texttt{/goal} sets a completion condition. After every turn, a \emph{separate} small model reads the transcript and judges whether it holds.
+\begin{frame}{With \texttt{/goal}, a separate evaluator decides when to stop}
+\texttt{/goal} sets a completion condition. After every turn, a \emph{separate} small model reads the transcript and judges whether the condition holds.
 \begin{center}
 \begin{tikzpicture}[
     box/.style={draw, rounded corners=3pt, minimum width=3.0cm, minimum height=0.75cm, font=\scriptsize, align=center},
@@ -1884,10 +1882,10 @@ a shell loop over \texttt{claude -p} (the ``Ralph loop'') & your script calls it
 \end{tikzpicture}
 \end{center}
 \vspace{-0.3em}
-The evaluator reads only the transcript: the agent must \emph{show} the test output. Deny rules and hooks still apply.
+The evaluator reads only the transcript, so the agent must \emph{show} the test output. Deny rules and hooks remain in force.
 \end{frame}
 
-\begin{frame}[fragile]{Setting a Goal: One End State, One Proof, One Bound}
+\begin{frame}[fragile]{A goal needs an end state, a command that proves it, and a cap}
 \begin{columns}[T]
 \column{0.52\textwidth}
 \begin{lstlisting}[style=bash, basicstyle=\footnotesize\ttfamily]
@@ -1899,19 +1897,19 @@ The evaluator reads only the transcript: the agent must \emph{show} the test out
 claude -p "/goal <condition>"  # headless
 \end{lstlisting}
 \column{0.44\textwidth}
-\textbf{A condition that holds up}
+\textbf{A well-specified condition has}
 \begin{itemize}\itemsep8pt
-  \item one measurable end state, and the command that proves it
-  \item constraints that hold on the way
-  \item a bound: ``or stop after 6 turns''
+  \item one measurable end state and the command that proves it
+  \item constraints that must hold along the way
+  \item a cap, such as ``or stop after 6 turns''
 \end{itemize}
 \end{columns}
 \end{frame}
 
 
-\begin{frame}[fragile]{Step 4: The Loop Has to Write This Residual}
+\begin{frame}[fragile]{The loop has to write this residual function}
 \hfill\stepmarker{4}\par\vspace{0.1em}
-\textbf{The demo problem:} the stochastic solver of Part I, built by a loop.
+\textbf{The demo problem} is the solver for the stochastic model from Part I, built by a loop.
 \begin{columns}[T]
 \column{0.60\textwidth}
 \begin{lstlisting}[basicstyle=\scriptsize\ttfamily]
@@ -1936,18 +1934,18 @@ def residual(net, logz, logK):
 \end{lstlisting}
 \column{0.37\textwidth}
 \vspace{0.6em}
-\textbf{Our solution's residual} (lightly reformatted): consumption today, capital tomorrow, the expectation over five shocks, the gap.
+\textbf{The residual of the provided solution} (lightly reformatted) computes consumption today, capital tomorrow, the expectation over five quadrature nodes, and the residual.
 
 \vspace{0.8em}
-\textbf{The training loop} is seventeen more lines.
+\textbf{The training loop} takes 17 more lines.
 
 \vspace{0.8em}
-\textbf{The agent writes both} from the goal on the next slides; our solution stays outside the demo project.
+\textbf{The agent writes both} from the goal on the next slides. The provided solution is kept outside the demo project.
 \end{columns}
 \filebox{code/deqn/solution/deqn\_stochastic.py; the shared pieces: code/deqn/common.py}
 \end{frame}
 
-\begin{frame}[fragile]{\walkthrough~6: The Tests Are the Spec~\livedemo[4]}
+\begin{frame}[fragile]{\walkthrough~6: The tests are the specification~\livedemo[4]}
 \hfill\stepmarker{4}\par\vspace{0.1em}
 \begin{columns}[T]
 \column{0.56\textwidth}
@@ -1972,39 +1970,39 @@ def test_policy_matches_reference(trained):
 #   same seed -> same policy
 \end{lstlisting}
 \column{0.41\textwidth}
-\texttt{tests/test\_deqn\_stochastic.py}, abridged (the stub it tests raises \texttt{NotImplementedError}).
+The listing shows \texttt{tests/test\_deqn\_stochastic.py}, abridged. The stub that it tests raises \texttt{NotImplementedError}.
 
 \vspace{1.0em}
-The tests bring their own residual and simulation (\texttt{conftest.py}): the agent cannot talk its way past them.
+The tests compute the residual and the simulation with their own code (\texttt{conftest.py}), so they do not depend on what the agent reports.
 \end{columns}
 \end{frame}
 
-\begin{frame}{Where the Thresholds Come From}
+\begin{frame}{The thresholds are derived from the provided solution}
 \hfill\stepmarker{4}\par\vspace{0.1em}
 \begin{center}
 \renewcommand{\arraystretch}{1.5}
 \begin{tabular}{@{}lrr@{}}
 \toprule
- & \textbf{ours} & \textbf{threshold} \\
+ & \textbf{Provided solution} & \textbf{Threshold} \\
 \midrule
-on-path mean $|r|$ & $1.4\times10^{-4}$ & $< 10^{-3}$ \\
-max $|s - s_{\mathrm{ref}}|$ & $2.3\times10^{-3}$ & $< 10^{-2}$ \\
+On-path mean $|r|$ & $1.4\times10^{-4}$ & $< 10^{-3}$ \\
+Policy error, max $|s - s_{\mathrm{ref}}|$ & $2.3\times10^{-3}$ & $< 10^{-2}$ \\
 $|E[s] - 0.2521|$ & $2\times10^{-4}$ & $< 5\times10^{-3}$ \\
-own-path $\log K$ in window & yes & always \\
-two runs, same seed & identical & equality \\
+Simulated $\log K$ inside the training window & yes & always \\
+Two runs with the same seed & identical & equality \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 \vspace{0.5em}
-Thresholds are 4--25$\times$ what our solution reaches.
+The thresholds are 4--25 times the values that the provided solution reaches.
 \filebox{code/deqn/tests/, code/deqn/reference/baseline.md (the measured run and every margin)}
 \end{frame}
 
 % --- Anatomy of the goal ---
-\begin{frame}[fragile]{Six Parts Make a Goal the Agent Cannot Misread~\livedemo[4]}
+\begin{frame}[fragile]{Six parts make the goal hard to misread~\livedemo[4]}
 \hfill\stepmarker{4}\par\vspace{0.1em}
-Typed in a second terminal at the start of this part. The six components of Part IV, arranged for a loop:
+The goal is typed in a second terminal at the start of this part. Its six parts adapt the prompt components of Part IV to a loop:
 
 \vspace{0.4em}
 \begin{lstlisting}[style=prompt, basicstyle=\scriptsize\ttfamily]
@@ -2023,23 +2021,23 @@ Typed in a second terminal at the start of this part. The six components of Part
 \filebox{code/prompts.md, \S 11 (the goal verbatim, and a template for your own)}
 \end{frame}
 
-\begin{frame}{What Each of the Six Parts Does}
+\begin{frame}{The role of each part of the goal}
 \hfill\stepmarker{4}\par\vspace{0.1em}
 \begin{center}
 \renewcommand{\arraystretch}{1.6}
-\begin{tabular}{@{}l >{\raggedright\arraybackslash}p{10.2cm}@{}}
-\textcolor{level5}{\textbf{Condition}} & what ``done'' means, readable off the transcript \\
-\textcolor{softblue}{\textbf{Problem}} & the model, and where it is stated \\
-\textcolor{softgreen!80!black}{\textbf{Recipe}} & a reproducible eleven-second run: the Step-2 prompt again \\
-\textcolor{softorange!90!black}{\textbf{Interface}} & the function the tests import \\
-\textcolor{darkred}{\textbf{Each turn}} & test first, show the output, one fix, one commit \\
-\textcolor{harvardcrimson}{\textbf{Cap}} & bound the cost; say what to do when stuck \\
+\begin{tabular}{@{}l >{\raggedright\arraybackslash}p{10.6cm}@{}}
+\textcolor{level5}{\textbf{Condition}} & States what ``done'' means in a form that can be read off the transcript \\
+\textcolor{softblue}{\textbf{Problem}} & Names the economic model and where it is stated \\
+\textcolor{softgreen!80!black}{\textbf{Recipe}} & Specifies a reproducible run of 11 seconds; it repeats the Step 2 prompt \\
+\textcolor{softorange!90!black}{\textbf{Interface}} & Defines the function that the tests import \\
+\textcolor{darkred}{\textbf{Each turn}} & Requires a test run first, the output shown, one fix, and one commit \\
+\textcolor{harvardcrimson}{\textbf{Cap}} & Bounds the cost and says what to do when the agent is stuck \\
 \end{tabular}
 \end{center}
 \end{frame}
 
 % --- Turn by turn ---
-\begin{frame}[fragile]{Two Turns: The Tests Named the Bug, One Fix Passed}
+\begin{frame}[fragile]{The tests locate the bug in turn 1, and one fix resolves it}
 \hfill\stepmarker{4}\par\vspace{0.1em}
 \begin{columns}[T]
 \column{0.57\textwidth}
@@ -2079,15 +2077,15 @@ ALL_TESTS_PASS  mean |r| 1.4e-4, E[s] 0.2523
 \end{center}
 \end{columns}
 \vspace{0.2em}
-{\small\textcolor{uzhgreydark}{The second terminal (an illustrative transcript, condensed; your run differs in detail).}}
+{\small\textcolor{uzhgreydark}{The transcript of the second terminal is illustrative and condensed; your run will differ in detail.}}
 \end{frame}
 
-\begin{frame}[fragile]{What to Notice, and What to Run Afterwards}
+\begin{frame}[fragile]{What the transcript shows and what to run afterward}
 \hfill\stepmarker{4}\par\vspace{0.3em}
-\textbf{Notice:} a \emph{different} model decides completion; the failure named a format mismatch, not an economics error.
+A \emph{different} model decides when the task is done. The failing test pointed to a format mismatch and not to an error in the economics.
 
 \vspace{1.3em}
-\textbf{Afterwards, in \texttt{demo/}:}
+\textbf{Afterward, in \texttt{demo/}:}
 \begin{lstlisting}[style=bash, basicstyle=\small\ttfamily]
 python3 -m pytest -q tests/
 git log --oneline
@@ -2096,9 +2094,9 @@ git log --oneline
 \end{frame}
 
 % --- The verification figure ---
-\begin{frame}[fragile]{Three Panels Confirm the Solution the Loop Built}
+\begin{frame}[fragile]{Three panels confirm the solution that the loop built}
 \hfill\stepmarker{4}\par\vspace{0.4em}
-Five passed tests are numbers. The \texttt{/deqn-accuracy} skill draws the same checks, so that ``solved'' is something you can see:
+Five passed tests are a count. The \texttt{/deqn-accuracy} skill plots the same checks, so that the solution can be inspected.
 \begin{center}
 \includegraphics[width=0.74\linewidth]{figures/agentic_deqn_verify_good.pdf}
 \end{center}
@@ -2106,44 +2104,43 @@ Five passed tests are numbers. The \texttt{/deqn-accuracy} skill draws the same 
 \begin{columns}[T]
 \small
 \column{0.31\textwidth}
-\textbf{The right policy.} Network (solid) on the reference (dashed), at low, average and high productivity.
+\textbf{The policy is right.} The network (solid) lies on the reference (dashed) at low, average, and high productivity.
 \column{0.31\textwidth}
-\textbf{The equation holds.} Mean residual $1.4\times10^{-4}$ over 2,000 simulated periods: a seventh of the threshold.
+\textbf{The equation holds.} The mean residual over 2,000 simulated periods is $1.4\times10^{-4}$, a seventh of the threshold.
 \column{0.31\textwidth}
-\textbf{Checked where it matters.} Simulated capital stays inside the training window.
+\textbf{The check covers the relevant states.} Simulated capital stays inside the training window.
 \end{columns}
 \filebox{code/deqn/accuracy.py (-{}-plot); slides/figures/agentic\_deqn\_verify\_good.pdf}
 \end{frame}
 
 % --- Guardrails + headless ---
-\begin{frame}{No Verifier, No Cap, No Rules: Then No Closed Loop}
-\textbf{Five prerequisites}
+\begin{frame}{A closed loop has five prerequisites}
 \begin{enumerate}\itemsep8pt
-  \item \emphc{A verifier.} No command that exits 0 exactly when the task is done: no goal.
-  \item \emphc{A tight condition.} ``The tests pass'': yes. ``Replicate Acemoglu, Johnson and Robinson (2001)'': no.
-  \item \emphc{A cost cap} in the condition: ``or stop after 6 turns''.
-  \item \emphc{Rules on:} deny rules, the \texttt{PreToolUse} guard, read-only paths.
-  \item \emphc{A throw-away branch.} Review the result like a pull request, then merge or discard.
+  \item \emphc{A verifier.} Without a command that exits 0 exactly when the task is done, do not set a goal.
+  \item \emphc{A narrow condition.} ``The tests pass'' is suitable; ``Replicate Acemoglu, Johnson, and Robinson (2001)'' is not.
+  \item \emphc{A cap.} Put it in the condition, such as ``or stop after 6 turns.''
+  \item \emphc{Active rules.} The deny rules, the \texttt{PreToolUse} hook, and the read-only paths are in force.
+  \item \emphc{A disposable branch.} Review the result like a pull request, then merge or discard it.
 \end{enumerate}
 \end{frame}
 
-\begin{frame}{Two Failure Modes to Expect}
+\begin{frame}{Closed loops fail through compounded errors or runaway cost}
 \begin{columns}[T]
 \column{0.47\textwidth}
 \begin{alertblock}{Compounding errors}
-The evaluator checks the condition, not the economics. Keep loops short; read the diffs.
+The evaluator checks the condition and not the economics. Keep loops short and read the diffs.
 \end{alertblock}
 \column{0.47\textwidth}
-\begin{alertblock}{Token blow-up}
-A turn costs roughly \$0.50--1 on Opus. Six turns are a few dollars; sixty are not.
+\begin{alertblock}{Runaway cost}
+A turn costs roughly \$0.50 to \$1 on Opus, so six turns cost a few dollars and sixty turns cost ten times as much.
 \end{alertblock}
 \end{columns}
 \end{frame}
 
-\begin{frame}[fragile]{Headless Runs Keep the Same Rules, With Nobody Watching}
+\begin{frame}[fragile]{Headless runs follow the same rules without supervision}
 \begin{columns}[T]
 \column{0.52\textwidth}
-\textbf{Headless: the same agent in a batch job}
+\textbf{A headless run is the same agent in a batch job.}
 \begin{lstlisting}[style=bash, basicstyle=\footnotesize\ttfamily]
 # print mode: no UI; cron or Slurm
 claude -p "Re-run estimate.py on
@@ -2162,15 +2159,15 @@ done
 \end{lstlisting}
 \column{0.44\textwidth}
 \vspace{1.6em}
-Same permissions, hooks and \texttt{CLAUDE.md}.
+The same permissions, hooks, and \texttt{CLAUDE.md} apply.
 
 \vspace{1.0em}
-On confidential data: the governance problem of Part IX, with nobody watching.
+With confidential data, an unattended run raises the governance problem discussed in Part IX.
 \end{columns}
 \filebox{code/prompts.md, \S 12; docs: code.claude.com/docs/en/agent-sdk/overview}
 \end{frame}
 
-\begin{frame}{Which Tool for Which Need}
+\begin{frame}{Choosing the tool for the task}
 \begin{center}
 \renewcommand{\arraystretch}{1.7}
 \begin{tabular}{@{}ll@{}}
@@ -2178,9 +2175,9 @@ On confidential data: the governance problem of Part IX, with nobody watching.
 \textbf{Need} & \textbf{Tool} \\
 \midrule
 Interactive work & \texttt{claude}, \texttt{/goal} \\
-Scheduled, one prompt & \texttt{claude -p} in cron / Slurm \\
+A scheduled run of one prompt & \texttt{claude -p} in cron or Slurm \\
 Your own harness & Agent SDK (Python, TypeScript) \\
-Hosted, long-running & Managed Agents \\
+A hosted, long-running agent & Managed Agents \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -2189,12 +2186,12 @@ Hosted, long-running & Managed Agents \\
 % ============================================================================
 % PART VIII: FROM PLAN TO PAPER SECTION
 % ============================================================================
-\partcard{VIII}{From Plan to Table and Figure}{A converged loss is not a solved model}
+\partcard{VIII}{From plan to table and figure}{A converged loss does not imply a solved model}
 
 % --- Walk-through 7: the plan ---
-\begin{frame}[fragile]{\walkthrough~7: The Plan's Targets Caught What the Loss Hid}
+\begin{frame}[fragile]{\walkthrough~7: The plan's targets detect what the loss misses}
 \hfill\stepmarker{5}\par\vspace{0.1em}
-Step 4 again, in plan mode: the plan written before any code, and what the run did to it.
+Step 4 is repeated in plan mode. The plan is written before any code, and the next slide compares the run with it.
 \begin{columns}[T]
 \column{0.56\textwidth}
 \begin{lstlisting}[style=md, basicstyle=\footnotesize\ttfamily]
@@ -2214,14 +2211,14 @@ brock_mirman_reference.solve(0.96, 0.9).
 \end{lstlisting}
 \column{0.40\textwidth}
 \vspace{1.6em}
-\begin{block}{The plan}
-Targets belong in the plan, \emph{before any code}.
+\begin{block}{Recommendation}
+Put the targets into the plan \emph{before any code is written}.
 \end{block}
 \end{columns}
 \filebox{code/deqn/plan\_deqn.md (the numbers are measured)}
 \end{frame}
 
-\begin{frame}[fragile]{What the Run Did to the Plan}
+\begin{frame}[fragile]{The first run misses the plan's targets}
 \hfill\stepmarker{5}\par\vspace{0.1em}
 \begin{columns}[T]
 \column{0.58\textwidth}
@@ -2242,54 +2239,54 @@ wrong branch, not a solution.
 \end{lstlisting}
 \column{0.38\textwidth}
 \vspace{1.6em}
-\textbf{Why it matters:} the first run missed the targets, and nothing in the training loop said so.
+The first run missed the targets, and nothing in the training loop indicated it.
 \end{columns}
 \filebox{the two runs: code/deqn/solution/deqn\_stochastic.py, code/deqn/stochastic\_box.py}
 \end{frame}
 
 % --- The silent failure ---
-\begin{frame}{The Silent Failure: A Loss That Converged, a Policy That Did Not}
+\begin{frame}{The silent failure is a converged loss with a wrong policy}
 \hfill\stepmarker{6}\par\vspace{0.2em}
 \begin{columns}[T]
 \column{0.49\textwidth}
 \centering
 \includegraphics[width=0.96\linewidth]{figures/agentic_deqn_silent_bad.pdf}\\[5pt]
-{\small \textbf{Default initialisation:} loss $2.9\times10^{-7}$; savings rate 0.94; the economy leaves the window.}
+{\small \textbf{Default initialization.} The loss is $2.9\times10^{-7}$, the savings rate is 0.94, and the economy leaves the training window.}
 \column{0.49\textwidth}
 \centering
 \includegraphics[width=0.96\linewidth]{figures/agentic_deqn_silent_good.pdf}\\[5pt]
-{\small \textbf{One line changed} (\texttt{s\_init=s*}): loss $6.0\times10^{-7}$, \emph{higher}; the policy sits on the reference.}
+{\small \textbf{One line changed} (\texttt{s\_init=s*}). The loss is $6.0\times10^{-7}$, which is \emph{higher}, and the policy lies on the reference.}
 \end{columns}
 \end{frame}
 
-\begin{frame}{The Numbers, and the Lesson: Necessary Is Not Sufficient}
+\begin{frame}{The Euler equation is necessary but not sufficient}
 \hfill\stepmarker{6}\par\vspace{0.1em}
 \begin{center}
 \small
 \renewcommand{\arraystretch}{1.3}
 \begin{tabular}{@{}lrr@{}}
 \toprule
- & \textbf{default init} & \textbf{with \texttt{s\_init}} \\
+ & \textbf{Default initialization} & \textbf{With \texttt{s\_init}} \\
 \midrule
-training loss & $2.9\times10^{-7}$ & $6.0\times10^{-7}$ \\
-on-path mean $|r|$ & $9.2\times10^{-2}$ & $1.4\times10^{-4}$ \\
+Training loss & $2.9\times10^{-7}$ & $6.0\times10^{-7}$ \\
+On-path mean $|r|$ & $9.2\times10^{-2}$ & $1.4\times10^{-4}$ \\
 $E[s]$ (reference 0.252) & 0.937 & 0.252 \\
-$\log K$ (window $[0.96, 1.96]$) & $[3.14, 3.72]$ & $[1.08, 1.81]$ \\
+$\log K$ (training window $[0.96, 1.96]$) & $[3.14, 3.72]$ & $[1.08, 1.81]$ \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 \vspace{0.3em}
-\begin{block}{The lesson}
-The Euler equation is \emph{necessary}, not sufficient: an over-saving path ($C \to 0$) satisfies it too. Transversality rules that path out; the loss does not. The check on the network's own path caught it.
+\begin{block}{Explanation}
+The Euler equation is \emph{necessary} but not sufficient, because an oversaving path ($C \to 0$) satisfies it too. Transversality rules that path out, but the loss does not. The on-path check detected it.
 \end{block}
 \filebox{code/deqn/silent\_failure.md, stochastic\_box.py (the one-line diff), plot\_silent\_failure.py}
 \end{frame}
 
 % --- One prompt -> table + figure ---
-\begin{frame}[fragile]{One Prompt, One Answer: The Kernel Barely Matters~\livedemo[5]}
+\begin{frame}[fragile]{The choice of loss kernel barely affects the solution~\livedemo[5]}
 \hfill\stepmarker{7}\par\vspace{0.1em}
-Does the loss kernel matter? One prompt settles it, on the accuracy measure we trust.
+One prompt tests whether the loss kernel matters, with accuracy measured on the simulated path.
 \begin{columns}[T]
 \column{0.48\textwidth}
 \begin{lstlisting}[style=prompt, basicstyle=\footnotesize\ttfamily]
@@ -2313,13 +2310,13 @@ Does the loss kernel matter? One prompt settles it, on the accuracy measure we t
 \filebox{code/deqn/loss\_kernels.py (45 s); prompt: code/prompts.md, \S 13}
 \end{frame}
 
-\begin{frame}{Four Kernels, One Answer on the Path}
+\begin{frame}{All four kernels give the same answer on the simulated path}
 \hfill\stepmarker{7}\par\vspace{0.1em}
 \begin{center}
 \renewcommand{\arraystretch}{1.4}
 \begin{tabular}{@{}lrrrr@{}}
 \toprule
-Kernel & training loss & mean $|r|$ & $E[s]$ & max gap \\
+\textbf{Kernel} & \textbf{Training loss} & \textbf{Mean $|r|$} & \textbf{$E[s]$} & \textbf{Policy error} \\
 \midrule
 MSE & $6.0\times10^{-7}$ & $1.4\times10^{-4}$ & 0.2523 & $2.3\times10^{-3}$ \\
 MAE & $2.9\times10^{-4}$ & $1.7\times10^{-4}$ & 0.2520 & $1.4\times10^{-3}$ \\
@@ -2330,13 +2327,13 @@ log-cosh & $3.0\times10^{-7}$ & $1.4\times10^{-4}$ & 0.2523 & $2.3\times10^{-3}$
 \end{center}
 
 \vspace{0.7em}
-The training losses are in different units: they cannot rank the kernels. On the path, their mean savings rates agree to $3\times10^{-4}$.
+The training losses are in different units and therefore cannot rank the kernels. On the simulated path, the mean savings rates agree to within $3\times10^{-4}$.
 \filebox{outputs/deqn\_kernel\_table.tex}
 \end{frame}
 
 % --- Replication ---
-\begin{frame}{Agents Replicate Papers When the Evidence Lives in Files}
-Hans \& Bilionis (2026) replicate papers from their materials alone, with the method of this lecture.
+\begin{frame}{Agents can replicate papers when the evidence is kept in files}
+Hans and Bilionis (2026) replicate papers from the papers' own materials, with a method close to the one in this lecture.
 \begin{center}
 \begin{tikzpicture}[
     lab/.style={font=\tiny\bfseries, text=uzhgreydark, anchor=east},
@@ -2356,214 +2353,221 @@ Hans \& Bilionis (2026) replicate papers from their materials alone, with the me
 \end{tikzpicture}
 \end{center}
 \vspace{0.1em}
-\textbf{What they found} (12 runs, 4 papers, no author code)
+\textbf{Their findings} (12 runs on 4 papers, without the authors' code)
 \begin{itemize}\itemsep4pt
-  \item All 158 targets met the acceptance rules the agent recorded
-  \item 1 to 13 hours per run; reruns differ 2$\times$ in time
-  \item Against the papers' own accuracy: 37 of 39 numbers inside
+  \item All 158 targets met the acceptance rules that the agent had recorded.
+  \item A run took 1 to 13 hours, and repeated runs differed by a factor of two in time.
+  \item Of 39 numbers, 37 fell within the accuracy reported by the papers themselves.
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Their Method Is This Lecture's Method}
-\textbf{Why it matches this lecture}
-\begin{itemize}\itemsep9pt
-  \item Targets with acceptance rules = the tests
-  \item Ledger and matrix on disk = \texttt{CLAUDE.md}, state files
-  \item Validators outside the agent = evaluator, hooks
-  \item ``The agent's final message is not enough evidence'' = the silent failure
-\end{itemize}
+\begin{frame}{Their method corresponds to the method of this lecture}
+\begin{center}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{6.4cm} >{\raggedright\arraybackslash}p{6.0cm}@{}}
+\toprule
+\textbf{Hans and Bilionis (2026)} & \textbf{This lecture} \\
+\midrule
+Targets with acceptance rules & The tests \\
+A ledger and a matrix on disk & \texttt{CLAUDE.md} and the state files \\
+Validators outside the agent & The evaluator and the hooks \\
+``the agent's final message is not enough evidence'' & The lesson of the silent failure \\
+\bottomrule
+\end{tabular}
+\end{center}
 
-\vspace{1.1em}
-\textbf{The method scales} to a published paper. Their skill: appendix.
+\vspace{0.8em}
+\textbf{The method scales} to a published paper. Their skill is described in the appendix.
 \filebox{arXiv:2607.02134 (skill: see References); code/prompts.md, \S 14}
 \end{frame}
 
 % ============================================================================
 % PART IX: VERIFICATION, REPRODUCIBILITY, GOVERNANCE
 % ============================================================================
-\partcard{IX}{Verification, Reproducibility and Governance}{You remain accountable for every number}
+\partcard{IX}{Verification, reproducibility, and governance}{You remain accountable for every number}
 
 % --- Cardinal rule ---
-\begin{frame}{Verify the Solution, Not the Loss, Every Time}
-\begin{alertblock}{The invisible failure}
-Code that \emphc{crashes} is visible. Code that runs cleanly and returns a savings rate of 0.94 instead of 0.25 is not: the agent's characteristic failure.
+\begin{frame}{Verify the solution rather than the loss}
+\begin{alertblock}{The silent failure}
+A crash is noticed. Code that runs without error and returns a savings rate of 0.94 instead of 0.25 is not, and this is the typical failure of an agent.
 \end{alertblock}
 
 \vspace{0.9em}
-\textbf{Four checks, every time}
+\textbf{Four checks to apply every time}
 \begin{enumerate}\itemsep6pt
-  \item \textbf{A known answer:} a special case with a closed form ($\delta = 1$)
-  \item \textbf{An independent method:} a reference solver that shares no code
-  \item \textbf{The solution, not the loss:} the policy against the reference, on its own path
+  \item \textbf{A known answer}, from a special case with a closed form ($\delta = 1$)
+  \item \textbf{An independent method}, a reference solver that shares no code
+  \item \textbf{The policy itself}, compared with the reference on the path it generates
   \item \textbf{A stored result}, reproduced before you change anything
 \end{enumerate}
 \end{frame}
 
-\begin{frame}{Five Things Agents Get Wrong in a Model Solution}
+\begin{frame}{Common errors that agents make in solving economic models}
 \begin{itemize}\itemsep11pt
-  \item \textbf{Scales:} one loss term silently dominates
-  \item \textbf{Samples:} a fixed window, not the ergodic set
-  \item \textbf{Constraints:} a penalty where a complementarity condition belongs
-  \item \textbf{Branches:} a necessary condition with a second solution
-  \item \textbf{Accuracy claims:} a training loss reported as an error
+  \item \textbf{Scales.} One loss term dominates the others unnoticed.
+  \item \textbf{Samples.} States are drawn from a fixed window instead of the ergodic set.
+  \item \textbf{Constraints.} A penalty replaces a complementarity condition.
+  \item \textbf{Branches.} A necessary condition has a second solution.
+  \item \textbf{Accuracy claims.} A training loss is reported as an error measure.
 \end{itemize}
 \end{frame}
 
 % --- Disclosure ---
-\begin{frame}{Disclose Every AI Use That Produced a Result}
-A snapshot, checked in November 2026: read the journal's current policy before you submit or referee.
+\begin{frame}{Disclose any use of AI that produced a result}
 \begin{center}
 \small
-\renewcommand{\arraystretch}{1.35}
+\renewcommand{\arraystretch}{1.3}
 \begin{tabular}{@{}>{\raggedright\arraybackslash}p{3.6cm} >{\raggedright\arraybackslash}p{5.2cm} >{\raggedright\arraybackslash}p{4.0cm}@{}}
 \toprule
 \textbf{Publisher} & \textbf{Authors} & \textbf{Referees} \\
 \midrule
-AEA journals & describe AI use at submission & disclose AI use; no tool that trains on the manuscript \\
-Oxford UP (\textit{QJE}, \textit{REStud}) & disclose in the cover letter and in Methods or Acknowledgements & check the reviewer guidelines \\
-\textit{Econometrica} & AI allowed; authors stay accountable & check the reviewer guidelines \\
-Elsevier (\textit{JME}, \textit{JPubE\/}) & AI declaration in the manuscript; no AI-made images of data & no upload of the manuscript \\
-Springer Nature & AI declaration in the manuscript & no upload to public AI tools \\
+AEA journals & Describe the use of AI at submission & Disclose the use of AI; no tool that trains on the manuscript \\
+Oxford UP (\textit{QJE}, \textit{REStud}) & Disclose it in the cover letter and in Methods or Acknowledgments & Check the reviewer guidelines \\
+\textit{Econometrica} & AI is allowed; authors remain accountable & Check the reviewer guidelines \\
+Elsevier (\textit{JME}, \textit{JPubE\/}) & AI declaration in the manuscript; no AI-made images of data & Do not upload the manuscript \\
+Springer Nature & AI declaration in the manuscript & Do not upload it to public AI tools \\
 COPE (2023) & AI tools cannot be authors & \\
 \bottomrule
 \end{tabular}
 \end{center}
+\vspace{-0.3em}
+{\scriptsize\textcolor{uzhgreydark}{The table is a snapshot from November 2026. Read the journal's current policy before you submit or referee. COPE is the Committee on Publication Ethics.}}
 \end{frame}
 
-\begin{frame}{What to Disclose, and a Sentence to Copy}
-\begin{block}{Bottom line}
-Disclose any use that produced a number, a figure, a derivation or more than a sentence: model, version, date, and a prompt log.
+\begin{frame}{What to disclose, with a sample sentence}
+\begin{block}{What to disclose}
+Disclose any use that produced a number, a figure, a derivation, or more than a sentence. State the model, the version, and the date, and keep a prompt log.
 \end{block}
 
 \vspace{1.3em}
-\textbf{A model sentence:}
+\textbf{A sample sentence:}
 
 \vspace{0.3em}
 {\itshape ``The code in Sections 3--4 was drafted with Claude Code (Opus 5.5, November 2026) from the prompts in \texttt{replication/prompts.md}; all results were verified by the authors.''}
 \end{frame}
 
 % --- Referees, supervisors, students ---
-\begin{frame}{Referees Keep Manuscripts Out; Students Defend Every Line}
+\begin{frame}{Duties of referees, supervisors, and PhD students}
 \begin{columns}[T]
 \column{0.32\textwidth}
 \begin{block}{As a referee or editor}
 \begin{itemize}\itemsep5pt
-  \item The manuscript is confidential; an LLM is a third party
-  \item Several publishers prohibit uploading a submission
+  \item The manuscript is confidential, and a language model is a third party.
+  \item Several publishers prohibit uploading a submission.
 \end{itemize}
 \end{block}
 \column{0.32\textwidth}
 \begin{block}{As a supervisor}
 \begin{itemize}\itemsep5pt
-  \item Agree the disclosure \emph{before} the work starts
-  \item Ask for the verification, not the code
+  \item Agree on the disclosure \emph{before} the work starts.
+  \item Ask to see the verification before the code.
 \end{itemize}
 \end{block}
 \column{0.32\textwidth}
 \begin{block}{As a PhD student}
 \begin{itemize}\itemsep5pt
-  \item Keep a \texttt{prompts.md}; \texttt{/export} the transcripts (local copies expire)
-  \item You specified it, you verified it, you can defend every line
+  \item Keep a \texttt{prompts.md} and \texttt{/export} the transcripts, because local copies expire.
+  \item Specify and verify the work yourself, so that you can defend every line.
 \end{itemize}
 \end{block}
 \end{columns}
 \end{frame}
 
-\begin{frame}{Three Rules That Do Not Change}
+\begin{frame}{Rules that hold regardless of the tool}
 \begin{enumerate}\itemsep16pt
-  \item You answer for every number
-  \item Confidential material stays out
-  \item Disclosure is cheap, discovery is not
+  \item You answer for every number.
+  \item Confidential material stays out of the tool.
+  \item Disclosure costs little compared with an undisclosed use that is discovered later.
 \end{enumerate}
 \end{frame}
 
 % --- Replication packages ---
-\begin{frame}{Ship LLM Output as Frozen Code, Not Re-runnable Prompts}
-An LLM call is \emph{non-deterministic}: re-running the prompt does not reproduce the numbers. The AEA's data and code policy still applies: the package must be sufficient to permit replication, so everything re-runs \emph{without} asking a model.
+\begin{frame}{A replication package must run without calling a model}
+A call to a large language model (LLM) is \emph{nondeterministic}, so rerunning the prompt does not reproduce the numbers. The AEA's data and code policy still applies: the package must be sufficient to permit replication, which means that everything reruns \emph{without} asking a model.
 
 \vspace{0.8em}
 \begin{columns}[T]
 \column{0.52\textwidth}
 \textbf{What to ship}
 \begin{itemize}\itemsep5pt
-  \item All code, LLM-written code included, as \emphc{frozen} files
-  \item Scripted data lineage, pinned seeds, a lockfile
-  \item \texttt{prompts.md}: model, version and date per artefact
-  \item \texttt{CLAUDE.md}, sensitive paths redacted
+  \item All code, including code written by an LLM, as \emphc{frozen} files
+  \item A scripted data lineage, pinned seeds, and a lockfile
+  \item A \texttt{prompts.md} with the model, version, and date for each artifact
+  \item The \texttt{CLAUDE.md}, with sensitive paths redacted
 \end{itemize}
 \column{0.44\textwidth}
-\begin{alertblock}{Anti-patterns}
+\begin{alertblock}{What to avoid}
 \begin{itemize}\itemsep4pt
-  \item ``Re-run \texttt{claude} on \texttt{prompt.md}''
-  \item An LLM call inside \texttt{run\_all.py}
+  \item ``Rerun \texttt{claude} on \texttt{prompt.md}'' as an instruction
+  \item A call to an LLM inside \texttt{run\_all.py}
   \item Commit messages as the only documentation
 \end{itemize}
 \end{alertblock}
 \end{columns}
 \end{frame}
 
-\begin{frame}{Citations Come From Your Own \texttt{.bib}, Never From Recall}
+\begin{frame}{Take citations from your own \texttt{.bib} file, not from the model}
 \begin{center}
-{\large 55\,\% of GPT-3.5 citations were fabricated}\\[5pt]
-{\small\textcolor{uzhgreydark}{Walters \& Wilder (2023)}}
+{\large 55\% of the citations generated by GPT-3.5 were fabricated}\\[5pt]
+{\small\textcolor{uzhgreydark}{Walters and Wilder (2023)}}
 \end{center}
 
 \vspace{1.5em}
 \begin{itemize}\itemsep9pt
-  \item Cite from your own \texttt{.bib} (template 4, Part IV)
-  \item Never let the model recall
+  \item Cite from your own \texttt{.bib} file (Template 4, Part IV).
+  \item Do not let the model cite from memory.
 \end{itemize}
 \end{frame}
 
 % --- Governance ---
-\begin{frame}{Restricted Data Stays Off the API; Ask IT and Legal}
-Everything the agent \emph{reads} goes into the API call. With licensed or confidential data, this question comes first.
+\begin{frame}{Restricted data must not reach the API}
+Everything the agent \emph{reads} becomes part of the API call. With licensed or confidential data, first agree with your IT and legal departments on what may be sent.
 
 \vspace{1.0em}
-\textbf{Three regimes}
+\textbf{Three legal regimes}
 \begin{itemize}\itemsep9pt
-  \item \emphc{GDPR:} personal data needs a lawful basis, a processor agreement and a transfer mechanism
-  \item \emphc{Data agreements:} restricted microdata are confidential by contract
-  \item \emphc{EU AI Act:} transparency duties for providers and deployers (Art.\ 50)
+  \item \emphc{GDPR.} Under the EU data protection regulation, personal data require a lawful basis, a processor agreement, and a transfer mechanism.
+  \item \emphc{Data use agreements.} Restricted microdata are confidential by contract.
+  \item \emphc{EU AI Act.} Article 50 sets transparency duties for providers and deployers.
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Practical Defaults: What May Go to the API}
+\begin{frame}{Practical defaults for what may be sent to the API}
 \begin{itemize}\itemsep10pt
-  \item[\textcolor{darkred}{\ding{55}}] Confidential or personal data, credentials: never to a public API
-  \item[\textcolor{softorange}{\textbf{?}}] Licensed data: re-read the agreement first
-  \item[\textcolor{darkgreen}{\checkmark}] Public and synthetic data, model code: fine
-  \item[\textcolor{softorange}{\textbf{!}}] Deny rules and hooks are not airtight: keep restricted data off the agent's machine
+  \item[\textcolor{darkred}{\ding{55}}] Confidential or personal data and credentials are never sent to a public API.
+  \item[\textcolor{softorange}{\textbf{?}}] For licensed data, reread the agreement first.
+  \item[\textcolor{darkgreen}{\checkmark}] Public and synthetic data and the code for the economic model can be sent.
+  \item[\textcolor{softorange}{\textbf{!}}] Deny rules and hooks are not airtight, so keep restricted data off the machine on which the agent runs.
 \end{itemize}
 
 \vspace{1.1em}
-\textbf{The institutional route:} Claude Code under your institution's cloud contract (Amazon Bedrock, Google Cloud, Microsoft Foundry), or an open-weight model on your own cluster.
+\textbf{The institutional route} is Claude Code under your institution's cloud contract (Amazon Bedrock, Google Cloud, Microsoft Foundry) or an open-weight model on your own cluster.
 \end{frame}
 
 % --- Six habits ---
-\begin{frame}{Six Habits That Make Compliance Checkable}
+\begin{frame}{Habits that make compliance verifiable}
 \begin{enumerate}\itemsep9pt
-  \item \texttt{CLAUDE.md} declares data classes and read-only paths
-  \item Deny rules stop \emph{reading}; a \texttt{PreToolUse} hook stops \emph{editing}
-  \item An audit log records file paths only, never commands
-  \item LLM output is committed as a \emph{file}, not as a prompt to re-run
-  \item \texttt{prompts.md} ships with the replication package
-  \item Co-authors review the diff before merge
+  \item \texttt{CLAUDE.md} declares the data classes and the read-only paths.
+  \item Deny rules block \emph{reads}, and a \texttt{PreToolUse} hook blocks \emph{edits}.
+  \item An audit log records file paths only, never commands.
+  \item LLM output is committed as a \emph{file}, so that nothing has to be regenerated.
+  \item \texttt{prompts.md} ships with the replication package.
+  \item Coauthors review the diff before the merge.
 \end{enumerate}
 \end{frame}
 
-\begin{frame}{The Habits in the Demo, and What They Do Not Do}
+\begin{frame}{The habits in the demo project and their limits}
 \textbf{In the demo project}
 \begin{itemize}\itemsep6pt
-  \item \texttt{CLAUDE.md}: habit 1
-  \item \texttt{.claude/settings.json}: habits 2 and 3
-  \item the git history: habits 4 and 6
-  \item \texttt{prompts.md}: habit 5
+  \item \texttt{CLAUDE.md} implements Habit 1.
+  \item \texttt{.claude/settings.json} implements Habits 2 and 3.
+  \item The Git history implements Habits 4 and 6.
+  \item \texttt{prompts.md} implements Habit 5.
 \end{itemize}
 
 \vspace{1.0em}
-\begin{block}{What this does not do}
-It makes compliance \emph{checkable}. It does not replace the data agreement or the referee's duty of confidentiality.
+\begin{block}{Limits}
+The habits make compliance \emph{verifiable}. They do not replace the data use agreement or the referee's duty of confidentiality.
 \end{block}
 \end{frame}
 
@@ -2573,55 +2577,55 @@ It makes compliance \emph{checkable}. It does not replace the data agreement or 
 \begin{frame}{}
 \vfill
 \begin{center}
-{\Huge \textcolor{uzhblue}{\textbf{Wrap-Up}}}\\[12pt]
-{\LARGE Quick Reference, Takeaways, Conclusion}
+{\Huge \textcolor{uzhblue}{\textbf{Wrap-up}}}\\[12pt]
+{\LARGE Quick reference, takeaways, and conclusion}
 \end{center}
 \vfill
 \end{frame}
 
 % --- Quick Reference ---
-\begin{frame}{Quick Reference Card}
+\begin{frame}{Quick reference for sessions, context, and safety}
 \begin{columns}[T]
 \column{0.47\textwidth}
 \textbf{\textcolor{uzhblue}{Before every session}}
 \begin{itemize}\itemsep3pt
-  \item[$\square$] \texttt{git commit} checkpoint
+  \item[$\square$] Make a \texttt{git commit} checkpoint
   \item[$\square$] Update the status in \texttt{CLAUDE.md}
-  \item[$\square$] Plan mode for anything non-trivial
+  \item[$\square$] Use plan mode for anything nontrivial
 \end{itemize}
 \vspace{0.8em}
-\textbf{\textcolor{uzhblue}{Context hygiene}}
+\textbf{\textcolor{uzhblue}{Context}}
 \begin{itemize}\itemsep3pt
-  \item[$\square$] \texttt{/compact} with a focus when a session drifts
-  \item[$\square$] State to \texttt{notes/session\_state.md}
-  \item[$\square$] \texttt{/clear} per sub-task
-  \item[$\square$] Subagents for reading-heavy work
+  \item[$\square$] Run \texttt{/compact} with a focus when a session drifts
+  \item[$\square$] Write the state to \texttt{notes/session\_state.md}
+  \item[$\square$] Run \texttt{/clear} between unrelated tasks
+  \item[$\square$] Use subagents for reading-heavy work
 \end{itemize}
 \column{0.47\textwidth}
 \textbf{\textcolor{uzhblue}{Safety}}
 \begin{itemize}\itemsep3pt
-  \item[$\square$] No confidential or personal data
-  \item[$\square$] Deny rules + hook on data folders
-  \item[$\square$] Review the diff before commit
+  \item[$\square$] Send no confidential or personal data
+  \item[$\square$] Set deny rules and a hook on data folders
+  \item[$\square$] Review the diff before the commit
 \end{itemize}
 \vspace{0.8em}
 \textbf{\textcolor{uzhblue}{After every session}}
 \begin{itemize}\itemsep3pt
-  \item[$\square$] \texttt{git diff HEAD}; \texttt{git add -p}
-  \item[$\square$] Update \texttt{session\_state.md}, \texttt{CLAUDE.md}
+  \item[$\square$] Run \texttt{git diff HEAD}, then \texttt{git add -p}
+  \item[$\square$] Update \texttt{session\_state.md} and \texttt{CLAUDE.md}
 \end{itemize}
 \end{columns}
 \end{frame}
 
-\begin{frame}{Quick Reference: Prompts, Commands, Subagents}
+\begin{frame}{Quick reference for prompts, commands, and subagents}
 \begin{columns}[T]
 \column{0.47\textwidth}
 \textbf{\textcolor{uzhblue}{Prompt checklist (Level 3)}}
 \begin{itemize}\itemsep4pt
   \item[$\square$] Set the role and the context
-  \item[$\square$] State one task; name files and paths
-  \item[$\square$] Add constraints (what NOT to do)
-  \item[$\square$] Fix output format and location
+  \item[$\square$] State one task and name the files and paths
+  \item[$\square$] Add constraints (what not to do)
+  \item[$\square$] Specify the output format and location
   \item[$\square$] Add a verification step
 \end{itemize}
 \column{0.47\textwidth}
@@ -2629,34 +2633,34 @@ It makes compliance \emph{checkable}. It does not replace the data agreement or 
 {\small\ttfamily /init, /clear, /compact, /context, /usage, /memory, /permissions, /goal, /rewind; Shift+Tab (modes), Esc (interrupt)}
 
 \vspace{1.1em}
-\textbf{\textcolor{uzhblue}{The demo's subagents}}\\[3pt]
+\textbf{\textcolor{uzhblue}{Subagents in the demo project}}\\[3pt]
 {\small verifier, solution-accuracy-checker, loss-balancing-reviewer, econometrics-reviewer, code-reviewer, test-writer, doc-generator, monte-carlo-designer}
 \end{columns}
 \end{frame}
 
 % --- Takeaways ---
-\begin{frame}{Key Takeaways}
+\begin{frame}{Summary}
 \begin{enumerate}\itemsep6pt
-  \item \textbf{The bottleneck has shifted} to \emphc{specification and verification}: your economics is the advantage.
-  \item \textbf{Explore, plan, implement, commit:} energy into the plan; read the diff.
-  \item \textbf{Six-component prompts:} verification is the part only you can supply.
-  \item \textbf{Plain files extend the agent:} preferences in text, rules in code.
-  \item \textbf{Close a loop only on a verifier:} the smallest machine-checkable condition.
-  \item \textbf{A converged loss is not a solved model:} check the solution, on its own path.
-  \item \textbf{You answer for every number:} freeze, pin, log, disclose.
+  \item \textbf{The bottleneck has shifted} to \emphc{specification and verification}, where your knowledge of economics is the advantage.
+  \item \textbf{Explore, plan, implement, and commit.} Put the effort into the plan and read the diff.
+  \item \textbf{A prompt has six components.} Verification is the one that only you can supply.
+  \item \textbf{Plain files extend the agent.} Preferences go in text and binding rules in code.
+  \item \textbf{Close a loop only when there is a verifier}, and give it the narrowest condition that a machine can check.
+  \item \textbf{A converged loss does not imply a solved model.} Check the solution on its own simulated path.
+  \item \textbf{You answer for every number.} Freeze the code, pin the versions, keep the prompt log, and disclose.
 \end{enumerate}
 \end{frame}
 
-\begin{frame}{In One Sentence}
+\begin{frame}{The lecture in one sentence}
 \begin{center}
-{\large A very fast research assistant who never asks\\[4pt] whether the result makes economic sense:}\\[12pt]
-{\large \emphc{a tool for your research, not a replacement for your judgement.}}
+{\large An agent is a very fast research assistant that does not ask\\[4pt] whether a result makes economic sense,}\\[12pt]
+{\large \emphc{so it remains a tool for your research and no substitute for your judgment.}}
 \end{center}
 \end{frame}
 
 % --- Boris tips ---
-\begin{frame}{Ten Practitioner Tips: Advice, Not Evidence}
-From the Claude Code team, posted by Boris Cherny, who created Claude Code. The TIP badges point here.
+\begin{frame}{Tips 1 to 5 from the Claude Code team}
+The ten tips come from the Claude Code team and were posted by Boris Cherny, who created Claude Code. They are practitioners' advice and have not been tested as evidence. The TIP badges on the slides refer to this list.
 
 \vspace{0.5em}
 \begin{center}
@@ -2665,60 +2669,59 @@ From the Claude Code team, posted by Boris Cherny, who created Claude Code. The 
 \toprule
 \textbf{\#} & \textbf{Tip} & \textbf{Key detail} \\
 \midrule
-1 & Do more in \emphc{parallel} & 3--5 worktrees, one session each \\
-2 & Start complex tasks in \emphc{plan mode} & energy into the plan; implementation in one pass \\
+1 & Do more in \emphc{parallel} & 3--5 worktrees, with one session each \\
+2 & Start complex tasks in \emphc{plan mode} & Put the effort into the plan so that the implementation succeeds in one pass \\
 3 & Invest in your \emphc{CLAUDE.md} & ``Update your CLAUDE.md so you don't make that mistake again'' \\
-4 & Create custom \emphc{skills} & more than once a day: make it a skill \\
-5 & Let the agent fix its \emphc{bugs} & say what, and how you will know; not how \\
+4 & Create custom \emphc{skills} & Turn anything you do more than once a day into a skill \\
+5 & Let the agent fix its \emphc{bugs} & State what you want and how you will know it is done; leave the method to the agent \\
 \bottomrule
 \end{tabular}
 \end{center}
 \end{frame}
 
-\begin{frame}{Ten Practitioner Tips, 6 to 10}
+\begin{frame}{Tips 6 to 10 from the Claude Code team}
 \begin{center}
 \renewcommand{\arraystretch}{1.45}
 \begin{tabular}{@{}c >{\raggedright\arraybackslash}p{4.8cm} >{\raggedright\arraybackslash}p{7.4cm}@{}}
 \toprule
 \textbf{\#} & \textbf{Tip} & \textbf{Key detail} \\
 \midrule
-6 & Level up your \emphc{prompting} & challenge the agent; write detailed specs \\
-7 & Set up your \emphc{terminal} & one tab per session; context usage in the status line \\
-8 & Use \emphc{subagents} & offload heavy reading; keep the main context clean \\
-9 & Use it for \emphc{data and analytics} & databases via a CLI or MCP \\
-10 & \emphc{Learn} with the agent & ask it to explain; ask for diagrams \\
+6 & Improve your \emphc{prompting} & Challenge the agent and write detailed specifications \\
+7 & Set up your \emphc{terminal} & One tab per session, with the context usage in the status line \\
+8 & Use \emphc{subagents} & Offload heavy reading and keep the main context clean \\
+9 & Use it for \emphc{data and analytics} & Reach databases through a command-line tool or MCP \\
+10 & \emphc{Learn} with the agent & Ask it to explain and to draw diagrams \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 \vspace{0.6em}
-{\scriptsize\textcolor{uzhgreydark}{Source: Cherny (2026), thread on X, 31 January 2026; wording adapted to the November 2026 tool.}}
+{\scriptsize\textcolor{uzhgreydark}{Source: Cherny (2026), thread on X, January 31, 2026. The wording is adapted to the tool as of November 2026.}}
 \end{frame}
 
 % --- Taking it home ---
-\begin{frame}{Conclusion: Taking It Home}
-\textbf{Your first week on your own project}
+\begin{frame}{A first week with an agent on your own project}
 \begin{enumerate}\itemsep8pt
-  \item \texttt{/init}, then edit the \texttt{CLAUDE.md} it writes
-  \item Copy the \texttt{verifier} subagent and the settings file from the demo
-  \item Port one notebook to a tested script, in plan mode
-  \item Build the twin of your problem with a known answer
-  \item Write one extension as tests; set a \texttt{/goal}
+  \item Run \texttt{/init}, then edit the \texttt{CLAUDE.md} that it writes.
+  \item Copy the \texttt{verifier} subagent and the settings file from the demo project.
+  \item Port one notebook to a tested script, in plan mode.
+  \item Build the twin of your problem with a known answer.
+  \item Write one extension as tests and set a \texttt{/goal}.
 \end{enumerate}
 \vspace{0.7em}
 \boristip{10} Ask the agent to explain what it wrote.
 \end{frame}
 
-\begin{frame}{Everything Replays From the Repository}
+\begin{frame}{The repository reproduces everything shown today}
 \begin{itemize}\itemsep8pt
-  \item \texttt{README.md}: install, five lines
-  \item \texttt{code/WALKTHROUGH.md}: every file, in lecture order
-  \item \texttt{code/prompts.md}: every prompt, ready to paste
+  \item \texttt{README.md} gives the installation in five lines.
+  \item \texttt{code/WALKTHROUGH.md} lists every file in the order of the lecture.
+  \item \texttt{code/prompts.md} contains every prompt, ready to paste.
 \end{itemize}
 
 \vspace{0.9em}
-\begin{block}{The pattern}
-Specify. Let the agent build. Verify against something you know.
+\begin{block}{The procedure}
+Specify the task, let the agent build, and verify the result against something you know.
 \end{block}
 
 \vspace{0.9em}
@@ -2731,43 +2734,43 @@ Specify. Let the agent build. Verify against something you know.
 \footnotesize
 \begin{itemize}\itemsep3pt
   \item Anthropic (2026). Claude Code documentation: best practices, context window, hooks, subagents, \texttt{/goal}. \url{https://code.claude.com/docs}
-  \item Azinovic, M., L. Gaegauf and S. Scheidegger (2022). ``Deep Equilibrium Nets.'' \emph{International Economic Review} 63(4): 1471--1525.
-  \item Becker, J., N. Rush, E. Barnes and D. Rein (2025). ``Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity.'' METR; arXiv:2507.09089.
-  \item Bilionis, I. (2026). ``We Asked an AI Agent to Replicate Three Research Papers.'' \emph{Democratizing Science with AI} (Substack), 5 March 2026. \url{https://ebilionis.substack.com/p/we-asked-an-ai-agent-to-replicate}
+  \item Azinovic, M., L. Gaegauf, and S. Scheidegger (2022). ``Deep Equilibrium Nets.'' \emph{International Economic Review} 63(4): 1471--1525.
+  \item Becker, J., N. Rush, E. Barnes, and D. Rein (2025). ``Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity.'' METR; arXiv:2507.09089.
+  \item Bilionis, I. (2026). ``We Asked an AI Agent to Replicate Three Research Papers.'' \emph{Democratizing Science with AI} (Substack), March 5, 2026. \url{https://ebilionis.substack.com/p/we-asked-an-ai-agent-to-replicate}
   \item Brock, W. A. and L. J. Mirman (1972). ``Optimal Economic Growth and Uncertainty: The Discounted Case.'' \emph{Journal of Economic Theory} 4(3): 479--513.
-  \item Brynjolfsson, E., D. Li and L. Raymond (2025). ``Generative AI at Work.'' \emph{Quarterly Journal of Economics} 140(2): 889--942.
-  \item Cherny, B. (2026). Ten tips from the Claude Code team. Thread on X, 31 January 2026. \url{https://x.com/bcherny/status/2017742741636321619}
+  \item Brynjolfsson, E., D. Li, and L. Raymond (2025). ``Generative AI at Work.'' \emph{Quarterly Journal of Economics} 140(2): 889--942.
+  \item Cherny, B. (2026). Ten tips from the Claude Code team. Thread on X, January 31, 2026. \url{https://x.com/bcherny/status/2017742741636321619}
 \end{itemize}
 \end{frame}
 
 \begin{frame}{References (2 of 3)}
 \footnotesize
 \begin{itemize}\itemsep3pt
-  \item Galiani, S., F. A. L\'opez and R. A. Sosa (2026). ``AI Agents and Prompt Engineering in Econometric Coding.'' NBER Working Paper 35588.
+  \item Galiani, S., F. A. L\'opez, and R. A. Sosa (2026). ``AI Agents and Prompt Engineering in Econometric Coding.'' NBER Working Paper 35588.
   \item Gemma Team (2026). ``Gemma 4 Technical Report.'' arXiv:2607.02770. Model cards (2026): DeepSeek-V4-Pro, Kimi-K2.6, Qwen3.6-27B, Qwen3.5-397B-A17B (Hugging Face); Gemini 3.1 Pro (Google DeepMind). Ollama documentation.
-  \item Goldsmith-Pinkham, P. (2026). ``Getting Started with Claude Code: A Researcher's Setup Guide.'' \emph{paulgp.substack.com}, 29 March 2026.
+  \item Goldsmith-Pinkham, P. (2026). ``Getting Started with Claude Code: A Researcher's Setup Guide.'' \emph{paulgp.substack.com}, March 29, 2026.
   \item Hans, A. and I. Bilionis (2026). ``Coding-Agents Can Replicate Scientific Machine Learning Papers.'' arXiv:2607.02134; skill and case studies: \url{https://github.com/PredictiveScienceLab/paper-replication-paper}
   \item Korinek, A. (2023). ``Generative AI for Economic Research: Use Cases and Implications for Economists.'' \emph{Journal of Economic Literature} 61(4): 1281--1317.
   \item Liu, N. F. et al.\ (2024). ``Lost in the Middle: How Language Models Use Long Contexts.'' \emph{TACL} 12: 157--173.
-  \item Osmani, A. (2026). ``Which Claude Model Should You Build With? Fable, Opus, Sonnet, or Haiku.'' claude.dev blog, 9 November 2026. \url{https://claude.dev/blog/which-claude-model-should-you-build-with/}
+  \item Osmani, A. (2026). ``Which Claude Model Should You Build With? Fable, Opus, Sonnet, or Haiku.'' claude.dev blog, November 9, 2026. \url{https://claude.dev/blog/which-claude-model-should-you-build-with/}
 \end{itemize}
 \end{frame}
 
 \begin{frame}{References (3 of 3)}
 \footnotesize
 \begin{itemize}\itemsep3pt
-  \item Schluntz, E. and B. Zhang (2024). ``Building Effective Agents.'' Anthropic engineering blog, 19 December 2024.
-  \item Schwartz, M., I. Andrews and J. M. Shapiro (2026). ``An LLM Workflow That Reproduces, Improves, and Extends Published Economics Research.'' NBER Working Paper 35782.
+  \item Schluntz, E. and B. Zhang (2024). ``Building Effective Agents.'' Anthropic engineering blog, December 19, 2024.
+  \item Schwartz, M., I. Andrews, and J. M. Shapiro (2026). ``An LLM Workflow That Reproduces, Improves, and Extends Published Economics Research.'' NBER Working Paper 35782.
   \item Walters, W. H. and E. I. Wilder (2023). ``Fabrication and Errors in the Bibliographic Citations Generated by ChatGPT.'' \emph{Scientific Reports} 13: 14045.
-  \item Policies cited (as of November 2026): COPE (2023), ``Authorship and AI tools'', position statement; AEA, Data and Code Availability Policy (February 2026), \url{https://www.aeaweb.org/journals/data/data-code-policy}; the AI policies of the AEA, Oxford University Press, the Econometric Society, Elsevier and Springer Nature; Regulation (EU) 2024/1689 (the AI Act), Art.\ 50.
+  \item Policies cited (as of November 2026): COPE (2023), ``Authorship and AI tools'', position statement; AEA, Data and Code Availability Policy (February 2026), \url{https://www.aeaweb.org/journals/data/data-code-policy}; the AI policies of the AEA, Oxford University Press, the Econometric Society, Elsevier, and Springer Nature; Regulation (EU) 2024/1689 (the AI Act), Art.\ 50.
 \end{itemize}
 \vspace{0.6em}
 \textbf{Tools}\quad Claude Code \url{https://code.claude.com/docs} $\bullet$ MCP \url{https://modelcontextprotocol.io} $\bullet$ Agent SDK \url{https://code.claude.com/docs/en/agent-sdk/overview} $\bullet$ Ralph loop \url{https://github.com/snarktank/ralph}
 \end{frame}
 
 % --- Appendix: the paper-replication skill ---
-\begin{frame}[fragile]{Appendix: Running the Paper-Replication Skill}
-Installs like the skills of Part VI; needs the paper's LaTeX source (arXiv provides it).
+\begin{frame}[fragile]{Appendix: Running the paper-replication skill}
+The skill is installed in the same way as the skills in Part VI. It needs the LaTeX source of the paper, which arXiv provides.
 \begin{columns}[T]
 \column{0.52\textwidth}
 \textbf{Install and start}
@@ -2789,7 +2792,7 @@ python3 .claude/skills/paper-replication/\
   code. One target at a time.
 \end{lstlisting}
 \vspace{0.5em}
-\textbf{The quick version}, for a small paper without the harness:
+\textbf{A quick version} for a small paper, without the harness:
 \begin{lstlisting}[style=prompt, basicstyle=\footnotesize\ttfamily]
 > Replicate every figure and table of
   [paper]. No author code. Plan first;
@@ -2800,10 +2803,10 @@ python3 .claude/skills/paper-replication/\
 \filebox{code/prompts.md, \S 14 (both prompts)}
 \end{frame}
 
-\begin{frame}[fragile]{Appendix: The Workspace It Keeps, and What to Expect}
+\begin{frame}[fragile]{Appendix: The skill's workspace and what to expect}
 \begin{columns}[T]
 \column{0.52\textwidth}
-\textbf{The workspace it keeps}
+\textbf{The workspace that the skill maintains}
 \begin{lstlisting}[style=md, basicstyle=\footnotesize\ttfamily]
 paper_manifest.json      source hash, rules
 spec/reproduction_matrix.csv  one row per
@@ -2816,11 +2819,11 @@ artifacts/figures|tables|runs|provenance/
 report/main.tex          every match embedded
 \end{lstlisting}
 \column{0.45\textwidth}
-\textbf{The validators}: \texttt{validate-spec}, \texttt{validate-progress}, \texttt{validate-report}, \texttt{validate-completion}; a target is MATCHED only with artefact, provenance, comparison and a place in the report. A clean scaffold does not count.
+\textbf{The validators} are \texttt{validate-spec}, \texttt{validate-progress}, \texttt{validate-report}, and \texttt{validate-completion}. A target counts as MATCHED only with an artifact, its provenance, a comparison, and a place in the report. An empty scaffold does not count.
 \end{columns}
 
 \vspace{0.8em}
-\textbf{Expect} hours, not minutes, and a verdict per target with its acceptance rule (numeric with the paper's tolerance, distributional, structural or visual), not one number for the paper.
+\textbf{Expect} a run of hours rather than minutes. The result is a verdict for each target under its acceptance rule (numeric with the paper's tolerance, distributional, structural, or visual), not a single number for the paper.
 \filebox{arXiv:2607.02134, Sections 2.2--2.4}
 \end{frame}
 

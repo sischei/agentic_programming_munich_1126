@@ -16,7 +16,7 @@ the lecture runs in `demo/`.
 
 | § | Demo / walk-through | Prompt |
 |---|---|---|
-| 1 | D1, WT 1 | Setup check: summarise the project without writing |
+| 1 | D1, WT 1 | Setup check: summarize the project without writing |
 | 2 | | The feedback loop: Step 1 without a plan, and the steer |
 | 3 | | A Level-3 prompt: the port of Step 1 with its own check |
 | 4 | D2 | Step 1 in plan mode: port, check, figure, note |
@@ -39,7 +39,7 @@ crosswalk is at the top of `WALKTHROUGH.md`.
 ## 1. Setup check (Walk-through 1)
 
 ```text
-What is in this directory? Summarise the structure, the two rules of CLAUDE.md and the docstring of deqn/common.py. Do not write anything yet.
+What is in this directory? Summarize the structure, the two rules of CLAUDE.md and the docstring of deqn/common.py. Do not write anything yet.
 ```
 
 A healthy answer lists the files, reads `CLAUDE.md`, names the two rules (`tests/`
@@ -104,7 +104,7 @@ Expected (our version is `code/deqn/deterministic.py`, figure
 | max \|s(K) - alpha beta\| on [0.1, 1] | 4.9e-4 (threshold 1e-2) |
 | Euler residual on the grid, mean / max | 4.7e-4 / 1.9e-3 |
 
-Afterwards: `/deqn-accuracy results/deqn_deterministic.pt` (Part VI) grades the same
+Afterward: `/deqn-accuracy results/deqn_deterministic.pt` (Part VI) grades the same
 policy in five lines.
 
 ## 5. Notebooks
@@ -150,7 +150,7 @@ and recipe of the goal in §11):
 [ROLE] You are a computational macroeconomist.
 [CONTEXT] deqn/deterministic.py (Step 1) is verified against the closed form. Now the stochastic model of CLAUDE.md: Y = z K^alpha, log z AR(1); alpha 0.36, delta 0.10, sigma 0.04, beta 0.96, rho 0.9. No closed form; the reference is brock_mirman_reference.solve(0.96, 0.9). deqn/common.py has the parameters, gh_nodes, make_net, encode_state, save_policy and simulate_path; read its docstring first.
 [TASK] Write deqn/stochastic.py with solve(seed=42, steps=2000): state (log z / sd_z, log K - log K*); network 2-32-32-1 tanh, sigmoid output, s_init = s*; loss = mean squared Euler residual beta C E[(1 - delta + R') / C'] - 1 with the 5 Gauss-Hermite nodes; 128 fresh states per step, log z ~ N(0, sd_z), log K ~ U(log K* +- 0.5); Adam 1e-3.
-[CONSTRAINTS] torch, float64, torch.manual_seed(seed) first. Never use the reference policy in a loss or an initialisation. Do not modify deqn/common.py, tests/ or reference/.
+[CONSTRAINTS] torch, float64, torch.manual_seed(seed) first. Never use the reference policy in a loss or an initialization. Do not modify deqn/common.py, tests/ or reference/.
 [OUTPUT] results/deqn_stochastic.pt with its JSON sidecar; solve returns {"s": callable (log_z, log_K) -> s, numpy in and out, "net", "wall"}.
 [VERIFY] Simulate 2,000 periods with the network's own policy (common.simulate_path). Report mean |residual| there, max |s - s_ref| at those states, E[s] against the reference, and whether log K stayed inside [log K* - 0.5, log K* + 0.5]. Then run python3 -m pytest -q tests/ and show the output.
 ```
@@ -161,7 +161,7 @@ about 2.3e-3; E[s] 0.252; log K in [1.08, 1.81]. Our version: `code/deqn/solutio
 ### The constraint lines, to append to any prompt
 
 ```text
-Do NOT use reference/ in a loss, an initialisation or a fit. Do NOT edit tests/ or reference/. Do NOT change the seed or the step budget. Do NOT report the training loss as accuracy.
+Do NOT use reference/ in a loss, an initialization or a fit. Do NOT edit tests/ or reference/. Do NOT change the seed or the step budget. Do NOT report the training loss as accuracy.
 Use deqn/common.py: make_net, encode_state, save_policy, simulate_path. float64; torch.manual_seed before the network. Save every policy with its JSON sidecar. Use the notation of CLAUDE.md (K, z, s, rho, K*, s*).
 Only write deqn/stochastic.py and results/. Do not touch deqn/common.py, deqn/source/ or data/. Make the minimum change that fixes the failing test. Stop and report after each pytest run.
 ```
@@ -227,7 +227,7 @@ Reference answer: K* = 4.294, s* = 0.254 at beta = 0.96. That Euler equation is 
 In a fresh session (`/clear`) in the demo project:
 
 ```text
-Summarise this project and what I should work on next.
+Summarize this project and what I should work on next.
 ```
 
 The agent answers from `CLAUDE.md` alone: the growth-model sandbox, the two rules
@@ -307,13 +307,13 @@ condition must be something the agent's own output shows (hence "run the tests
 and show the output"). In the default permission mode the agent asks before
 running `pytest`; allow it with `/permissions` or use auto mode for an unattended run.
 
-Afterwards: `python3 -m pytest -q tests/` prints `5 passed`; `git log --oneline`
+Afterward: `python3 -m pytest -q tests/` prints `5 passed`; `git log --oneline`
 shows one commit per turn; `/goal` shows the achieved condition with turns, time
 and token spend; `/deqn-accuracy results/deqn_stochastic.pt` grades the result.
 The thresholds in the tests are 4–25x what the reference solution reaches
 (`reference/baseline.md`); the reference solution in `code/deqn/solution/` passes
 all five in 14 s. Dry-run the goal before the lecture and note turns, wall-clock
-and E[s]. To reset the demo project to the stub afterwards:
+and E[s]. To reset the demo project to the stub afterward:
 `git checkout deqn/stochastic.py && rm -f results/deqn_stochastic.*`.
 
 ### The six parts, as a template for your own goal
@@ -342,7 +342,7 @@ To end a goal yourself:
 One prompt from a script, cron or a Slurm job:
 
 ```bash
-claude -p "Re-run estimate.py on data/2026m11.csv, refresh tables/, summarise the changes vs last month in notes/changelog.md" --output-format json --allowedTools "Read,Edit,Bash(python *)" > logs/run_$(date +%F).json
+claude -p "Re-run estimate.py on data/2026m11.csv, refresh tables/, summarize the changes vs last month in notes/changelog.md" --output-format json --allowedTools "Read,Edit,Bash(python *)" > logs/run_$(date +%F).json
 ```
 
 A goal, headless, the whole loop in one invocation:

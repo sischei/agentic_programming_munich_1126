@@ -1,12 +1,12 @@
 ---
 name: strategic-revision
-description: Parse one or more referee reports plus the editor letter into a prioritised, parallelisable revision plan with conflict flags and dependency mapping.
+description: Parse one or more referee reports plus the editor letter into a prioritized, parallelisable revision plan with conflict flags and dependency mapping.
 ---
 
 # /strategic-revision
 
 ## Description
-Turn a batch of referee reports into a prioritised, parallelisable revision plan.
+Turn a batch of referee reports into a prioritized, parallelisable revision plan.
 Inspired by Jukka Sihvonen's `strategic-revision` skill.
 
 Given one or more referee reports plus the editor's letter, this skill parses
