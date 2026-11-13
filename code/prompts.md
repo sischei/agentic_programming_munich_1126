@@ -30,6 +30,7 @@ the lecture runs in `demo/`.
 | 12 | | Headless: `claude -p`, a headless goal, the fresh-context shell loop |
 | 13 | D5 | One prompt → table + figure (four loss kernels) |
 | 14 | | Replication |
+| 15 | | Commands shown on the slides that are not prompts |
 
 D = live demo (five), WT = walk-through badge on the slides (seven); the same
 crosswalk is at the top of `WALKTHROUGH.md`.
@@ -91,7 +92,7 @@ Do NOT use the closed form anywhere except in the check. Do NOT modify deqn/comm
 
 Read the plan before approving it: every file it will create; the closed form only in
 the check, not in the loss; `make_net` and `save_policy` reused, not re-implemented;
-torch seeded before the network is built; "solved" judged by the max error, not by
+torch seeded before the network is built; "solved" judged by the policy error, not by
 the loss.
 
 Expected (our version is `code/deqn/deterministic.py`, figure
@@ -274,7 +275,19 @@ Show me reference/baseline.md.
 
 ## 10. MCP
 
-After `claude mcp add ...` for a Zotero and a GitHub server:
+Adding servers (the GitHub server needs a token header; see the MCP documentation):
+
+```bash
+# a remote server (token header: see docs)
+claude mcp add --transport http github \
+    https://api.githubcopilot.com/mcp/
+# a local server: any command speaking MCP
+claude mcp add --transport stdio zotero \
+    -- npx -y <package>
+claude mcp list     # /mcp inside a session
+```
+
+With a Zotero and a GitHub server added:
 
 ```text
 Search Zotero for papers on fiscal multipliers in HANK models; list the ones not yet in paper/references.bib.
@@ -307,7 +320,15 @@ condition must be something the agent's own output shows (hence "run the tests
 and show the output"). In the default permission mode the agent asks before
 running `pytest`; allow it with `/permissions` or use auto mode for an unattended run.
 
-Afterward: `python3 -m pytest -q tests/` prints `5 passed`; `git log --oneline`
+Afterward, in `demo/`:
+
+```bash
+python3 -m pytest -q tests/
+git log --oneline
+/deqn-accuracy results/deqn_stochastic.pt
+```
+
+`python3 -m pytest -q tests/` prints `5 passed`; `git log --oneline`
 shows one commit per turn; `/goal` shows the achieved condition with turns, time
 and token spend; `/deqn-accuracy results/deqn_stochastic.pt` grades the result.
 The thresholds in the tests are 4–25x what the reference solution reaches
@@ -405,3 +426,67 @@ Role: replication engineer. Paper: [title, authors, DOI; LaTeX source in paper_s
 
 Expected: a target table before any code; per-target verdicts; some targets unmatched
 with a recorded reason. The paper's twelve runs took one to thirteen hours each.
+
+## 15. Commands shown on the slides
+
+General commands that the slides show and that are not prompts, in lecture order.
+
+Install and check (Part II):
+
+```bash
+curl -fsSL https://claude.ai/install.sh | bash   # or brew / winget
+claude --version && claude doctor                # then /login
+```
+
+A first session (Part II):
+
+```bash
+cd ~/research/my-project
+claude   # launch in the project
+/init    # write CLAUDE.md (Part V)
+/model   # pick the model
+/usage   # cost and usage so far
+```
+
+An open-weight model through Ollama (Part II; not supported by Anthropic):
+
+```bash
+ollama launch claude --model gemma4:31b
+```
+
+Git around every agent session (Part II):
+
+```bash
+# Before every agent session
+git add -A && git commit -m "checkpoint"
+
+# After every agent session
+git diff HEAD              # read it all
+git add -p && git commit   # hunk by hunk
+
+# If the session went wrong
+git stash                  # park the changes
+git checkout -- .          # or discard them
+```
+
+Parallel sessions in worktrees (Part III):
+
+```bash
+git worktree add ../a -b data-clean
+git worktree add ../b -b estimation
+git worktree add ../c -b lit-review
+cd ../a && claude    # terminal 1
+cd ../b && claude    # terminal 2
+claude -w data-clean # shortcut: a session in its own worktree
+```
+
+Setting and managing a goal (Part VII):
+
+```bash
+# set: the first turn starts at once
+/goal all tests pass: `pytest -q`
+      exits 0. Or stop after 6 turns.
+/goal          # status: turns, time, spend
+/goal clear    # end it yourself
+claude -p "/goal <condition>"  # headless
+```

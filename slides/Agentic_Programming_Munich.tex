@@ -649,6 +649,7 @@ claude --version && claude doctor                # then /login
 Whatever the agent \emph{reads} is sent to the API. Parts VI and IX show what to keep out and how.
 \end{block}
 \end{columns}
+\filebox{code/prompts.md, \S 15 (the commands on the slides)}
 \end{frame}
 
 % --- Commands, models, cost ---
@@ -684,6 +685,7 @@ claude   # launch in the project
 \begin{block}{Recommendation: interrupt early}
 Press \texttt{Esc} early, correct the direction, and continue. After two failed corrections, run \texttt{/clear} and write a better prompt.
 \end{block}
+\filebox{code/prompts.md, \S 15 (the commands on the slides)}
 \end{frame}
 
 \begin{frame}{Permission modes and the cost of a session}
@@ -795,6 +797,7 @@ Running Claude Code on a local model is not supported by Anthropic. Do not use a
 \begin{center}
 \textbf{The verification is the same whichever model you run.}
 \end{center}
+\filebox{code/prompts.md, \S 15 (the commands on the slides)}
 \end{frame}
 
 % --- Git ---
@@ -834,6 +837,7 @@ The agent's work arrives as a diff. Review it as you would review a pull request
 \end{tikzpicture}
 \end{center}
 \end{columns}
+\filebox{code/prompts.md, \S 15 (the commands on the slides)}
 \end{frame}
 
 \begin{frame}[fragile]{Undoing the work of a session that went wrong}
@@ -848,6 +852,7 @@ git checkout -- .          # or discard them
   \item Inside a session, \texttt{/rewind} restores an earlier turn.
   \item The whole Git routine takes about 30 seconds per session.
 \end{itemize}
+\filebox{code/prompts.md, \S 15 (the commands on the slides)}
 \end{frame}
 
 % --- Walk-through 1: the demo project ---
@@ -862,7 +867,7 @@ $ bash code/setup_demo_project.sh
 $ cd demo && claude
 \end{lstlisting}
 \column{0.55\textwidth}
-\textbf{Contents of the project}
+\textbf{Contents of the project} (annotated)
 \begin{lstlisting}[style=md, basicstyle=\footnotesize\ttfamily]
 demo/
  CLAUDE.md             memory, two rules
@@ -873,6 +878,7 @@ demo/
  tests/                five tests = the exam
  reference/            reference policy, denied
  data/raw/             confidential stand-in
+ results/ figures/ notes/ scripts/   outputs
  .claude/              skills, agents,
                        settings.json
 \end{lstlisting}
@@ -883,36 +889,38 @@ demo/
 \begin{frame}[fragile]{The first prompt asks the agent only to read~\livedemo[1]}
 \textbf{The first prompt, run live:}
 \begin{lstlisting}[style=prompt, basicstyle=\small\ttfamily]
-> What is in this directory? Summarize
-  the structure, the two rules of CLAUDE.md
-  and deqn/common.py. Write nothing yet.
+> What is in this directory? Summarize the structure, the two
+  rules of CLAUDE.md and the docstring of deqn/common.py. Do
+  not write anything yet.
 \end{lstlisting}
 
 \vspace{1.3em}
 \begin{block}{Expected answer}
 The agent lists the files, names the two rules, notes the stub, and writes nothing.
 \end{block}
+\filebox{code/prompts.md, \S 1}
 \end{frame}
 
 \begin{frame}[fragile]{The course notebook does not check its own answer}
 \begin{columns}[T]
 \column{0.56\textwidth}
 The loss cell of the notebook ($\delta = 1$), from \texttt{deqn/source/deqn\_tf\_deterministic.py}:
-\begin{lstlisting}[basicstyle=\footnotesize\ttfamily]
+\begin{lstlisting}[basicstyle=\scriptsize\ttfamily]
 @tf.function
 def compute_cost(X, nn):
+    """Mean squared relative Euler error on a batch of states X (n_data x 1)."""
     K_t = X
     Y_t = K_t ** alpha
-    s_t = nn(X)                  # savings rate
+    s_t = nn(X)
     K_tplus1 = (1. - delta) * K_t + Y_t * s_t
     C_t = Y_t - Y_t * s_t
+    Y_tplus1 = K_tplus1 ** alpha
     s_tplus1 = nn(K_tplus1)
-    C_tplus1 = ((1. - s_tplus1)
-                * K_tplus1 ** alpha)
+    C_tplus1 = Y_tplus1 - s_tplus1 * Y_tplus1
     R_tplus1 = alpha * K_tplus1 ** (alpha - 1.)
-    errREE = 1 - C_tplus1 / (beta * C_t
-                * (R_tplus1 + 1. - delta))
-    return tf.reduce_mean(errREE ** 2)
+    errREE = 1 - C_tplus1 / (beta * C_t * (R_tplus1 + 1. - delta))
+    cost = tf.reduce_mean(errREE ** 2)
+    return cost, errREE, C_t, C_tplus1, K_tplus1, R_tplus1
 \end{lstlisting}
 \column{0.41\textwidth}
 \begin{itemize}\itemsep7pt
@@ -964,8 +972,9 @@ Port the notebook to PyTorch with a fixed seed, and add the check that it lacks.
 \column{0.53\textwidth}
 Step 1 without a plan, as a condensed transcript. Lines that start with a red \texttt{>} are typed by the user.
 \begin{lstlisting}[style=prompt, basicstyle=\footnotesize\ttfamily]
-> Port deqn/source/deqn_tf_deterministic.py
-  to PyTorch. Print the loss.
+> Port deqn/source/deqn_tf_deterministic.py to
+  PyTorch as deqn/deterministic.py. Same
+  recipe. Print the training loss at the end.
 \end{lstlisting}
 \begin{lstlisting}[style=bash, basicstyle=\footnotesize\ttfamily]
 [Reads the source; writes; runs: 3 s]
@@ -974,8 +983,10 @@ Done: the loss has converged.
 \end{lstlisting}
 \begin{lstlisting}[style=prompt, basicstyle=\footnotesize\ttfamily]
 > A small loss is not a small error. The
-  answer is known: print max |s - alpha*beta|
-  on [0.1, 1]; is it solved?
+  answer is known: s* = alpha*beta. Print max
+  |s(K) - alpha*beta| on 1,001 points of [0.1,
+  1] and plot s(K) against the constant. Then
+  tell me whether it is solved.
 \end{lstlisting}
 \column{0.43\textwidth}
 \vspace{1.3em}
@@ -1027,29 +1038,35 @@ A Level 3 prompt states:
 \begin{columns}[T]
 \column{0.56\textwidth}
 \textbf{The prompt}
-\begin{lstlisting}[style=prompt, basicstyle=\footnotesize\ttfamily]
-> Role: computational macroeconomist.
-  Port deqn/source/deqn_tf_deterministic.py
-  to deqn/deterministic.py in PyTorch, same
-  recipe: delta = 1, beta = 0.99, K ~ U[0.1, 1],
-  64 states per step, Adam 1e-3, 2000 steps;
-  network: common.make_net(1), 1-32-32-1 tanh
-  - float64; torch.manual_seed(42) first
-  - loss = mean squared relative Euler error;
-    do NOT put the closed form in it
-  - save results/deqn_deterministic.pt
-  Verify: max |s(K) - alpha*beta| on 1,001
-  points of [0.1, 1] < 1e-2; print it.
+\begin{lstlisting}[style=prompt, basicstyle=\scriptsize\ttfamily]
+> Role: computational macroeconomist. Port
+  deqn/source/deqn_tf_deterministic.py (TensorFlow)
+  to deqn/deterministic.py in PyTorch, same recipe:
+  delta = 1, beta = 0.99, K ~ U[0.1, 1], 64 states
+  per step, Adam 1e-3, 2000 steps; a 1-32-32-1 tanh
+  network for the savings rate, built with
+  deqn.common.make_net(1).
+  - float64; torch.manual_seed(42) before the
+  network
+  - the loss is the mean squared relative Euler
+  error, as in the original; do NOT put the closed
+  form in the loss
+  - save results/deqn_deterministic.pt via
+  common.save_policy
+  Verify: max |s(K) - alpha*beta| on 1,001 points of
+  [0.1, 1] must be < 1e-2; print it, and the Euler
+  residual there.
 \end{lstlisting}
 \column{0.41\textwidth}
 \textbf{The response}, condensed, with the numbers from the provided script
-\begin{lstlisting}[style=bash, basicstyle=\footnotesize\ttfamily]
+\begin{lstlisting}[style=bash, basicstyle=\scriptsize\ttfamily]
 [Read the source, common.py]
 [Wrote deqn/deterministic.py]
-[Ran it: 3.2 s]
-loss (last 100) 3.1e-07
-max |s - alpha*beta|: 4.91e-04
-assert < 1e-2: OK
+[Ran it]
+trained in 3.3 s; training loss
+  (last 100 steps) 3.10e-07
+max |s(K) - alpha*beta| on [0.1, 1]:
+  4.91e-04  (alpha*beta = 0.3564)
 \end{lstlisting}
 \vspace{0.4em}
 \begin{block}{Why this is Level 3}
@@ -1066,14 +1083,21 @@ Press \textbf{Shift+Tab} until the status line shows \emph{plan mode}. The agent
 
 \vspace{0.6em}
 \begin{lstlisting}[style=prompt, basicstyle=\footnotesize\ttfamily]
-> Step 1 of the DEQN build. deqn/source/deqn_tf_deterministic.py is a course
-  notebook: a network for the savings rate, delta = 1, trained on the Euler
-  residual. The answer is known: s* = alpha*beta. Say how you would port it:
-  1. deqn/deterministic.py: PyTorch, float64, seed 42, same recipe; save the policy
-  2. scripts/check_step1.py: max |s(K) - alpha*beta| and the residual, 1,001 pts
-  3. figures/deqn_step1.pdf: s(K) vs alpha*beta; |residual| on a log axis
-  4. notes/deqn_step1.md: three sentences: is it solved, and how can you tell
-  Do NOT use the closed form outside the check. Do NOT modify deqn/common.py.
+> Step 1 of the DEQN build. deqn/source/deqn_tf_deterministic.py is a TensorFlow
+  notebook flattened to a script: a neural network for the savings rate of the
+  deterministic growth model with delta = 1, trained on the Euler residual. The
+  answer is known: s* = alpha*beta. Without writing anything yet, tell me how you
+  would port it. Then:
+  1. Port it to deqn/deterministic.py: PyTorch, float64, seed 42, same recipe (K ~
+  U[0.1, 1], 64 states per step, Adam 1e-3, 2000 steps); deqn.common.make_net(1) for
+  the network and common.save_policy for results/deqn_deterministic.pt
+  2. Write scripts/check_step1.py: max |s(K) - alpha*beta| and the Euler residual on
+  1,001 points of [0.1, 1]; print both
+  3. Save figures/deqn_step1.pdf: s(K) against the constant alpha*beta, and
+  |residual| on a log axis (matplotlib, serif font, no gridlines, 6 x 2.4 inches)
+  4. Write 3 sentences to notes/deqn_step1.md: is it solved, and how you can tell
+  Do NOT use the closed form anywhere except in the check. Do NOT modify
+  deqn/common.py.
 \end{lstlisting}
 \filebox{code/prompts.md, \S 4; the provided version: code/deqn/deterministic.py}
 \end{frame}
@@ -1105,8 +1129,8 @@ Press \textbf{Shift+Tab} until the status line shows \emph{plan mode}. The agent
   \item It edits one cell at a time.
   \item It runs the notebook headless, as a batch job:
 \end{itemize}
-\begin{lstlisting}[style=bash, basicstyle=\footnotesize\ttfamily]
-jupyter nbconvert --to notebook --execute --output out.ipynb estimation.ipynb
+\begin{lstlisting}[style=bash, basicstyle=\scriptsize\ttfamily]
+jupyter nbconvert --to notebook --execute --ExecutePreprocessor.timeout=-1 --output out.ipynb estimation.ipynb
 \end{lstlisting}
 
 \vspace{0.9em}
@@ -1153,6 +1177,7 @@ cd ../b && claude    # terminal 2
 \end{tikzpicture}
 \end{center}
 \end{columns}
+\filebox{code/prompts.md, \S 15 (the commands on the slides)}
 \end{frame}
 
 \begin{frame}{Give each parallel session a scope and time yourself}
@@ -1171,10 +1196,10 @@ cd ../b && claude    # terminal 2
 At the end of a session, write a state file:
 \begin{lstlisting}[style=prompt, basicstyle=\footnotesize\ttfamily]
 > Write notes/session_state.md:
-  1. What we have done so far
-  2. What is working
-  3. What we need to do next
-  4. Design decisions and why
+  1. What we have done so far.
+  2. What is working.
+  3. What we need to do next.
+  4. Design decisions and why.
 \end{lstlisting}
 \vspace{0.4em}
 At the start of the next session:
@@ -1247,6 +1272,7 @@ A Level 0 prompt gives a bare task and none of the other components:
 
 \vspace{1.5em}
 The next slide shows the same task with all six components (Step 2). A Level 3 prompt contains all six.
+\filebox{code/prompts.md, \S 7}
 \end{frame}
 
 \begin{frame}[fragile]{The prompt for the full model has all six components}
@@ -1254,17 +1280,23 @@ The next slide shows the same task with all six components (Step 2). A Level 3 p
 \begin{lstlisting}[style=md, basicstyle=\scriptsize\ttfamily]
 [ROLE]        You are a computational macroeconomist.
 [CONTEXT]     deqn/deterministic.py (Step 1) is verified against the closed form. Now the
-              stochastic model of CLAUDE.md (delta = 0.10): no closed form; the reference is
-              brock_mirman_reference.solve(0.96, 0.9). Read the docstring of deqn/common.py first.
-[TASK]        Write deqn/stochastic.py with solve(seed=42, steps=2000): state (log z / sd_z,
-              log K - log K*); network 2-32-32-1 tanh, sigmoid output, s_init = s*; loss = mean
-              squared Euler residual with the 5 Gauss-Hermite nodes; 128 fresh states per step.
-[CONSTRAINTS] torch, float64, torch.manual_seed(seed) first. Never use the reference policy in
-              a loss or an initialization. Do not modify deqn/common.py, tests/ or reference/.
-[OUTPUT]      results/deqn_stochastic.pt with its JSON sidecar; solve returns {"s", "net", "wall"}.
-[VERIFY]      Simulate 2,000 periods with the network's own policy. Report mean |residual| there,
-              max |s - s_ref| at those states, E[s] against the reference, and whether log K stayed inside
-              [log K* - 0.5, log K* + 0.5]. Then run python3 -m pytest -q tests/ and show it.
+              stochastic model of CLAUDE.md: Y = z K^alpha, log z AR(1); alpha 0.36, delta 0.10,
+              sigma 0.04, beta 0.96, rho 0.9. No closed form; the reference is
+              brock_mirman_reference.solve(0.96, 0.9). deqn/common.py has the parameters,
+              gh_nodes, make_net, encode_state, save_policy and simulate_path; read its docstring
+              first.
+[TASK]        Write deqn/stochastic.py with solve(seed=42, steps=2000): state (log z / sd_z, log K
+              - log K*); network 2-32-32-1 tanh, sigmoid output, s_init = s*; loss = mean squared
+              Euler residual beta C E[(1 - delta + R') / C'] - 1 with the 5 Gauss-Hermite nodes;
+              128 fresh states per step, log z ~ N(0, sd_z), log K ~ U(log K* +- 0.5); Adam 1e-3.
+[CONSTRAINTS] torch, float64, torch.manual_seed(seed) first. Never use the reference policy in a
+              loss or an initialization. Do not modify deqn/common.py, tests/ or reference/.
+[OUTPUT]      results/deqn_stochastic.pt with its JSON sidecar; solve returns {"s": callable
+              (log_z, log_K) -> s, numpy in and out, "net", "wall"}.
+[VERIFY]      Simulate 2,000 periods with the network's own policy (common.simulate_path). Report
+              mean |residual| there, max |s - s_ref| at those states, E[s] against the reference,
+              and whether log K stayed inside [log K* - 0.5, log K* + 0.5]. Then run python3 -m
+              pytest -q tests/ and show the output.
 \end{lstlisting}
 \filebox{code/prompts.md, \S 7 (this prompt and the six templates, ready to paste)}
 \end{frame}
@@ -1284,100 +1316,118 @@ The next slide shows the same task with all six components (Step 2). A Level 3 p
 
 % --- Constraints ---
 \begin{frame}[fragile]{Constraints make the agent's code conform to your project}
-The constraint lines in the Step 2 prompt are of three kinds.
+The constraint lines in the Step 2 prompt are of three kinds, shown here in full.
 
-\vspace{0.7em}
-\begin{columns}[T]
-\column{0.30\textwidth}
+\vspace{0.6em}
 \textbf{\textcolor{darkred}{Negative}} (what not to do)
 \begin{lstlisting}[style=prompt, basicstyle=\footnotesize\ttfamily]
-Do NOT use reference/ in
-  a loss, an init or a fit.
-Do NOT edit tests/ or
-  reference/.
-Do NOT report the training
-  loss as accuracy.
+Do NOT use reference/ in a loss, an initialization or a fit. Do NOT edit tests/ or
+reference/. Do NOT change the seed or the step budget. Do NOT report the training loss
+as accuracy.
 \end{lstlisting}
-\column{0.30\textwidth}
+\vspace{0.4em}
 \textbf{\textcolor{darkgreen}{Positive}} (what to do)
 \begin{lstlisting}[style=prompt, basicstyle=\footnotesize\ttfamily]
-Use deqn/common.py:
-  make_net, encode_state,
-  save_policy.
-float64; seed torch before
-  the network.
-Notation of CLAUDE.md:
-  K, z, s, rho, K*, s*.
+Use deqn/common.py: make_net, encode_state, save_policy, simulate_path. float64;
+torch.manual_seed before the network. Save every policy with its JSON sidecar. Use the
+notation of CLAUDE.md (K, z, s, rho, K*, s*).
 \end{lstlisting}
-\column{0.35\textwidth}
+\vspace{0.4em}
 \textbf{\textcolor{uzhblue}{Scope}} (the boundaries)
 \begin{lstlisting}[style=prompt, basicstyle=\footnotesize\ttfamily]
-Only write deqn/stochastic.py
-  and results/.
-Minimum change that fixes
-  the failing test.
-Stop and report after each
-  pytest run.
+Only write deqn/stochastic.py and results/. Do not touch deqn/common.py, deqn/source/ or
+data/. Make the minimum change that fixes the failing test. Stop and report after each
+pytest run.
 \end{lstlisting}
-\end{columns}
 \filebox{code/prompts.md, \S 7 (the constraint lines, ready to append)}
 \end{frame}
 
-\begin{frame}{Ask for a plan before the agent writes code}
-\begin{block}{The ``think before you code'' prompt}
-``Before writing code: describe your plan, list the files you will modify, list the risks. Wait for my go-ahead.''
-\end{block}
+\begin{frame}[fragile]{Ask for a plan before the agent writes code}
+\textbf{The ``think before you code'' prompt}
+\begin{lstlisting}[style=prompt, basicstyle=\small\ttfamily]
+> BEFORE writing any code: (1) describe your plan, (2) list every file you
+  will modify, (3) list the risks. Do not proceed until I say "go ahead".
+\end{lstlisting}
 
 \vspace{1.3em}
 Plan mode does this for you, and the sentence works in any other tool as well.
+\filebox{code/prompts.md, \S 7}
 \end{frame}
 
 % --- Templates I ---
-\begin{frame}{Prompt templates name their files and their output}
-These are prompts you will use repeatedly. The full text is in the repository.
+\begin{frame}[fragile]{Prompt templates name their files and their output}
+These are prompts you will use repeatedly, shown in full.
 
-\vspace{0.8em}
-\begin{block}{1. Replication check of code against paper}
-``Does \texttt{code/estimate.py} match Section 3 of the paper? One line per item: \checkmark{} matches, $\times$ paper says X / code does Y, ? unclear.''
-\end{block}
-\vspace{0.5em}
-\begin{block}{2. Robustness table}
-``Three checks on the baseline: one script each, one JSON each, then one booktabs table with all four columns.''
-\end{block}
+\vspace{0.6em}
+\textbf{1. Replication check of code against paper}
+\begin{lstlisting}[style=prompt, basicstyle=\footnotesize\ttfamily]
+> Read code/estimate.py and Section 3 of paper/main.tex. Check: does the estimator in the
+  code match the one in the paper? Discrepancy report, one line per item: OK [item]:
+  matches; X [item]: paper says X, code does Y; ? [item]: unclear from the paper.
+\end{lstlisting}
+\vspace{0.6em}
+\textbf{2. Robustness table}
+\begin{lstlisting}[style=prompt, basicstyle=\footnotesize\ttfamily]
+> Add 3 robustness checks to the baseline in code/estimate.py: (1) drop the post-2008
+  sample, (2) cluster at the region level, (3) add region-specific linear trends. For
+  each: a separate script, results to results/robustness_{name}.json. Then one LaTeX
+  table, all 4 specifications side by side (booktabs), coefficient and standard error.
+\end{lstlisting}
 \filebox{code/prompts.md, \S 7, Templates 1--4 (verbatim)}
 \end{frame}
 
-\begin{frame}{Templates 3 and 4 add a cap on retries and a citation rule}
-\begin{block}{3. Autonomous session}
-``Implement \texttt{plan.md}; commit after each step. Stuck after 3 attempts: write \texttt{notes/blocked.md} and STOP.''
-\end{block}
+\begin{frame}[fragile]{Templates 3 and 4 add a cap on retries and a citation rule}
+\textbf{3. Autonomous session}
+\begin{lstlisting}[style=prompt, basicstyle=\footnotesize\ttfamily]
+> I am stepping away for 30 minutes. Task: implement the pipeline per plan.md. Rules while
+  I am away: commit after each major step; if stuck after 3 attempts, write
+  notes/blocked.md and STOP; do NOT modify the raw data or the reference solver; write
+  progress every 10 steps to notes/progress.md. When done: summary to
+  notes/session_end.md.
+\end{lstlisting}
 \vspace{0.9em}
-\begin{block}{4. Literature writing}
-``Cite only \texttt{references.bib}. If a source is missing, write \texttt{[CITE: author, year -{}- verify]} and list the gaps.''
-\end{block}
+\textbf{4. Literature writing}
+\begin{lstlisting}[style=prompt, basicstyle=\footnotesize\ttfamily]
+> Do NOT invent any citations. Only cite papers already in paper/references.bib. If a
+  claim needs a source that is not there, write [CITE: author, year -- verify] and list
+  the gaps at the end.
+\end{lstlisting}
+\filebox{code/prompts.md, \S 7, Templates 3--4 (verbatim)}
 \end{frame}
 
 % --- Templates II ---
-\begin{frame}{Template 5 turns a correctness question into a number}
-\begin{block}{5. Translate legacy code and test the translation}
-``Port the TensorFlow notebook to PyTorch; do NOT change the algorithm. Then test: the residual has shape $(n, 1)$; the quadrature weights sum to 1; at $\sigma = 0$, $\delta = 1$ it reduces to Step 1's Euler equation.''
-\end{block}
+\begin{frame}[fragile]{Template 5 turns a correctness question into a number}
+\textbf{5. Translate legacy code and test the translation}
+\begin{lstlisting}[style=prompt, basicstyle=\footnotesize\ttfamily]
+> Port deqn/source/deqn_tf_stochastic.py (TensorFlow) to deqn/stochastic_port.py. Do NOT
+  change the algorithm, only the language. Then write deqn/test_port.py: the residual has
+  shape (n, 1) for n states; the Gauss-Hermite weights sum to 1; at sigma = 0, delta = 1
+  and beta = 0.99 the residual equals the one of deqn/deterministic.py at the same states
+  (within 1e-12). Run pytest on it. Report every deviation from the original with the line
+  that causes it.
+\end{lstlisting}
 
-\vspace{1.1em}
-The first test catches a shape bug that the original code carried unnoticed.
-\filebox{code/prompts.md, \S 7, Templates 5--6}
+\vspace{1.0em}
+The first test catches a shape bug that the original code carried unnoticed: the expectation has shape $(n, 2)$ instead of $(n, 1)$, and the mean squared error does not change.
+\filebox{code/prompts.md, \S 7, Template 5}
 \end{frame}
 
-\begin{frame}{Template 6 checks a derivation by computer algebra}
-\begin{block}{6. Check a derivation with computer algebra}
-``Derive the Euler equation and the steady state $(K^*, s^*)$. Verify each step with SymPy: the residual at the steady state must print 0. If it does not, say so; do not adjust the derivation.''
-\end{block}
+\begin{frame}[fragile]{Template 6 checks a derivation by computer algebra}
+\textbf{6. Check a derivation with computer algebra}
+\begin{lstlisting}[style=prompt, basicstyle=\footnotesize\ttfamily]
+> Model: log utility, Y = z K^alpha, K' = (1-delta) K + s Y, log z AR(1). Derive the Euler
+  equation and the deterministic steady state (K*, s*). Verify every step with sympy in
+  notes/check_euler.py: substitute the steady state into the Euler equation and print the
+  residual (must be 0). Cross-check K* against brock_mirman_reference.steady_state(0.96).
+  If a residual is not zero, say so; do not adjust the derivation to fit.
+\end{lstlisting}
 
 \vspace{0.6em}
 The expected values are $K^* = 4.294$ and $s^* = 0.254$.
 
-\vspace{1.1em}
+\vspace{1.0em}
 Both templates turn the question ``is this right?'' into a number that is zero when the answer is yes. With such a check, the agent's work on an economic model can be verified.
+\filebox{code/prompts.md, \S 7, Template 6}
 \end{frame}
 
 % --- Failure modes ---
@@ -1413,7 +1463,7 @@ Converged loss, wrong solution & Only the loss was checked & Check the on-path r
 \begin{center}
 {\Huge \textcolor{uzhblue}{\textbf{Break}}}\\[12pt]
 {\LARGE 10 minutes}\\[16pt]
-{\small Block 2 extends the agent with \texttt{CLAUDE.md}, skills, subagents, hooks, and MCP, closes the loop with \texttt{/goal},\\goes from a plan to a table and a figure, and ends with verification, reproducibility, and governance.}
+{\small Block 2 extends the agent with \texttt{CLAUDE.md}, skills, subagents, hooks, and MCP,\\closes the loop with \texttt{/goal}, goes from a plan to a table and a figure,\\and ends with verification, reproducibility, and governance.}
 \end{center}
 \vfill
 \end{frame}
@@ -1473,52 +1523,58 @@ Converged loss, wrong solution & Only the loss was checked & Check the on-path r
 \begin{columns}[T]
 \column{0.60\textwidth}
 The \texttt{CLAUDE.md} of a fictional paper under revision:
-\begin{lstlisting}[style=md, basicstyle=\footnotesize\ttfamily]
-# CLAUDE.md -- Fiscal Multipliers in a HANK Model
+\begin{lstlisting}[style=md, basicstyle=\scriptsize\ttfamily]
+# CLAUDE.md -- Fiscal Multipliers in a Heterogeneous-Agent Framework
 ## Project Overview
-- Stage: Revision (R&R at Review of Economic Studies)
+- **Stage:** Revision (R&R at Review of Economic Studies)
 ## Paths With Rules
-- data/raw/      READ ONLY. Never modify.
-- paper/tables/  generated; do not hand-edit
+- `data/raw/` -- READ ONLY. Never modify. BLS/FRED downloads.
+- `paper/tables/` -- generated LaTeX tables; do not hand-edit
 ## Commands
-- Run the tests: pytest -q tests/
+- Run the tests: `pytest -q tests/`
+## Package Environment
+- Key packages: numpy, scipy, pandas, matplotlib, torch, tensorflow, scikit-learn
 ## Statistical Conventions
-- SE clustered at the state level (51 clusters)
-- Block bootstrap, block length 8 quarters, 1000 reps
-## Decisions Made
-- 2026-01: switched the solver to JAX
+- Standard errors: clustered at the state level (51 clusters) in all micro regressions
+## Decisions Made (and Why)
+- 2026-01-15: Switched from TensorFlow to JAX for 3x speedup on GPU cluster
 \end{lstlisting}
 \column{0.37\textwidth}
 \vspace{1.3em}
 \begin{alertblock}{The stale line}
-The decision log says JAX, while the package list (not shown) still says TensorFlow. The agent follows whichever statement it reads last, so update the file in every session.
+The decision log says JAX, while the package list still says TensorFlow. The agent follows whichever statement it reads last, so update the file in every session.
 \end{alertblock}
 \end{columns}
-\filebox{code/CLAUDE\_md\_template.md (71 lines); prompt: code/prompts.md, \S 8}
+\filebox{code/CLAUDE\_md\_template.md (71 lines, abridged here); prompt: code/prompts.md, \S 8}
 \end{frame}
 
 \begin{frame}[fragile]{The demo project's \texttt{CLAUDE.md} states two rules}
 The part of the demo project's file that governs the solver:
 \begin{center}
-\begin{minipage}{0.62\textwidth}
-\begin{lstlisting}[style=md, basicstyle=\footnotesize\ttfamily]
+\begin{minipage}{0.86\textwidth}
+\begin{lstlisting}[style=md, basicstyle=\scriptsize\ttfamily]
 ## The two rules of this project
-1. reference/ and tests/ are the exam. Never load
-   the reference into a loss or an initialization;
-   never edit either (a hook refuses).
-2. data/raw/ stands in for confidential data.
-   Never read it, never edit it (a deny rule
-   and a hook refuse).
+1. `reference/` holds the reference solver's policy on simulated states and `tests/` the
+   acceptance tests: together they are the exam. Never load the reference into a loss, an
+   initialization or a fit; the tests and the accuracy check compare with it. Never edit
+   `tests/` or `reference/` (a hook refuses; the permission rules deny reading
+   `reference/`, pytest may read it).
+2. `data/raw/` stands in for confidential data. Never read it and never edit it (the
+   permission rules deny reading it; a hook refuses edits).
+
 ## DEQN notation and standards
-- s_theta(x), x = (log z / sd_z, log K - log K*)
-- r = beta C E[(1 - delta + R') / C'] - 1
-- Accuracy = the residual on the network's OWN
-  path and the distance to the reference. The
-  training loss is never reported as accuracy.
+- Policy: a network s_theta(x) for the savings rate, sigmoid output; state transform
+  x = (log z / sd_z, log K - log K*) from `common.encode_state`; `common.make_net(2, s_init=s*)`.
+- Residual (log utility): r = beta C E[(1 - delta + alpha z' K'^(alpha-1)) / C'] - 1, a fraction
+  of consumption; the expectation uses the 5 Gauss-Hermite nodes of `common.gh_nodes`.
+...
+- Accuracy means the residual on the path the network's own policy generates
+  (`common.simulate_path`) and the distance to the reference policy. The training loss is
+  not an accuracy measure and is never reported as one.
 \end{lstlisting}
 \end{minipage}
 \end{center}
-\filebox{code/CLAUDE\_md\_demo.md (= demo/CLAUDE.md)}
+\filebox{code/CLAUDE\_md\_demo.md (= demo/CLAUDE.md), abridged here}
 \end{frame}
 
 % ============================================================================
@@ -1565,35 +1621,24 @@ In short, skills hold prompts, subagents hold specialist roles, hooks enforce ru
 % --- Walk-through 3: skills ---
 \begin{frame}[fragile]{\walkthrough~3: A repeated check becomes a skill~\livedemo[3]}
 \hfill\stepmarker{3}\par\vspace{0.1em}
-\begin{columns}[T]
-\column{0.54\textwidth}
-\begin{lstlisting}[style=md, basicstyle=\footnotesize\ttfamily]
+\boristip{4} \textbf{If you do something more than once a day, turn it into a skill}, a Markdown file of instructions that is invoked by name. The listing shows \texttt{/deqn-accuracy}, the on-path check of a saved policy (abridged). The \texttt{description} field tells the agent when to use the skill on its own initiative.
+\begin{lstlisting}[style=md, basicstyle=\scriptsize\ttfamily]
 ---
 name: deqn-accuracy
-description: Audit a saved DEQN policy on the
-  path its own policy generates: residuals,
-  distance to the reference, E[s], the window.
+description: Audit a saved DEQN policy (.pt with its .json sidecar) on the path its own policy generates. Reports Euler-residual percentiles, the distance to the reference policy, E[s] against the reference and whether the path stayed inside the training window, with a verdict. Never retrains, never reads the training loss as accuracy.
 ---
-### Step 1  Identify the .pt file
-### Step 2  Run the check
-  python3 .claude/skills/deqn-accuracy/\
-          accuracy.py <pt>
-### Step 3  Report the lines verbatim, then
-  one sentence and the verdict
-### Step 4  Save notes/accuracy_<file>.{md,pdf}
-## Constraints: never retrain; never quote
-  the training loss as accuracy.
+...
+### Step 1: Identify the policy file
+### Step 2: Run the check
+python3 .claude/skills/deqn-accuracy/accuracy.py <path to .pt> --plot notes/accuracy_<stem>.pdf
+### Step 3: Report
+Reproduce the script's five lines verbatim, then one sentence of interpretation:
+### Step 4: Save
+## Constraints
+- Never retrain, never modify the `.pt` or its sidecar, never edit `tests/` or `reference/`.
+- Never quote the training loss from the sidecar as an accuracy measure; it is not one.
 \end{lstlisting}
-\column{0.42\textwidth}
-\boristip{4} \textbf{If you do something more than once a day, turn it into a skill}, a Markdown file of instructions that is invoked by name.
-
-\vspace{0.9em}
-The listing shows \texttt{/deqn-accuracy}, the on-path check of a saved policy (abridged).
-
-\vspace{0.9em}
-The \texttt{description} field tells the agent when to use the skill on its own initiative.
-\end{columns}
-\filebox{code/skills/deqn-accuracy/SKILL.md}
+\filebox{code/skills/deqn-accuracy/SKILL.md (abridged here)}
 \end{frame}
 
 \begin{frame}[fragile]{The skill returns a verdict from one command~\livedemo[3]}
@@ -1604,13 +1649,11 @@ The \texttt{description} field tells the agent when to use the skill on its own 
 \begin{lstlisting}[style=prompt, basicstyle=\footnotesize\ttfamily]
 > /deqn-accuracy results/deqn_deterministic.pt
 \end{lstlisting}
-\begin{lstlisting}[style=bash, basicstyle=\footnotesize\ttfamily]
-reference: closed form s* = 0.3564
-|Euler residual| on the grid:
-   mean 4.68e-04  max 1.87e-03
-|s - s_ref|: max 4.91e-04
-E[s] = 0.3564 vs reference 0.3564
-path [0.20, 0.28] in [0.10, 1.00]
+\begin{lstlisting}[style=bash, basicstyle=\scriptsize\ttfamily]
+policy: deqn/outputs/deqn_deterministic.pt  (deterministic model; reference: closed form s* = alpha beta = 0.3564)
+|Euler residual| on the grid [0.1, 1.0]: mean 4.68e-04  p50 4.72e-04  p90 7.24e-04  p99 1.65e-03  max 1.87e-03
+|s - s_ref| on the grid: mean 1.13e-04  max 4.91e-04;   E[s] = 0.3564 vs reference 0.3564
+path range [0.20, 0.28] vs training window [0.10, 1.00]: inside
 verdict: ACCURATE
 \end{lstlisting}
 \column{0.43\textwidth}
@@ -1626,21 +1669,22 @@ The script \texttt{accuracy.py} also draws the figures on these slides, so the c
 \begin{columns}[T]
 \column{0.52\textwidth}
 \texttt{.claude/agents/verifier.md}, abridged:
-\begin{lstlisting}[style=md, basicstyle=\footnotesize\ttfamily]
+\begin{lstlisting}[style=md, basicstyle=\scriptsize\ttfamily]
 ---
 name: verifier
-description: Read-only skeptic: is a claimed
-  result supported by files and outputs?
+description: Read-only skeptic that checks whether a claimed result is actually supported by files, logs, and outputs.
 model: haiku
 tools: Read, Grep, Glob
 ---
-# Verifier
-1. Restate the claim in one sentence.
-2. Inspect only the files and outputs needed.
-3. Report each claim as PASS, FAIL or UNSURE.
-4. End with the smallest follow-up checks.
-## Constraints: never modify files; never
-  declare success without evidence.
+...
+1. Restate the claim you are checking in one sentence.
+2. Inspect only the files, logs, and outputs needed to verify the claim.
+...
+4. Report each claim as `PASS`, `FAIL`, or `UNSURE`.
+5. End with the smallest set of follow-up checks needed to raise confidence.
+## Constraints
+- Never modify files.
+- Never declare success without pointing to concrete evidence.
 \end{lstlisting}
 \column{0.44\textwidth}
 \boristip{8} \textbf{Use subagents.} They apply more computation to the problem and keep the main context clean.
@@ -1654,15 +1698,15 @@ tools: Read, Grep, Glob
   \item The subagent has its own context window, and only a summary returns.
 \end{itemize}
 \end{columns}
-\filebox{code/agents/*.md (8 files), installed to demo/.claude/agents/}
+\filebox{code/agents/verifier.md (abridged here); all 8 files in code/agents/, installed to demo/.claude/agents/}
 \end{frame}
 
 \begin{frame}[fragile]{Give each subagent one job~\livedemo[3]}
 \hfill\stepmarker{3}\par\vspace{0.3em}
 \textbf{Run live:}
 \begin{lstlisting}[style=prompt, basicstyle=\small\ttfamily]
-> Use the verifier subagent to check the claims in
-  the accuracy report under notes/.
+> Use the verifier subagent to check the claims in the
+  accuracy report it just wrote under notes/.
 \end{lstlisting}
 
 \vspace{1.2em}
@@ -1679,45 +1723,49 @@ A generic reviewer checks that the code runs. A specialist knows where code \emp
 \vspace{0.4em}
 \begin{columns}[T]
 \column{0.51\textwidth}
-\begin{lstlisting}[style=md, basicstyle=\footnotesize\ttfamily]
+\begin{lstlisting}[style=md, basicstyle=\scriptsize\ttfamily]
 ## Four checks, in this order
-1. Residuals where the policy sends the
-   economy, not on the training states.
-2. Against a reference: compare the POLICY.
-   A small residual with a large policy
-   error is the finding (silent_failure.md).
-3. Extrapolation: the policy 2 sd outside
-   the ergodic set; still economic sense?
-4. Reproducibility: seed, versions, wall-
-   clock recorded next to the result?
-Verdict: ACCURATE / DEGRADED / WRONG
+1. **Residuals where the policy sends the economy.** ... They must have been evaluated on the path the policy itself generates (a fresh simulation), ...
+2. **Against a reference.** Compare the *policy* (consumption, savings rate, value function) with the reference on the same states. ... A small residual with a large policy error is the finding, not a contradiction ...
+3. **Extrapolation.** Evaluate the policy at states 2 sd outside the ergodic set. ...
+4. **Reproducibility.** Are the seed, run preset, epochs, learning rate, library versions and wall-clock recorded next to the result? ...
+...
+Verdict: ACCURATE | DEGRADED (usable for <...>, not for <...>) | WRONG
 \end{lstlisting}
 \column{0.46\textwidth}
 The \texttt{solution-accuracy-checker} asks whether a model reported as solved is in fact solved.
 
 \vspace{0.9em}
 \begin{lstlisting}[style=prompt, basicstyle=\footnotesize\ttfamily]
-> Use solution-accuracy-checker on the
-  accuracy report under notes/.
+> Use the solution-accuracy-checker
+  subagent on the accuracy report under
+  notes/ and on
+  results/deqn_stochastic.json (the
+  sidecar of the policy). Reference:
+  brock_mirman_reference.solve(0.96,
+  0.9).
 \end{lstlisting}
 \end{columns}
-\filebox{code/agents/solution\_accuracy\_checker.md; prompts: code/prompts.md, \S 9}
+\filebox{code/agents/solution\_accuracy\_checker.md (abridged here); prompts: code/prompts.md, \S 9}
 \end{frame}
 
 \begin{frame}[fragile]{A subagent can carry the applied economist's checklist}
 \begin{columns}[T]
 \column{0.54\textwidth}
 The \texttt{econometrics-reviewer}'s checklist:
-\begin{lstlisting}[style=md, basicstyle=\footnotesize\ttfamily]
+\begin{lstlisting}[style=md, basicstyle=\scriptsize\ttfamily]
 ### A. Identification
-- The identifying assumption, one sentence.
-- DiD: pre-trends? heterogeneous effects
-  (Callaway-Sant'Anna, Sun-Abraham)?
-- IV: effective first-stage F (Montiel
-  Olea-Pflueger); F > 10 is not enough.
-- RDD: bandwidth, polynomial, manipulation.
-### B. Controls  C. Clustering  D. Sample
-Verdict: APPROVE / REQUEST CHANGES / BLOCK
+- State the identifying assumption in one sentence. If you cannot, flag it.
+- For DiD: is there a pre-trends check? Two-way FE with heterogeneous effects? ...
+- For IV: report the effective first-stage F (Montiel Olea-Pflueger) under the paper's clustering; F > 10 is not sufficient (Lee, McCrary, Moreira, Porter 2022). ...
+- For RDD: bandwidth choice (IK, CCT?), polynomial order, donut, manipulation test (McCrary / Cattaneo).
+...
+### B. Fixed effects and controls
+### C. Clustering and standard errors
+### D. Sample and data
+### E. Reproducibility
+...
+4. Emit one of three verdicts at the end: `APPROVE`, `REQUEST CHANGES`, `BLOCK (identification)`.
 \end{lstlisting}
 \column{0.42\textwidth}
 \vspace{1.3em}
@@ -1725,7 +1773,7 @@ Verdict: APPROVE / REQUEST CHANGES / BLOCK
 A converged loss with a wrong policy and a weak first stage behind a significant coefficient have one thing in common: the code \emph{runs without error} in both cases.
 \end{block}
 \end{columns}
-\filebox{code/agents/econometrics\_reviewer.md}
+\filebox{code/agents/econometrics\_reviewer.md (abridged here); prompt: code/prompts.md, \S 9}
 \end{frame}
 
 % --- Walk-through 5: deny rules and hooks ---
@@ -1745,19 +1793,27 @@ Instructions in \texttt{CLAUDE.md} are requests, whereas deny rules and hooks ar
 
 \begin{frame}[fragile]{The settings file with the deny rules and the hook}
 \begin{center}
-\begin{minipage}{0.66\textwidth}
-\begin{lstlisting}[style=json, basicstyle=\footnotesize\ttfamily]
-"permissions": { "deny": [
-    "Read(./data/raw/**)",  "Bash(cat data/raw/*)",
-    "Read(./reference/**)", "Bash(cat reference/*)" ] },
-"hooks": { "PreToolUse": [{
-    "matcher": "Edit|Write|NotebookEdit",
-    "hooks": [{ "type": "command",
-      "command": "jq -e '.tool_input.file_path
-         | test(\"(^|/)(data/raw|reference|tests)/\")'
-         > /dev/null && { echo 'read-only per
-         CLAUDE.md' >&2; exit 2; }; exit 0" }] }],
-  "PostToolUse": [{  /* ruff, latexmk, audit log */ }] }
+\begin{minipage}{0.92\textwidth}
+\begin{lstlisting}[style=json, basicstyle=\scriptsize\ttfamily]
+"permissions": {
+  "deny": [
+    "Read(./data/raw/**)",
+    "Bash(cat data/raw/*)",
+    ...
+    "Read(./reference/**)",
+    "Bash(cat reference/*)",
+    ...
+  ]
+},
+"hooks": {
+  ...
+  "PreToolUse": [
+    {
+      "matcher": "Edit|Write|NotebookEdit",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "jq -e '(.tool_input.file_path // .tool_input.notebook_path // \"\") | test(\"(^|/)(data/raw|reference|tests)/\")' > /dev/null && { echo 'data/raw/, reference/ and tests/ are read-only per CLAUDE.md' >&2; exit 2; }; exit 0"
 \end{lstlisting}
 \end{minipage}
 \end{center}
@@ -1776,7 +1832,7 @@ The \textbf{Model Context Protocol} (MCP) connects the agent to services outside
 \begin{lstlisting}[style=prompt, basicstyle=\footnotesize\ttfamily]
 > Search Zotero for papers on fiscal
   multipliers in HANK models; list the
-  ones not yet in paper/references.bib
+  ones not yet in paper/references.bib.
 \end{lstlisting}
 \vspace{0.4em}
 \boristip{9} With a database server, the agent retrieves and analyzes the data itself: ``Personally, I haven't written a line of SQL in 6+ months.''
@@ -1801,6 +1857,7 @@ Whatever a tool \emph{returns} enters the context and is therefore sent to the A
 \end{tikzpicture}
 \end{center}
 \end{columns}
+\filebox{code/prompts.md, \S 10}
 \end{frame}
 
 \begin{frame}[fragile]{Adding an MCP server takes one command}
@@ -1904,77 +1961,55 @@ claude -p "/goal <condition>"  # headless
   \item a cap, such as ``or stop after 6 turns''
 \end{itemize}
 \end{columns}
+\filebox{code/prompts.md, \S 15 (the commands on the slides)}
 \end{frame}
 
 
 \begin{frame}[fragile]{The loop has to write this residual function}
 \hfill\stepmarker{4}\par\vspace{0.1em}
-\textbf{The demo problem} is the solver for the stochastic model from Part I, built by a loop.
-\begin{columns}[T]
-\column{0.60\textwidth}
+\textbf{The demo problem} is the solver for the stochastic model from Part I, built by a loop. The residual of the provided solution (comments and docstring omitted):
 \begin{lstlisting}[basicstyle=\scriptsize\ttfamily]
-def residual(net, logz, logK):
+def residual(net: torch.nn.Module, logz: torch.Tensor, logK: torch.Tensor) -> torch.Tensor:
     z, K = torch.exp(logz), torch.exp(logK)
     Y = z * K ** ALPHA
-    x = common.encode_state(logz, logK, P)
-    s = net(x).squeeze(1)
+    s = net(common.encode_state(logz, logK, P)).squeeze(1)
     C = (1.0 - s) * Y
     Kn = (1.0 - DELTA) * K + s * Y
     logKn = torch.log(Kn)
     E = torch.zeros_like(C)
-    for e, w in zip(NODES, WEIGHTS):
-        logzn = RHO * logz + SIGMA * e
+    for x, w in zip(NODES, WEIGHTS):
+        logzn = RHO * logz + SIGMA * x
         zn = torch.exp(logzn)
-        xn = common.encode_state(logzn, logKn, P)
-        sn = net(xn).squeeze(1)
+        sn = net(common.encode_state(logzn, logKn, P)).squeeze(1)
         Cn = (1.0 - sn) * zn * Kn ** ALPHA
-        Rn = 1.0 - DELTA + ALPHA * zn * Kn ** (ALPHA - 1.0)
-        E = E + w * Rn / Cn
+        E = E + w * (1.0 - DELTA + ALPHA * zn * Kn ** (ALPHA - 1.0)) / Cn
     return BETA * C * E - 1.0
 \end{lstlisting}
-\column{0.37\textwidth}
-\vspace{0.6em}
-\textbf{The residual of the provided solution} (lightly reformatted) computes consumption today, capital tomorrow, the expectation over five quadrature nodes, and the residual.
-
-\vspace{0.8em}
-\textbf{The training loop} takes 17 more lines.
-
-\vspace{0.8em}
-\textbf{The agent writes both} from the goal on the next slides. The provided solution is kept outside the demo project.
-\end{columns}
+It computes consumption today, capital tomorrow, the expectation over five quadrature nodes, and the residual. The training loop takes 17 more lines. \textbf{The agent writes both} from the goal on the next slides; the provided solution is kept outside the demo project.
 \filebox{code/deqn/solution/deqn\_stochastic.py; the shared pieces: code/deqn/common.py}
 \end{frame}
 
 \begin{frame}[fragile]{\walkthrough~6: The tests are the specification~\livedemo[4]}
 \hfill\stepmarker{4}\par\vspace{0.1em}
-\begin{columns}[T]
-\column{0.56\textwidth}
-\begin{lstlisting}[basicstyle=\footnotesize\ttfamily, frame=single, rulecolor=\color{uzhgreydark!40}]
+Two of the five tests in \texttt{tests/test\_deqn\_stochastic.py} (abridged). The other three check the mean savings rate, the path inside the training window, and reproducibility with the same seed. The stub that the tests import raises \texttt{NotImplementedError}.
+\begin{lstlisting}[basicstyle=\scriptsize\ttfamily]
+from conftest import LOG_K_SS, REFERENCE_CSV, euler_residual, simulate_own_path
 from deqn.stochastic import solve
-MEAN_ABS_RESIDUAL = 1e-3   # ours: 1.4e-4
-MAX_POLICY_GAP = 1e-2      # ours: 2.3e-3
-
-def test_euler_residual_on_own_path(
-        trained, own_path):
+MEAN_ABS_RESIDUAL = 1e-3      # reference solution: 1.4e-4
+MAX_POLICY_GAP = 1e-2         # reference solution: 2.3e-3 (max |s - s_ref| on 2,000 reference states)
+...
+def test_euler_residual_on_own_path(trained, own_path):
     LZ, LK = own_path
-    r = euler_residual(trained["s"], LZ, LK)
-    assert np.abs(r).mean() < MEAN_ABS_RESIDUAL
+    assert np.abs(euler_residual(trained["s"], LZ, LK)).mean() < MEAN_ABS_RESIDUAL
 
 def test_policy_matches_reference(trained):
-    ref = np.loadtxt(REFERENCE_CSV, ...)
+    ref = np.loadtxt(REFERENCE_CSV, delimiter=",", skiprows=1)
     s_net = trained["s"](ref[:, 0], ref[:, 1])
-    gap = np.abs(s_net - ref[:, 2]).max()
-    assert gap < MAX_POLICY_GAP
-
-# + mean savings rate, path inside the window,
-#   same seed -> same policy
+    assert np.abs(s_net - ref[:, 2]).max() < MAX_POLICY_GAP
+...
 \end{lstlisting}
-\column{0.41\textwidth}
-The listing shows \texttt{tests/test\_deqn\_stochastic.py}, abridged. The stub that it tests raises \texttt{NotImplementedError}.
-
-\vspace{1.0em}
 The tests compute the residual and the simulation with their own code (\texttt{conftest.py}), so they do not depend on what the agent reports.
-\end{columns}
+\filebox{code/deqn/tests/test\_deqn\_stochastic.py, code/deqn/tests/conftest.py}
 \end{frame}
 
 \begin{frame}{The thresholds are derived from the provided solution}
@@ -2007,16 +2042,18 @@ The goal is typed in a second terminal at the start of this part. Its six parts 
 \vspace{0.4em}
 \begin{lstlisting}[style=prompt, basicstyle=\scriptsize\ttfamily]
 (*@\textcolor{level5}{\textbf{[CONDITION]}}@*) /goal `python3 -m pytest -q tests/` in this project exits 0 with 5 passed.
-(*@\textcolor{softblue}{\textbf{[PROBLEM]}}@*)   To get there, implement solve(seed, steps) in deqn/stochastic.py: a DEQN for
-             the stochastic growth model of CLAUDE.md.
-(*@\textcolor{softgreen!80!black}{\textbf{[RECIPE]}}@*)    State via common.encode_state; network common.make_net(2, s_init=s*); loss =
-             mean squared Euler residual with common.gh_nodes(5); 128 fresh states per
-             step; Adam 1e-3, 2000 steps, torch.manual_seed(seed) first, float64.
-(*@\textcolor{softorange!90!black}{\textbf{[INTERFACE]}}@*) solve returns {"s": callable (log_z, log_K) -> savings rate, numpy in and
-             out, "net", "wall"} and saves results/deqn_stochastic.pt via save_policy.
-(*@\textcolor{darkred}{\textbf{[EACH TURN]}}@*) Run the tests and show the output, fix one thing, commit. Never edit tests/
-             or reference/. Report ALL_TESTS_PASS when pytest exits 0.
-(*@\textcolor{harvardcrimson}{\textbf{[CAP]}}@*)       Stop after 6 turns (count your commits) and write notes/blocked.md instead.
+(*@\textcolor{softblue}{\textbf{[PROBLEM]}}@*)   To get there, implement solve(seed, steps) in deqn/stochastic.py: a DEQN for the
+            stochastic growth model of CLAUDE.md.
+(*@\textcolor{softgreen!80!black}{\textbf{[RECIPE]}}@*)    State (log z / sd_z, log K - log K*) via common.encode_state; network
+            common.make_net(2, s_init=s*); loss = mean squared Euler residual beta C E[(1 - delta
+            + R') / C'] - 1 with common.gh_nodes(5); 128 fresh states per step, log z ~ N(0,
+            sd_z), log K ~ U(log K* +- 0.5); Adam 1e-3, 2000 steps, torch.manual_seed(seed) first,
+            float64.
+(*@\textcolor{softorange!90!black}{\textbf{[INTERFACE]}}@*) solve returns {"s": callable (log_z, log_K) -> savings rate, numpy in and out, "net",
+            "wall"} and saves results/deqn_stochastic.pt via common.save_policy.
+(*@\textcolor{darkred}{\textbf{[EACH TURN]}}@*) Each turn: run the tests and show the output, fix one thing, commit. Never edit tests/
+            or reference/. Report ALL_TESTS_PASS when pytest exits 0.
+(*@\textcolor{harvardcrimson}{\textbf{[CAP]}}@*)       Stop after 6 turns (count your commits in git log) and write notes/blocked.md instead.
 \end{lstlisting}
 \filebox{code/prompts.md, \S 11 (the goal verbatim, and a template for your own)}
 \end{frame}
@@ -2078,6 +2115,7 @@ ALL_TESTS_PASS  mean |r| 1.4e-4, E[s] 0.2523
 \end{columns}
 \vspace{0.2em}
 {\small\textcolor{uzhgreydark}{The transcript of the second terminal is illustrative and condensed; your run will differ in detail.}}
+\filebox{the goal: code/prompts.md, \S 11; the transcript is illustrative}
 \end{frame}
 
 \begin{frame}[fragile]{What the transcript shows and what to run afterward}
@@ -2091,6 +2129,7 @@ python3 -m pytest -q tests/
 git log --oneline
 /deqn-accuracy results/deqn_stochastic.pt
 \end{lstlisting}
+\filebox{code/prompts.md, \S 11}
 \end{frame}
 
 % --- The verification figure ---
@@ -2138,32 +2177,17 @@ A turn costs roughly \$0.50 to \$1 on Opus, so six turns cost a few dollars and 
 \end{frame}
 
 \begin{frame}[fragile]{Headless runs follow the same rules without supervision}
-\begin{columns}[T]
-\column{0.52\textwidth}
-\textbf{A headless run is the same agent in a batch job.}
-\begin{lstlisting}[style=bash, basicstyle=\footnotesize\ttfamily]
-# print mode: no UI; cron or Slurm
-claude -p "Re-run estimate.py on
-  the new data, refresh tables/,
-  log the changes" \
-  --allowedTools "Read,Edit,Bash"
+\textbf{A headless run is the same agent in a batch job.} One prompt from a script, cron, or a Slurm job; a goal in one invocation; and the fresh-context shell loop:
+\begin{lstlisting}[style=bash, basicstyle=\scriptsize\ttfamily]
+claude -p "Re-run estimate.py on data/2026m11.csv, refresh tables/, summarize the changes vs last month in notes/changelog.md" --output-format json --allowedTools "Read,Edit,Bash(python *)" > logs/run_$(date +%F).json
 
-# a goal, headless
-claude -p "/goal pytest -q exits 0"
+claude -p "/goal python3 -m pytest -q tests/ exits 0 with 5 passed. To get there, ..." --output-format stream-json --verbose
 
-# fresh context per run (Ralph):
-# your test decides; disk remembers
-while ! pytest -q tests/; do
-  claude -p "$(cat PROMPT.md)"
+while ! python3 -m pytest -q tests/; do
+  claude -p "$(cat PROMPT.md)" --allowedTools "Read,Edit,Bash"
 done
 \end{lstlisting}
-\column{0.44\textwidth}
-\vspace{1.6em}
-The same permissions, hooks, and \texttt{CLAUDE.md} apply.
-
-\vspace{1.0em}
-With confidential data, an unattended run raises the governance problem discussed in Part IX.
-\end{columns}
+The same permissions, hooks, and \texttt{CLAUDE.md} apply. With confidential data, an unattended run raises the governance problem discussed in Part IX.
 \filebox{code/prompts.md, \S 12; docs: code.claude.com/docs/en/agent-sdk/overview}
 \end{frame}
 
@@ -2191,57 +2215,43 @@ A hosted, long-running agent & Managed Agents \\
 % --- Walk-through 7: the plan ---
 \begin{frame}[fragile]{\walkthrough~7: The plan's targets detect what the loss misses}
 \hfill\stepmarker{5}\par\vspace{0.1em}
-Step 4 is repeated in plan mode. The plan is written before any code, and the next slide compares the run with it.
-\begin{columns}[T]
-\column{0.56\textwidth}
-\begin{lstlisting}[style=md, basicstyle=\footnotesize\ttfamily]
+Step 4 is repeated in plan mode. The plan is written before any code (abridged), and the next slide compares the run with it.
+\begin{lstlisting}[style=md, basicstyle=\scriptsize\ttfamily]
 ## Problem
-Loss: r = beta C E[...] - 1. Known answer:
-brock_mirman_reference.solve(0.96, 0.9).
+...
+Residual used as the loss: r = beta C E[(1 - delta + R') / C'] - 1, a fraction of consumption. Known answer: the reference policy, `brock_mirman_reference.solve(0.96, 0.9)`.
 ## Recipe
-- x = (log z / sd_z, log K - log K*)
-- 2-32-32-1 tanh, sigmoid (default init)
-- 5 GH nodes; 128 fresh states per step
-- Adam 1e-3, 2000 steps, seed 42, float64
-## Targets (reference/baseline.md)
-| mean |r| on the network's path | < 1e-3 |
-| max |s - s_ref|              | < 1e-2 |
-| |E[s] - 0.2521|              | < 5e-3 |
-| own-path log K in the window | always |
+- State transform x = (log z / sd_z, log K - log K*), `common.encode_state`.
+- Network 2-32-32-1 tanh, sigmoid output, `common.make_net(2)` with the course notebook's initialization (the untrained policy saves about half of output).
+- Expectation: 5 Gauss-Hermite nodes, `common.gh_nodes(5)`.
+- Training states: 128 fresh draws per step, log z ~ N(0, sd_z), log K ~ U(log K* +- 0.5).
+- Adam 1e-3, 2000 steps, seed 42 (`torch.manual_seed` before the network), float64.
+...
+## Metrics and targets (from `reference/baseline.md`)
+| mean \|r\| on the network's own path (2,000 periods, seed 7) | < 1e-3 |
+| max \|s - s_ref\| on the reference states | < 1e-2 |
+| \|E[s] - 0.2521\| | < 5e-3 |
+| own-path log K inside [0.96, 1.96] | always |
+...
 \end{lstlisting}
-\column{0.40\textwidth}
-\vspace{1.6em}
-\begin{block}{Recommendation}
-Put the targets into the plan \emph{before any code is written}.
-\end{block}
-\end{columns}
+\textbf{Recommendation:} put the targets into the plan \emph{before any code is written}.
 \filebox{code/deqn/plan\_deqn.md (the numbers are measured)}
 \end{frame}
 
 \begin{frame}[fragile]{The first run misses the plan's targets}
 \hfill\stepmarker{5}\par\vspace{0.1em}
-\begin{columns}[T]
-\column{0.58\textwidth}
-\begin{lstlisting}[style=md, basicstyle=\footnotesize\ttfamily]
-## First implementation: as planned
-Loss 2.9e-7, below the correct run's. On-path
-mean |r| 9.2e-2; E[s] 0.94 instead of 0.25;
-log K drifted to [3.14, 3.72], outside the
-window. WRONG on four of five tests.
+\begin{lstlisting}[style=md, basicstyle=\scriptsize\ttfamily]
+## First implementation, and what the plan did not foresee
+The recipe as planned. Training loss after 2000 steps: 2.9e-7, below the correct run's 6.0e-7. On-path mean |r|: 9.2e-2. E[s] = 0.94 instead of 0.25; the simulated log K drifted to [3.14, 3.72], outside the box [0.96, 1.96] the loss was evaluated on. WRONG on four of the five tests.
+...
 ## Revised recipe (achieved)
-One change: s_init = s*. Loss 6.0e-7 (higher);
-mean |r| 1.4e-4; max |s - s_ref| 2.3e-3;
-E[s] 0.2523; log K in [1.08, 1.81]. All pass.
-## Sanity rule
-The constant policy s = s* gives |r| = 1.2e-2.
-A smaller RMS residual far from s* is a
-wrong branch, not a solution.
+One change: `s_init=s*` in `make_net`, so descent starts on the equilibrium branch. Training loss 6.0e-7 (higher than before); on-path mean |r| 1.4e-4, max 9.2e-4; max |s - s_ref| 2.3e-3; E[s] 0.2523 (the reference on the same path 0.2518; reference file 0.2521); log K in [1.08, 1.81]. 11 s. All five tests pass.
+## Verification
+...
+Sanity rule: the constant policy s = s* gives on-path mean |r| of about 1.2e-2 (measured). A run whose root-mean-square residual is below that but whose E[s] is far from s* has found a wrong branch, not a solution.
 \end{lstlisting}
-\column{0.38\textwidth}
-\vspace{1.6em}
 The first run missed the targets, and nothing in the training loop indicated it.
-\end{columns}
-\filebox{the two runs: code/deqn/solution/deqn\_stochastic.py, code/deqn/stochastic\_box.py}
+\filebox{code/deqn/plan\_deqn.md (abridged here); the two runs: code/deqn/solution/deqn\_stochastic.py, code/deqn/stochastic\_box.py}
 \end{frame}
 
 % --- The silent failure ---
@@ -2286,28 +2296,29 @@ The Euler equation is \emph{necessary} but not sufficient, because an oversaving
 % --- One prompt -> table + figure ---
 \begin{frame}[fragile]{The choice of loss kernel barely affects the solution~\livedemo[5]}
 \hfill\stepmarker{7}\par\vspace{0.1em}
-One prompt tests whether the loss kernel matters, with accuracy measured on the simulated path.
-\begin{columns}[T]
-\column{0.48\textwidth}
-\begin{lstlisting}[style=prompt, basicstyle=\footnotesize\ttfamily]
-> Role: computational macroeconomist.
-  Task: train deqn/stochastic.py four
-  times, only the loss kernel changed:
-  MSE, MAE, Huber, log-cosh; seed 42.
-  Evaluate each on its own simulated
-  path: |residual| mean, p99, max;
-  E[s]; max |s - s_ref|.
-  Outputs: deqn_kernel_table.tex
-  (booktabs), deqn_kernel_figure.pdf.
-  Do NOT modify common.py or tests/.
-  Verify: every E[s] within 5e-3.
+One prompt tests whether the loss kernel matters, with accuracy measured on the simulated path:
+\begin{lstlisting}[style=prompt, basicstyle=\scriptsize\ttfamily]
+> Role: computational macroeconomist. Code: deqn/stochastic.py (the verified solver), deqn/common.py.
+  Task: train the solver four times with the loss kernel changed and nothing else: MSE, MAE, Huber
+  (delta 1e-2), log-cosh on the Euler residual; seed 42, 2000 steps each. Evaluate each on the path
+  its own policy generates (common.simulate_path): |residual| mean, p99, max; E[s]; max |s - s_ref|
+  from brock_mirman_reference.solve(0.96, 0.9). Outputs: 1) outputs/deqn_kernel_table.tex -- booktabs:
+  kernel, training loss, the three residual columns, E[s], max |s - s_ref|, seconds. 2)
+  outputs/deqn_kernel_figure.pdf -- s(z = 1, K) per kernel vs the reference; histogram of on-path
+  |residual|, log axis; serif. Constraints: do NOT modify deqn/common.py or tests/. Verify: assert
+  every E[s] is within 5e-3 of the reference value; print which kernel has the smallest mean
+  |residual|.
 \end{lstlisting}
-\column{0.48\textwidth}
+\filebox{code/prompts.md, \S 13; the provided answer: code/deqn/loss\_kernels.py (45 s)}
+\end{frame}
+
+\begin{frame}{The four kernels give the same policy and similar residuals}
+\hfill\stepmarker{7}\par\vspace{0.1em}
 \begin{center}
-\includegraphics[width=\linewidth]{figures/agentic_deqn_kernels.pdf}
+\includegraphics[width=0.78\linewidth]{figures/agentic_deqn_kernels.pdf}
 \end{center}
-\end{columns}
-\filebox{code/deqn/loss\_kernels.py (45 s); prompt: code/prompts.md, \S 13}
+Left: the savings rate at $z = 1$ for each kernel against the reference. Right: the distribution of the on-path Euler residual for each kernel, on a log axis.
+\filebox{code/deqn/outputs/deqn\_kernel\_figure.pdf, written by code/deqn/loss\_kernels.py}
 \end{frame}
 
 \begin{frame}{All four kernels give the same answer on the simulated path}
@@ -2771,42 +2782,42 @@ Specify the task, let the agent build, and verify the result against something y
 % --- Appendix: the paper-replication skill ---
 \begin{frame}[fragile]{Appendix: Running the paper-replication skill}
 The skill is installed in the same way as the skills in Part VI. It needs the LaTeX source of the paper, which arXiv provides.
-\begin{columns}[T]
-\column{0.52\textwidth}
+
+\vspace{0.4em}
 \textbf{Install and start}
-\begin{lstlisting}[style=bash, basicstyle=\footnotesize\ttfamily]
-git clone https://github.com/\
-  PredictiveScienceLab/paper-replication-paper
-cp -r paper-replication-paper/skill/\
-  claude-code/paper-replication .claude/skills/
-python3 .claude/skills/paper-replication/\
-  scripts/paper_replication.py bootstrap \
-  --project-dir rep/ --paper-title "..." \
-  --paper-source paper_src/
+\begin{lstlisting}[style=bash, basicstyle=\scriptsize\ttfamily]
+git clone https://github.com/PredictiveScienceLab/paper-replication-paper
+cp -r paper-replication-paper/skill/claude-code/paper-replication .claude/skills/
+python3 .claude/skills/paper-replication/scripts/paper_replication.py bootstrap --project-dir rep/ --paper-title "<title>" --paper-source paper_src/
 \end{lstlisting}
-\column{0.45\textwidth}
 \textbf{Then, in Claude Code}
-\begin{lstlisting}[style=prompt, basicstyle=\footnotesize\ttfamily]
-> Use paper-replication on rep/ until
-  validate-completion passes. No author
-  code. One target at a time.
+\begin{lstlisting}[style=prompt, basicstyle=\scriptsize\ttfamily]
+> Use the paper-replication skill on rep/ and keep going until validate-completion passes. No author
+  code. Keep exactly one target active at a time; record every run and its provenance; mark a target
+  MATCHED only when its artifact, provenance, comparison and report embedding exist. If a target
+  cannot be reproduced from the paper materials, leave it unmatched and record why.
 \end{lstlisting}
-\vspace{0.5em}
-\textbf{A quick version} for a small paper, without the harness:
+\filebox{code/prompts.md, \S 14}
+\end{frame}
+
+\begin{frame}[fragile]{Appendix: A quick version for a small paper}
+Without the harness, for a small paper:
 \begin{lstlisting}[style=prompt, basicstyle=\footnotesize\ttfamily]
-> Replicate every figure and table of
-  [paper]. No author code. Plan first;
-  one target per commit; final table:
-  paper value vs ours, rule per target.
+> Role: replication engineer. Paper: [title, authors, DOI; LaTeX source in paper_src/]. Mission:
+  replicate every figure and table. Hard rules: 1. Do NOT use the authors' code. 2. Before
+  implementing, list every target (figure, table, reported number) with the acceptance rule you
+  will apply, in notes/targets.md; wait for my approval. 3. One target per commit; record the
+  command, seed and output file of every run in notes/runs.md. 4. If stuck x3 on a target, mark it
+  unmatched in notes/targets.md with the reason and move on. Final: a table "paper value vs our
+  value" with the rule applied per target; unmatched targets listed, never dropped.
 \end{lstlisting}
-\end{columns}
-\filebox{code/prompts.md, \S 14 (both prompts)}
+\filebox{code/prompts.md, \S 14}
 \end{frame}
 
 \begin{frame}[fragile]{Appendix: The skill's workspace and what to expect}
 \begin{columns}[T]
 \column{0.52\textwidth}
-\textbf{The workspace that the skill maintains}
+\textbf{The workspace that the skill maintains} (annotated)
 \begin{lstlisting}[style=md, basicstyle=\footnotesize\ttfamily]
 paper_manifest.json      source hash, rules
 spec/reproduction_matrix.csv  one row per
@@ -2824,7 +2835,7 @@ report/main.tex          every match embedded
 
 \vspace{0.8em}
 \textbf{Expect} a run of hours rather than minutes. The result is a verdict for each target under its acceptance rule (numeric with the paper's tolerance, distributional, structural, or visual), not a single number for the paper.
-\filebox{arXiv:2607.02134, Sections 2.2--2.4}
+\filebox{arXiv:2607.02134, Sections 2.2--2.4; github.com/PredictiveScienceLab/paper-replication-paper}
 \end{frame}
 
 \end{document}

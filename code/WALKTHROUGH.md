@@ -3,11 +3,11 @@
 This replaces take-home exercises. Each row is a file (or a command) that is
 opened and stepped through during the lecture, in the order of the slides, with
 what to look at and the command that reproduces it (the deck is
-`slides/Agentic_Programming_Munich.pdf`; its last two frames are an appendix). Paths are relative to the
+`slides/Agentic_Programming_Munich.pdf`; its last three frames are an appendix). Paths are relative to the
 repository root. The demo project is `demo/` at the repository root, built by
 `bash code/setup_demo_project.sh` (git-ignored, with its own git history); every
 live session runs there: `cd demo && claude`. The prompts are in
-[`prompts.md`](prompts.md).
+[`prompts.md`](prompts.md); its §15 collects the general commands the slides show (install, Git, worktrees, `/goal`).
 
 ## The lead example
 
@@ -48,11 +48,11 @@ section (§) of `prompts.md`.
 |---|---|---|---|---|
 | 1 | | I | `code/brock_mirman_reference.py` | The docstring: model, the three exported functions (`solve`, `simulate`, `euler_error`) and `steady_state`. `solve(beta, rho)(z, K)` is the savings rate: the reference every DEQN step is checked against. Nobody needs to read past the docstring. |
 | 2 | | I | `code/deqn/README.md` | The README of the lead example: the step table and the measured numbers. |
-| 3 | | II | `claude --version`, `claude doctor` | The stack check. **D1.** |
+| 3 | | II | `claude --version`, `claude doctor` (§15) | The stack check. **D1.** |
 | 4 | WT 1 | II | `code/setup_demo_project.sh`, then `demo/` | Run the script, open the tree: `CLAUDE.md` (from `code/CLAUDE_md_demo.md`), `deqn/common.py`, `deqn/source/`, the stub `deqn/stochastic.py`, `tests/`, `reference/`, `data/raw/`, `.claude/`. `python3 -m pytest -q tests/` fails with `NotImplementedError`. Then `claude` and §1. |
 | 5 | | II | `code/deqn/source/deqn_tf_deterministic.py` | `compute_cost`, lines 51–64: the relative Euler error of the course notebook, in TensorFlow. This is what Step 1 ports. (Not run: TensorFlow is not a requirement.) |
 | 6 | | III | `code/deqn/deterministic.py` | The port, as the feedback-loop transcript and the Level-3 prompt produce it: `residual()` (lines 31–41), `solve()`, `check()`. `python3 code/deqn/deterministic.py` (3 s) prints the max error against alpha beta, 4.9e-4, and writes `outputs/deqn_deterministic.{pt,json}` and `deqn_step1_figure.pdf`. |
-| 7 | | III | §4, plan mode | **D2.** Read the plan aloud before approving: closed form only in the check, `make_net` reused, torch seeded first, "solved" judged by the max error. Afterward `git diff HEAD`, `cat notes/deqn_step1.md`, open `figures/deqn_step1.pdf`. Expected numbers in §4. |
+| 7 | | III | §4, plan mode | **D2.** Read the plan aloud before approving: closed form only in the check, `make_net` reused, torch seeded first, "solved" judged by the policy error. Afterward `git diff HEAD`, `cat notes/deqn_step1.md`, open `figures/deqn_step1.pdf`. Expected numbers in §4. |
 | 8 | | IV | `code/prompts.md` §7 | The before/after prompt (Step 2), the constraint lines and the six templates. Point at the `[VERIFY]` line: the network's own path, the reference, the window; the training loss is not in it. Template 5: the shape bug in `code/deqn/source/deqn_tf_stochastic.py`, line 66. |
 
 ## Block 2 (70 min)
@@ -60,7 +60,7 @@ section (§) of `prompts.md`.
 | # | WT | Part | File / command | What to look at |
 |---|---|---|---|---|
 | 9 | WT 2 | V | `code/CLAUDE_md_template.md` (the paper example) and `code/CLAUDE_md_demo.md` (= `demo/CLAUDE.md`) | In the template: Paths With Rules (`data/raw/`: READ ONLY), Current Status, Decisions Made, and the stale line (JAX in the log, TensorFlow in the package list). In the demo file: what the code does not tell you, the two rules, the DEQN notation, "accuracy means ... never the training loss". Live: §8. |
-| 10 | WT 3 | VI | `code/skills/deqn-accuracy/SKILL.md`, `code/deqn/accuracy.py` | Frontmatter, the four steps, the constraints; the script is the same one the tests' logic mirrors. **D3:** `/deqn-accuracy results/deqn_deterministic.pt` (§9, 5 s); open the report under `notes/`. Then `/data-diagnostics data/bm_panel.csv` if time allows. |
+| 10 | WT 3 | VI | `code/skills/deqn-accuracy/SKILL.md`, `code/deqn/accuracy.py` | Frontmatter, the four steps, the constraints; the script is the same one the tests' logic mirrors. **D3:** `/deqn-accuracy results/deqn_deterministic.pt` (§9, 5 s); open the report under `notes/`. |
 | 11 | WT 3 | VI | `code/skills/data-diagnostics/SKILL.md`, `code/skills/strategic-revision/SKILL.md` | Two more skills of the same shape, for data files and for referee reports; not on the slides. |
 | 12 | WT 4 | VI | `code/agents/verifier.md` | The whole file (28 lines). Live: the verifier prompt of §9 on the accuracy report. Watch the main session delegate and receive a summary. |
 | 13 | | VI | `code/agents/solution_accuracy_checker.md`, `code/agents/econometrics_reviewer.md` | The four checks (check 2 now cites the lecture's own silent failure); checklist A–E (effective first-stage F; F > 10 is not enough). Compare the `tools:` lines: read-only agents have no `Bash`, `Edit`, `Write`. |
@@ -72,7 +72,7 @@ section (§) of `prompts.md`.
 | 19 | | VII | `code/prompts.md` §12 | The headless command, the headless goal, and the fresh-context shell loop. |
 | 20 | WT 7 | VIII | `code/deqn/plan_deqn.md` | Problem, recipe, metrics and targets; "First implementation, and what the plan did not foresee" (the four numbers of the wrong run); "Revised recipe (achieved)"; the sanity rule. |
 | 21 | | VIII | `code/deqn/silent_failure.md`, `code/deqn/stochastic_box.py`; `cd code/deqn && python3 stochastic_box.py && python3 accuracy.py outputs/deqn_stochastic_box.pt` | The one-line diff (`s_init=None`); the run reproduces the left column of the slide in 11 s (training loss 2.9e-7, E[s] 0.94, log K in [3.1, 3.7]); the verdict WRONG. `python3 plot_silent_failure.py` redraws both figures from the saved policies. |
-| 22 | | VIII | `code/deqn/loss_kernels.py`, `code/deqn/outputs/deqn_kernel_table.tex`, `deqn_kernel_figure.pdf` | The prompt (§13), the `KERNELS` dict (lines 25–30), the committed table and figure. **D5 (optional):** `python3 code/deqn/loss_kernels.py`, 45 s; `diff` the table against the committed one (only the seconds column should differ). |
+| 22 | | VIII | `code/deqn/loss_kernels.py`, `code/deqn/outputs/deqn_kernel_table.tex`, `deqn_kernel_figure.pdf` | The prompt (§13; on the slide verbatim), the `KERNELS` dict (lines 25–30), the committed table and figure (two slides). **D5 (optional):** `python3 code/deqn/loss_kernels.py`, 45 s; `diff` the table against the committed one (only the seconds column should differ). |
 | 23 | | Wrap-up | `README.md`, this file | How to replay everything. |
 
 ## Instructor timing sheet (150 min)
