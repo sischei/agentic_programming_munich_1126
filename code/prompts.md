@@ -25,7 +25,7 @@ the lecture runs in `demo/`.
 | 7 | | Prompt anatomy: Step 2 as the six-component prompt; the constraint lines; six templates |
 | 8 | WT 2 | Orientation from `CLAUDE.md` alone |
 | 9 | D3, WT 3–5 | The accuracy skill, the verifier subagent, a specialist; the deny rule and the hook |
-| 10 | | MCP: Zotero and GitHub |
+| 10 | | MCP: GitHub and a database |
 | 11 | D4, WT 6 | The `/goal` that builds the stochastic solver, and its template |
 | 12 | | Headless: `claude -p`, a headless goal, the fresh-context shell loop |
 | 13 | D5 | One prompt → table + figure (four loss kernels) |
@@ -282,16 +282,12 @@ Adding servers (the GitHub server needs a token header; see the MCP documentatio
 claude mcp add --transport http github \
     https://api.githubcopilot.com/mcp/
 # a local server: any command speaking MCP
-claude mcp add --transport stdio zotero \
+claude mcp add --transport stdio postgres \
     -- npx -y <package>
 claude mcp list     # /mcp inside a session
 ```
 
-With a Zotero and a GitHub server added:
-
-```text
-Search Zotero for papers on fiscal multipliers in HANK models; list the ones not yet in paper/references.bib.
-```
+With a GitHub server added:
 
 ```text
 Open a GitHub issue for the pre-trend test with the plan from notes/plan.md.

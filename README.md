@@ -1,10 +1,10 @@
 # Agentic Programming for Economic Research
 
-![Agentic Programming for Economic Research, CES Munich, November 18, 2026](fig/theme.png)
+![Agentic Programming for Economic Research, CES Munich, November 17, 2026](fig/theme.png)
 
 > **AI coding agents can now take on much of the computational work of economic research. This lecture shows how to put them to work, and how to keep every result verifiable.**
 
-**A 150-minute lecture at the [Center for Economic Studies (CES)](https://www.en.ces.econ.uni-muenchen.de/), LMU Munich, November 18, 2026.**
+**A 150-minute lecture at the [Center for Economic Studies (CES)](https://www.en.ces.econ.uni-muenchen.de/), LMU Munich, November 17, 2026.**
 One example runs through the whole lecture: a neural solver for a growth model, built step by step *with* the agent
 and graded at every step against a known answer. You leave with a working solver, a prompt discipline that transfers
 to your own projects, and a repository that replays everything at home.
@@ -58,7 +58,7 @@ Cost: a Pro subscription covers every demo; on the API, a few dollars on Opus, a
 
 | Path | What |
 |---|---|
-| [`slides/Agentic_Programming_Munich.pdf`](slides/Agentic_Programming_Munich.pdf) | the deck, 133 pages, the last three an appendix (LaTeX source and figures next to it) |
+| [`slides/Agentic_Programming_Munich.pdf`](slides/Agentic_Programming_Munich.pdf) | the deck, 135 pages, the last three an appendix (LaTeX source and figures next to it) |
 | [`code/WALKTHROUGH.md`](code/WALKTHROUGH.md), [`code/prompts.md`](code/prompts.md) | every file and every prompt, in lecture order |
 | [`code/deqn/`](code/deqn/README.md) | the lead example: scripts, the five tests, the reference, the committed numbers and figures |
 | `code/brock_mirman_reference.py` | the reference solver: the known answer |

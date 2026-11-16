@@ -1,4 +1,4 @@
-# Agentic Programming for Economic Research (CES Munich, 18 November 2026)
+# Agentic Programming for Economic Research (CES Munich, 17 November 2026)
 # Python 3.10-3.12, CPU only:  python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt
 numpy>=1.26
 scipy>=1.11

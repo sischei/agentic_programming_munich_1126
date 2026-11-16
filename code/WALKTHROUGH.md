@@ -79,7 +79,7 @@ section (§) of `prompts.md`.
 
 | Clock | Part | Minutes | Content |
 |---|---|---|---|
-| 0:00 | Intro | 5 | Title, why now, the running example (one model, seven steps, the tool each step introduces) |
+| 0:00 | Intro | 5 | Title, why now, the running example (one model, seven steps, the tool each step introduces), the code behind each live demo |
 | 0:05 | I | 15 | Tiers, context window, where the agent helps, workflow, the running example and the step ladder |
 | 0:20 | II | 10 | Stack, commands, models and effort, open-weight models, git, **D1** + WT 1 |
 | 0:30 | III | 25 | Feedback loop on Step 1, prompt levels, the Level-3 port, **D2 (12 min)**, notebooks, parallel, context |

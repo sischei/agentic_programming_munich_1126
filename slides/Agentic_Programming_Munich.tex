@@ -1,6 +1,6 @@
 % ============================================================================
 % Agentic Programming for Economic Research
-% CES, LMU Munich, 18 November 2026 -- 150 minutes (2 x 70 min, 10-min break)
+% CES, LMU Munich, 17 November 2026 -- 150 minutes (2 x 70 min, 10-min break)
 % Lineage: Geneva (May 2026) -> RWTH Aachen Session 9 (October 2026) -> this standalone lecture.
 % Compile: latexmk -pdf Agentic_Programming_Munich.tex   (or: make)
 % ============================================================================
@@ -137,24 +137,16 @@
     \ifnum\i=#1 \node[fill=harvardcrimson,text=white,font=\tiny\bfseries,inner sep=2.5pt,minimum width=1.1em] at (\i*0.46,0) {\i};%
     \else \node[fill=uzhgreylight,text=uzhgreydark,font=\tiny,inner sep=2.5pt,minimum width=1.1em] at (\i*0.46,0) {\i};\fi}%
     \node[anchor=west,font=\scriptsize,text=uzhgreydark,inner sep=0pt] at (7*0.46+0.32,0) {Step #1};}}
-% \redthread{0|1}: the red thread of the lecture. 0: with the three stages on top (opening slide);
-% 1: without them, with a green row naming the known answer that grades each step.
+% \redthread{0|1}: the seven steps of the running example. 0: the plain timeline (opening);
+% 1: with a green row naming the known answer that grades each step.
 \newcommand{\redthread}[1]{%
 \begin{tikzpicture}[
-   stage/.style={draw=uzhgreydark!50, fill=uzhgreylight, rounded corners=3pt, minimum height=1.0cm, text width=3.9cm, align=center, font=\footnotesize, inner sep=2.5pt},
    station/.style={circle, fill=harvardcrimson, text=white, font=\scriptsize\bfseries, inner sep=0pt, minimum size=1.5em},
    work/.style={font=\scriptsize, align=center, text width=1.64cm, anchor=south, inner sep=0pt},
    tool/.style={font=\scriptsize, align=center, text width=1.64cm, anchor=north, text=uzhblue, inner sep=0pt},
    part/.style={font=\scriptsize, text=uzhgreydark},
    live/.style={fill=harvardcrimson, text=white, rounded corners=1.5pt, inner sep=1.6pt, font=\tiny\bfseries},
    grade/.style={font=\scriptsize, text=darkgreen, align=center, text width=1.64cm, anchor=north, inner sep=0pt}]
-  \ifnum#1=0
-    \node[stage] (m) at (1.27, 2.08) {\textbf{\textcolor{uzhblue}{The model}}\\the Brock--Mirman\\growth model};
-    \node[stage] (d) at (6.07, 2.08) {\textbf{\textcolor{uzhblue}{The method}}\\a neural network\\learns the policy};
-    \node[stage] (v) at (10.87, 2.08) {\textbf{\textcolor{uzhblue}{The standard}}\\every step checked against\\an answer we already know};
-    \draw[-{Stealth[length=2.5mm]}, very thick, uzhblue] (m) -- (d);
-    \draw[-{Stealth[length=2.5mm]}, very thick, uzhblue] (d) -- (v);
-  \fi
   % the thread and its stations
   \draw[harvardcrimson, line width=2pt, -{Stealth[length=3mm]}] (-0.8, 0) -- (12.95, 0);
   \node[circle, draw=harvardcrimson, fill=white, line width=1.2pt, minimum size=1.5em, inner sep=0pt] at (0, 0) {};
@@ -191,6 +183,9 @@
 % \filebox{path}: the repository location of what the frame shows.
 \newcommand{\filebox}[1]{%
   \vspace{0.5em}\par\noindent{\scriptsize\textcolor{uzhgreydark}{$\triangleright$~\texttt{#1}}}}
+% \democode{n}{paths}: the repository files behind live demo n, on the slide where the demo runs.
+\newcommand{\democode}[2]{%
+  \vspace{0.3em}\par\noindent{\scriptsize\textcolor{harvardcrimson}{$\blacktriangleright$}~\textbf{Code for live demo #1:}~\textcolor{uzhgreydark}{\texttt{#2}}}}
 \newcommand{\partcard}[3]{%
   \begin{frame}{}\vfill\begin{center}
   {\Huge \textcolor{uzhblue}{\textbf{Part #1}}}\\[12pt]{\LARGE #2}\\[14pt]{\large\textcolor{uzhgreydark}{\itshape #3}}
@@ -227,7 +222,7 @@
 \subtitle{AI coding agents in the research workflow: from prompt to verified result}
 \author{Simon Scheidegger}
 \institute[HEC Lausanne \& LSE]{HEC, University of Lausanne\\Grantham Research Institute, London School of Economics}
-\date{Lecture at the Center for Economic Studies (CES), LMU Munich\\November 18, 2026}
+\date{Lecture at the Center for Economic Studies (CES), LMU Munich\\November 17, 2026}
 
 \begin{document}
 
@@ -261,7 +256,7 @@
  & \emph{Break, 10 minutes} \\[4pt]
 \multicolumn{2}{@{}l}{\textbf{Block 2 (70 min): extending and trusting the agent}} \\
 \textbf{V} & Project memory in \texttt{CLAUDE.md} \\
-\textbf{VI} & Skills, subagents, hooks, and MCP \\
+\textbf{VI} & Skills, subagents, hooks, and external tools through MCP \\
 \textbf{VII} & Autonomous loops with \texttt{/goal} \\
 \textbf{VIII} & From plan to table and figure \\
 \textbf{IX} & Verification, reproducibility, and governance \\
@@ -270,6 +265,9 @@
 
 \vspace{0.6em}
 {\footnotesize There are live demos in Parts II, III, VI, VII, and VIII. You do not need to install anything today.}
+
+\vspace{0.4em}
+{\scriptsize\textcolor{uzhgreydark}{MCP, the Model Context Protocol, is an open standard through which the agent reaches tools and data outside\\the project, such as GitHub, a database, or a computing cluster.}}
 \end{frame}
 
 % --- Why now, what it is ---
@@ -316,17 +314,46 @@ The tools are more than ``autocomplete.'' Agents plan, run, and debug for hours.
 \end{frame}
 
 % --- Today's plan ---
-\begin{frame}{We solve one growth model with an AI agent, step by step}
-\small
-We solve one economic model with deep learning and build the solver with an AI agent, in seven steps that each introduce one new tool.
+\begin{frame}{We solve one growth model with an AI agent}
+\vspace{2.5em}
+{\large
+\begin{tabular}{@{}>{\color{uzhblue}\bfseries}l@{\hspace{1.4em}}l@{}}
+The model & The Brock--Mirman growth model \\[1.1em]
+The method & A neural network learns the savings policy (deep learning) \\[1.1em]
+The standard & Every step is checked against an answer we already know \\
+\end{tabular}}
+\vfill
+\end{frame}
+
+\begin{frame}{Each of the seven steps introduces one agent tool}
+\vspace{0.8em}
 \begin{center}
 \redthread{0}
 \end{center}
-\vspace{-0.3em}
+\vspace{0.6em}
+\small
+Above the line is the work on the model. Below it, in blue, is the agent tool that the step introduces.
+\end{frame}
+
+\begin{frame}{The code for every live demo is in the repository}
+Every demo runs in \texttt{demo/}, which \texttt{bash code/setup\_demo\_project.sh} builds from these files.
 \begin{center}
-The work on the model is shown above the line, and the agent tool that each step introduces below it, in blue.\\[3pt]
-The marker \raisebox{-0.25em}{\stepmarker{3}} on a slide shows the current step.
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}l>{\raggedright\arraybackslash}p{3.3cm}>{\raggedright\arraybackslash}p{6.9cm}l@{}}
+\toprule
+ & \textbf{What happens} & \textbf{Files} & \textbf{Prompt} \\
+\midrule
+\livedemo[1] & The agent reads the project & {\scriptsize\texttt{code/setup\_demo\_project.sh}, \texttt{code/deqn/}, \texttt{code/CLAUDE\_md\_demo.md}} & \S 1 \\
+\livedemo[2] & Step 1 in plan mode & {\scriptsize\texttt{code/deqn/source/deqn\_tf\_deterministic.py}, \texttt{code/deqn/deterministic.py}} & \S 4 \\
+\livedemo[3] & A skill and a subagent check Step 1 & {\scriptsize\texttt{code/skills/deqn-accuracy/}, \texttt{code/deqn/accuracy.py}, \texttt{code/agents/verifier.md}} & \S 9 \\
+\livedemo[4] & \texttt{/goal} builds the solver & {\scriptsize\texttt{code/deqn/tests/}, \texttt{code/deqn/reference/}, \texttt{code/deqn/solution/}} & \S 11 \\
+\livedemo[5] & Four loss kernels & {\scriptsize\texttt{code/deqn/loss\_kernels.py}, \texttt{code/deqn/outputs/}} & \S 13 \\
+\bottomrule
+\end{tabular}
 \end{center}
+
+{\scriptsize\textcolor{uzhgreydark}{A section sign (\S) refers to a section of \texttt{code/prompts.md}, which holds every prompt of the lecture. \texttt{code/WALKTHROUGH.md} lists every file in lecture order, with the command that reproduces it. The provided versions also run without the agent, each in under a minute.}}
 \end{frame}
 
 \begin{frame}{What you take away from the lecture}
@@ -357,7 +384,7 @@ The language models are the same across tiers, but the scaffolding differs: a ch
 \rowcolor{softblue!10}
 \textbf{3} & \textbf{Terminal agent} that reads and writes files, runs code, and uses Git & \textbf{Claude Code}, Codex CLI, Gemini CLI \\
 \rowcolor{softblue!10}
-\textbf{4} & Tier 3 with external tools via MCP (Model Context Protocol) & Zotero, GitHub, databases, computing clusters (HPC) \\
+\textbf{4} & Tier 3 with external tools via MCP (Model Context Protocol) & GitHub, databases, computing clusters (HPC) \\
 \textbf{5} & Closed-loop autonomy with a verifier & \texttt{/goal}, headless (batch) runs \\
 \bottomrule
 \end{tabular}
@@ -368,8 +395,8 @@ From Tier 3 onward, the agent \emph{does} the work. It behaves like a fast resea
 \end{frame}
 
 % --- Context Window ---
-\begin{frame}[fragile]{The whole conversation is resent at every turn}
-A language model has \emphc{no memory}. At every turn, the whole conversation is sent again as one document, the \emphc{context window}.
+\begin{frame}[fragile]{The model rereads the whole conversation at every turn}
+A language model has \emphc{no memory}. At every turn, the whole conversation is sent again as one document, which has to fit into the \emphc{context window}.
 
 \vspace{0.7em}
 \begin{center}
@@ -387,7 +414,7 @@ A language model has \emphc{no memory}. At every turn, the whole conversation is
     \fill[uzhgreylight] (7.5,0) rectangle (\barwidth,\barheight);
     \node[font=\scriptsize, text=uzhgreydark] at (8.75,0.45) {Free};
     \draw[thick] (0,0) rectangle (\barwidth,\barheight);
-    \node[font=\scriptsize, anchor=west, text=uzhgreydark] at (0,-0.35) {The current models hold 1M tokens, roughly half a million words};
+    \node[font=\scriptsize, anchor=west, text=uzhgreydark] at (0,-0.35) {The current models hold 1M tokens, roughly 500,000 to 750,000 words of English text, and less for code};
     \draw[decorate, decoration={brace, amplitude=3pt}, thick, harvardcrimson]
         (0.8,\barheight+0.1) -- (7.5,\barheight+0.1)
         node[midway, above=3pt, font=\scriptsize, text=harvardcrimson] {grows during the session; material in the middle is used least reliably (Liu et al., 2024)};
@@ -396,8 +423,10 @@ A language model has \emphc{no memory}. At every turn, the whole conversation is
 
 \vspace{0.7em}
 \begin{alertblock}{Caveat: sessions that mix unrelated tasks}
-When unrelated tasks share one session, every later turn rereads all of them and is billed for them. A focused context gives better answers at lower cost.
+When unrelated tasks share one session, every later turn rereads all of them, and the unrelated material lowers the quality of the answers. Claude Code caches the resent part at about 5\% of the normal input price on Opus and Sonnet, but it still adds to the bill and to the usage limits.
 \end{alertblock}
+\vspace{0.4em}
+{\scriptsize\textcolor{uzhgreydark}{A turn is one message from you and the agent's work on it, up to its reply.}}
 \end{frame}
 
 \begin{frame}{Keep the context focused on one task}
@@ -420,7 +449,7 @@ When unrelated tasks share one session, every later turn rereads all of them and
 \end{columns}
 
 \vspace{1.2em}
-{\small\textcolor{uzhgreydark}{With context windows of 1M tokens, the window rarely fills, but unneeded context still costs money and lowers the quality of the answers.}}
+{\small\textcolor{uzhgreydark}{With context windows of 1M tokens, the window rarely fills. Unneeded context still lowers the quality of the answers, and even at the cached price it adds to the cost.}}
 \end{frame}
 
 % --- Task Taxonomy ---
@@ -610,13 +639,13 @@ We use it to check the full model ($\delta = 0.10$), which has no closed form.
 \end{frame}
 
 \begin{frame}{Each of the seven steps is checked against a known answer}
-\small
-With the model in place, the same diagram now shows the known answer against which each step is checked.
+\vspace{0.8em}
 \begin{center}
 \redthread{1}
 \end{center}
-\vspace{-0.2em}
-Step 2 is written as a prompt and is run as Step 4.
+\vspace{0.6em}
+\small
+This is the diagram from the start of the lecture. The new green row names the known answer against which each step is checked. Step 2 is written as a prompt and is run as Step 4.
 \filebox{code/deqn/ (scripts, tests, outputs); code/prompts.md (every prompt, in order)}
 \end{frame}
 
@@ -786,11 +815,14 @@ Gemma 4 31B (Google) & Apache 2.0 & One GPU or a 64 GB Mac & 52.0$^{\dagger}$ \\
 \end{itemize}
 \column{0.46\textwidth}
 \textbf{How to run one}
+
+\vspace{0.4em}
+Ollama runs open-weight models on your own machine. This command starts Claude Code with Gemma 4 in place of Claude:
 \begin{lstlisting}[style=bash, basicstyle=\footnotesize\ttfamily]
 ollama launch claude --model gemma4:31b
 \end{lstlisting}
 \vspace{0.4em}
-Running Claude Code on a local model is not supported by Anthropic. Do not use a \texttt{:cloud} tag with restricted data.
+Models tagged \texttt{:cloud} run on Ollama's servers. Do not use them with restricted data.
 \end{columns}
 
 \vspace{1.5em}
@@ -883,7 +915,7 @@ demo/
                        settings.json
 \end{lstlisting}
 \end{columns}
-\filebox{code/setup\_demo\_project.sh, code/CLAUDE\_md\_demo.md (installed as demo/CLAUDE.md)}
+\democode{1}{code/setup\_demo\_project.sh builds demo/ from code/deqn/, code/brock\_mirman\_reference.py, code/CLAUDE\_md\_demo.md (installed as demo/CLAUDE.md), code/skills/, code/agents/, and code/hooks/. Prompt: code/prompts.md, \S 1}
 \end{frame}
 
 \begin{frame}[fragile]{The first prompt asks the agent only to read~\livedemo[1]}
@@ -993,6 +1025,8 @@ Done: the loss has converged.
 \begin{block}{What the transcript shows}
 Steer with the question you would ask an RA. Here the error is $4.9\times10^{-4}$. In Part VIII, stopping at the same point leaves a savings rate of 0.94 instead of 0.25 undetected.
 \end{block}
+\vspace{1em}
+{\scriptsize\textcolor{uzhgreydark}{The marker at the top right shows which of the seven steps a slide belongs to. Here it is Step 1.}}
 \end{columns}
 \filebox{code/prompts.md, \S 2 (every prompt in the lecture, ready to paste)}
 \end{frame}
@@ -1099,7 +1133,7 @@ Press \textbf{Shift+Tab} until the status line shows \emph{plan mode}. The agent
   Do NOT use the closed form anywhere except in the check. Do NOT modify
   deqn/common.py.
 \end{lstlisting}
-\filebox{code/prompts.md, \S 4; the provided version: code/deqn/deterministic.py}
+\democode{2}{code/prompts.md, \S 4; the input: code/deqn/source/deqn\_tf\_deterministic.py; the provided version: code/deqn/deterministic.py}
 \end{frame}
 
 \begin{frame}{What to check in a plan before approving it}
@@ -1119,6 +1153,7 @@ Press \textbf{Shift+Tab} until the status line shows \emph{plan mode}. The agent
 \includegraphics[width=\linewidth]{figures/agentic_deqn_step1.pdf}
 \end{center}
 \end{columns}
+\filebox{The agent writes the four files and the policy in demo/; provided versions: code/deqn/outputs/deqn\_deterministic.pt, code/deqn/outputs/deqn\_step1\_figure.pdf}
 \end{frame}
 
 % --- Agents and notebooks ---
@@ -1214,7 +1249,7 @@ Whatever a new RA would need to know on Monday morning belongs in a file, and th
 \vspace{0.9em}
 Alternatively, resume the conversation itself with \texttt{claude -{}-continue} or \texttt{claude -{}-resume}.
 \end{columns}
-\filebox{code/prompts.md, \S 6}
+\filebox{code/prompts.md, \S 6; the agent writes notes/session\_state.md in your project}
 \end{frame}
 
 \begin{frame}{How to manage the context of a session}
@@ -1232,6 +1267,8 @@ Heavy reading & Use a \emphc{subagent}; only its summary returns \\
 \bottomrule
 \end{tabular}
 \end{center}
+\vspace{0.6em}
+{\scriptsize\textcolor{uzhgreydark}{A turn is one message from you and the agent's work on it, up to its reply.}}
 \end{frame}
 
 % ============================================================================
@@ -1392,7 +1429,7 @@ These are prompts you will use repeatedly, shown in full.
   claim needs a source that is not there, write [CITE: author, year -- verify] and list
   the gaps at the end.
 \end{lstlisting}
-\filebox{code/prompts.md, \S 7, Templates 3--4 (verbatim)}
+\filebox{code/prompts.md, \S 7, Templates 3--4 (verbatim); the agent writes the files under notes/ in your project}
 \end{frame}
 
 % --- Templates II ---
@@ -1409,7 +1446,7 @@ These are prompts you will use repeatedly, shown in full.
 
 \vspace{1.0em}
 The first test catches a shape bug that the original code carried unnoticed: the expectation has shape $(n, 2)$ instead of $(n, 1)$, and the mean squared error does not change.
-\filebox{code/prompts.md, \S 7, Template 5}
+\filebox{code/prompts.md, \S 7, Template 5; the agent writes deqn/stochastic\_port.py and deqn/test\_port.py in your project}
 \end{frame}
 
 \begin{frame}[fragile]{Template 6 checks a derivation by computer algebra}
@@ -1427,7 +1464,7 @@ The expected values are $K^* = 4.294$ and $s^* = 0.254$.
 
 \vspace{1.0em}
 Both templates turn the question ``is this right?'' into a number that is zero when the answer is yes. With such a check, the agent's work on an economic model can be verified.
-\filebox{code/prompts.md, \S 7, Template 6}
+\filebox{code/prompts.md, \S 7, Template 6; the agent writes notes/check\_euler.py in your project}
 \end{frame}
 
 % --- Failure modes ---
@@ -1660,7 +1697,7 @@ verdict: ACCURATE
 \vspace{1.6em}
 The script \texttt{accuracy.py} also draws the figures on these slides, so the check is written only once.
 \end{columns}
-\filebox{code/deqn/accuracy.py; prompts: code/prompts.md, \S 9}
+\democode{3}{code/skills/deqn-accuracy/SKILL.md, code/deqn/accuracy.py, code/agents/verifier.md; prompts: code/prompts.md, \S 9; the skill writes its report to notes/ in demo/}
 \end{frame}
 
 % --- Walk-through 4: subagents ---
@@ -1789,12 +1826,11 @@ A converged loss with a wrong policy and a weak first stage behind a significant
 \begin{block}{Requests and rules}
 Instructions in \texttt{CLAUDE.md} are requests, whereas deny rules and hooks are enforced. Put preferences in text and binding rules in code.
 \end{block}
+\filebox{code/hooks/settings.json (installed as demo/.claude/settings.json); prompts: code/prompts.md, \S 9}
 \end{frame}
 
 \begin{frame}[fragile]{The settings file with the deny rules and the hook}
-\begin{center}
-\begin{minipage}{0.92\textwidth}
-\begin{lstlisting}[style=json, basicstyle=\scriptsize\ttfamily]
+\begin{lstlisting}[style=json, basicstyle=\fontsize{6.5}{7.8}\selectfont\ttfamily]
 "permissions": {
   "deny": [
     "Read(./data/raw/**)",
@@ -1815,10 +1851,8 @@ Instructions in \texttt{CLAUDE.md} are requests, whereas deny rules and hooks ar
           "type": "command",
           "command": "jq -e '(.tool_input.file_path // .tool_input.notebook_path // \"\") | test(\"(^|/)(data/raw|reference|tests)/\")' > /dev/null && { echo 'data/raw/, reference/ and tests/ are read-only per CLAUDE.md' >&2; exit 2; }; exit 0"
 \end{lstlisting}
-\end{minipage}
-\end{center}
-\vspace{0.3em}
-\textbf{Optional live check:} ask the agent to relax a test threshold, which the hook blocks, and to show \texttt{reference/baseline.md}, which the deny rule blocks.
+\vspace{0.2em}
+{\small\textbf{Optional live check:} ask the agent to relax a test threshold, which the hook blocks, and to show \texttt{reference/baseline.md}, which the deny rule blocks.}
 \filebox{code/hooks/settings.json (abridged here; needs jq), installed as demo/.claude/settings.json}
 \end{frame}
 
@@ -1830,9 +1864,9 @@ The \textbf{Model Context Protocol} (MCP) connects the agent to services outside
 \begin{columns}[T]
 \column{0.47\textwidth}
 \begin{lstlisting}[style=prompt, basicstyle=\footnotesize\ttfamily]
-> Search Zotero for papers on fiscal
-  multipliers in HANK models; list the
-  ones not yet in paper/references.bib.
+> Open a GitHub issue for the
+  pre-trend test with the plan from
+  notes/plan.md.
 \end{lstlisting}
 \vspace{0.4em}
 \boristip{9} With a database server, the agent retrieves and analyzes the data itself: ``Personally, I haven't written a line of SQL in 6+ months.''
@@ -1847,13 +1881,12 @@ Whatever a tool \emph{returns} enters the context and is therefore sent to the A
     \node[draw, rounded corners=6pt, fill=level4,
           minimum width=2.2cm, minimum height=0.7cm,
           font=\scriptsize\bfseries, text=white] (cc) at (0,0) {Claude Code};
-    \node[spoke=softgreen!80!black] (git) at (-2.5,1.5) {GitHub};
-    \node[spoke=softorange!80!black] (zot) at (0,2.2) {Zotero};
-    \node[spoke=level3] (search) at (2.5,1.5) {Search};
-    \node[spoke=darkred!80] (hpc) at (-2.5,-1.5) {HPC};
-    \node[spoke=uzhblue] (fs) at (0,-2.2) {Filesystem};
-    \node[spoke=level5] (db) at (2.5,-1.5) {Database};
-    \foreach \s in {git,zot,search,hpc,fs,db} \draw[conn] (cc) -- (\s);
+    \node[spoke=softgreen!80!black] (git) at (0,2.2) {GitHub};
+    \node[spoke=level3] (search) at (2.5,0.8) {Search};
+    \node[spoke=level5] (db) at (1.6,-2.0) {Database};
+    \node[spoke=uzhblue] (fs) at (-1.6,-2.0) {Filesystem};
+    \node[spoke=darkred!80] (hpc) at (-2.5,0.8) {HPC};
+    \foreach \s in {git,search,db,fs,hpc} \draw[conn] (cc) -- (\s);
 \end{tikzpicture}
 \end{center}
 \end{columns}
@@ -1866,7 +1899,7 @@ Whatever a tool \emph{returns} enters the context and is therefore sent to the A
 claude mcp add --transport http github \
     https://api.githubcopilot.com/mcp/
 # a local server: any command speaking MCP
-claude mcp add --transport stdio zotero \
+claude mcp add --transport stdio postgres \
     -- npx -y <package>
 claude mcp list     # /mcp inside a session
 \end{lstlisting}
@@ -2055,7 +2088,7 @@ The goal is typed in a second terminal at the start of this part. Its six parts 
             or reference/. Report ALL_TESTS_PASS when pytest exits 0.
 (*@\textcolor{harvardcrimson}{\textbf{[CAP]}}@*)       Stop after 6 turns (count your commits in git log) and write notes/blocked.md instead.
 \end{lstlisting}
-\filebox{code/prompts.md, \S 11 (the goal verbatim, and a template for your own)}
+\democode{4}{the goal: code/prompts.md, \S 11 (verbatim, and a template for your own); the tests: code/deqn/tests/; the stub: code/deqn/stochastic.py; the thresholds: code/deqn/reference/baseline.md; the provided solution: code/deqn/solution/deqn\_stochastic.py}
 \end{frame}
 
 \begin{frame}{The role of each part of the goal}
@@ -2309,7 +2342,7 @@ One prompt tests whether the loss kernel matters, with accuracy measured on the 
   every E[s] is within 5e-3 of the reference value; print which kernel has the smallest mean
   |residual|.
 \end{lstlisting}
-\filebox{code/prompts.md, \S 13; the provided answer: code/deqn/loss\_kernels.py (45 s)}
+\democode{5}{code/prompts.md, \S 13; the provided answer: code/deqn/loss\_kernels.py (45 s), with its table and figure in code/deqn/outputs/}
 \end{frame}
 
 \begin{frame}{The four kernels give the same policy and similar residuals}
