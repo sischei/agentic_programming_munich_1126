@@ -47,7 +47,7 @@ cd demo && claude                      # then paste the prompts from code/prompt
 
 ```bash
 python3 code/deqn/deterministic.py                    # Step 1: the port, 4.9e-4 from the closed form (3 s)
-python3 code/deqn/solution/deqn_stochastic.py         # Step 4: our solver and its on-path numbers (11 s)
+python3 code/deqn/solution/deqn_stochastic.py         # Step 4: the provided solution and its on-path numbers (11 s)
 python3 code/deqn/stochastic_box.py                   # the silent failure: lower loss, wrong policy (11 s)
 python3 code/deqn/accuracy.py code/deqn/outputs/deqn_stochastic.pt --plot check.pdf   # verdict and figure
 ```
@@ -64,15 +64,16 @@ Cost: a Pro subscription covers every demo; on the API, a few dollars on Opus, a
 | `code/brock_mirman_reference.py` | the reference solver: the known answer |
 | `code/skills/`, `code/agents/`, `code/hooks/`, `code/CLAUDE_md_*.md` | the skills, eight subagents, the settings file with deny rules and hooks, two `CLAUDE.md` files |
 | `code/setup_demo_project.sh` | builds `demo/` (git-ignored) from the pieces above |
-| `code/extras/`, `code/euler_check_demo.py` | material from earlier versions, not on the slides |
+| `code/extras/`, `code/euler_check_demo.py`, `code/outputs/` | material from earlier versions, not on the slides |
+| `fig/` | the banner above and the original screenshot behind the capybara example on slide 5 |
 
 ## 4. The lecture at a glance
 
 | Part | Topic |
 |---|---|
-| Intro | Why now; what "agentic" means; the running example of the lecture |
+| Intro | Why now; what "agentic" means; a word of warning on the mixed evidence about AI tools; the running example; the code behind each live demo |
 | I | Mental models: tiers, the context window, the workflow; the running example and its seven steps |
-| II | Setting up: Claude Code, models and effort, open-weight models, git, the demo project (demo 1) |
+| II | Setting up: Claude Code, models and effort, open-weight models, Git, the demo project (demo 1) |
 | III | The core loop on Step 1; the same task in plan mode (demo 2); notebooks, parallel sessions, context |
 | IV | Prompt engineering: the six-component prompt, constraints, templates, failure modes |
 | V | Project memory: `CLAUDE.md` |
@@ -80,7 +81,7 @@ Cost: a Pro subscription covers every demo; on the API, a few dollars on Opus, a
 | VII | Autonomous loops: `/goal` builds the solver against five tests (demo 4); the verification figure; guardrails |
 | VIII | From plan to table and figure: the reconciled plan, the silent failure, four loss kernels (demo 5), paper replication |
 | IX | Verification, disclosure, referees and supervisors, replication packages, data governance |
-| Wrap-up | Quick reference, takeaways, conclusion, references |
+| Wrap-up | Quick reference, takeaways, ten tips, a first week on your own project, *Sapere aude* (delegate tasks to the agent, not responsibility), references |
 
 Block 1 is Parts I–IV, Block 2 Parts V–IX, with a break in between. Five live demos, nothing to install to attend.
 
@@ -88,7 +89,7 @@ Block 1 is Parts I–IV, Block 2 Parts V–IX, with a break in between. Five liv
 
 The stochastic Brock–Mirman growth model. A deep equilibrium net (DEQN; [Azinovic, Gaegauf and
 Scheidegger, 2022](https://onlinelibrary.wiley.com/doi/abs/10.1111/iere.12575)) learns the savings rate by gradient descent on the Euler residual. Two known
-answers grade it: the closed form of the full-depreciation case (Step 1) and a conventional grid-based
+answers grade it: the closed form of the full-depreciation case (Steps 1 and 3) and a conventional grid-based
 reference solver (Steps 2 and 4–7). Every concept of the lecture is introduced on this example; Part VIII shows a run
 whose loss converged while the policy was wrong, and the check that caught it. Details and every
 number: [`code/deqn/README.md`](code/deqn/README.md).
@@ -115,7 +116,7 @@ number: [`code/deqn/README.md`](code/deqn/README.md).
 * Schluntz, E. and B. Zhang (2024). Building effective agents. Anthropic engineering blog.
 * Anthropic (2026). [Claude Code documentation](https://code.claude.com/docs).
 
-The full list, with the sources behind every slide, is on the two reference slides at the end of the deck.
+The full list, with the sources behind every slide, is on the four reference slides at the end of the deck.
 
 ## 7. Author
 
@@ -124,4 +125,4 @@ The full list, with the sources behind every slide, is on the two reference slid
 * Department of Economics, HEC, University of Lausanne; Grantham Research Institute, London School of Economics
 * Website: [sischei.github.io](https://sischei.github.io/)
 * Lecture material: [github.com/sischei/agentic_programming_munich_1126](https://github.com/sischei/agentic_programming_munich_1126)
-* License of this repository: [CC0 1.0](License).
+* License of this repository: [CC0 1.0](LICENCE).
