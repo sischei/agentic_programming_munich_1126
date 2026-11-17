@@ -58,7 +58,7 @@ Cost: a Pro subscription covers every demo; on the API, a few dollars on Opus, a
 
 | Path | What |
 |---|---|
-| [`slides/Agentic_Programming_Munich.pdf`](slides/Agentic_Programming_Munich.pdf) | the deck, 135 pages, the last three an appendix (LaTeX source and figures next to it) |
+| [`slides/Agentic_Programming_Munich.pdf`](slides/Agentic_Programming_Munich.pdf) | the deck, 138 pages, the last three an appendix (LaTeX source and figures next to it) |
 | [`code/WALKTHROUGH.md`](code/WALKTHROUGH.md), [`code/prompts.md`](code/prompts.md) | every file and every prompt, in lecture order |
 | [`code/deqn/`](code/deqn/README.md) | the lead example: scripts, the five tests, the reference, the committed numbers and figures |
 | `code/brock_mirman_reference.py` | the reference solver: the known answer |

@@ -313,6 +313,35 @@ The tools are more than ``autocomplete.'' Agents plan, run, and debug for hours.
 \end{columns}
 \end{frame}
 
+% --- A word of warning: mixed signals ---
+\begin{frame}{The evidence on AI tools is mixed}
+\begin{columns}[T,onlytextwidth]
+\column{0.24\textwidth}
+\centering{\small\textbf{A claimed breakthrough}}\par\smallskip
+\fbox{\includegraphics[width=0.9\linewidth]{figures/navier_stokes_claim.png}}\par\smallskip
+{\scriptsize\textcolor{uzhgreydark}{OpenAI, September 2026; not independently verified}}
+\column{0.27\textwidth}
+\centering{\small\textbf{Classroom evidence}}\par\smallskip
+\raggedright{\small Randomized study, high-school mathematics, unrestricted GPT-4 access against a control group:}\par\medskip
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}r@{\hspace{0.5em}}>{\raggedright\arraybackslash}p{2.3cm}@{}}
+{\large\textbf{+48\%}} & {\small assisted practice}\\
+{\large\textbf{$-$17\%}} & {\small later exam without AI}
+\end{tabular}\par\medskip
+{\scriptsize\textcolor{uzhgreydark}{A tutor with safeguards largely avoided the exam penalty.}}
+\column{0.45\textwidth}
+\centering{\small\textbf{A confident wrong answer}}\par\smallskip
+\includegraphics[width=0.72\linewidth]{figures/fable_capybara.jpeg}\par\smallskip
+\raggedright{\scriptsize The answer: ``The capybara looks healthy from the photo: it's alert, with bright eyes, upright ears, a full coat, and a steady posture, though a photo can't show internal health, so a vet would be the one to confirm.''}\par\smallskip
+\centering{\scriptsize\textcolor{uzhgreydark}{Claude Fable 5.2, max effort, November 2026. The capybara has three eyes.}}
+\end{columns}
+\vfill
+\begin{center}
+Which of these claims can we trust? The rest of the lecture is about checking them.
+\end{center}
+{\scriptsize\textcolor{uzhgreydark}{Sources: Bastani et al.\ (2025), \emph{PNAS}; OpenAI (2026).}}
+\end{frame}
+
 % --- Today's plan ---
 \begin{frame}{We solve one growth model with an AI agent}
 \vspace{2.5em}
@@ -2756,6 +2785,22 @@ The ten tips come from the Claude Code team and were posted by Boris Cherny, who
 \boristip{10} Ask the agent to explain what it wrote.
 \end{frame}
 
+% --- A word of warning: Sapere aude ---
+\begin{frame}{Delegate tasks to the agent, not responsibility}
+\begin{columns}[c,onlytextwidth]
+\column{0.27\textwidth}\centering
+\includegraphics[width=\linewidth,height=0.62\textheight,keepaspectratio]{figures/kant_aufklaerung.png}\par\smallskip
+{\scriptsize\textcolor{uzhgreydark}{Kant, \emph{What Is Enlightenment?} (1784)}}
+\column{0.69\textwidth}
+{\LARGE\textbf{\emph{Sapere aude!}}}\par\medskip
+{\large ``Have courage to use your own understanding!''}\par\bigskip
+{\small Kant defines immaturity as ``the inability to use one's own understanding without the guidance of another.''}\par\bigskip
+In research with an agent, you formulate the question, assess the answer, and take responsibility for the conclusion.
+\end{columns}
+\vspace{1.2em}
+{\scriptsize\textcolor{uzhgreydark}{Translation by H. B. Nisbet, in H. Reiss (ed.), \emph{Kant: Political Writings}, Cambridge University Press (1991).}}
+\end{frame}
+
 \begin{frame}{The repository reproduces everything shown today}
 \begin{itemize}\itemsep8pt
   \item \texttt{README.md} gives the installation in five lines.
@@ -2774,38 +2819,47 @@ Specify the task, let the agent build, and verify the result against something y
 \end{center}
 \end{frame}
 
-\begin{frame}{References (1 of 3)}
+\begin{frame}{References (1 of 4)}
 \footnotesize
 \begin{itemize}\itemsep3pt
   \item Anthropic (2026). Claude Code documentation: best practices, context window, hooks, subagents, \texttt{/goal}. \url{https://code.claude.com/docs}
   \item Azinovic, M., L. Gaegauf, and S. Scheidegger (2022). ``Deep Equilibrium Nets.'' \emph{International Economic Review} 63(4): 1471--1525.
+  \item Bastani, H., O. Bastani, A. Sungu, H. Ge, \"O. Kabak\c{c}\i, and R. Mariman (2025). ``Generative AI without Guardrails Can Harm Learning: Evidence from High School Mathematics.'' \emph{PNAS} 122(26): e2422633122.
   \item Becker, J., N. Rush, E. Barnes, and D. Rein (2025). ``Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity.'' METR; arXiv:2507.09089.
   \item Bilionis, I. (2026). ``We Asked an AI Agent to Replicate Three Research Papers.'' \emph{Democratizing Science with AI} (Substack), March 5, 2026. \url{https://ebilionis.substack.com/p/we-asked-an-ai-agent-to-replicate}
   \item Brock, W. A. and L. J. Mirman (1972). ``Optimal Economic Growth and Uncertainty: The Discounted Case.'' \emph{Journal of Economic Theory} 4(3): 479--513.
   \item Brynjolfsson, E., D. Li, and L. Raymond (2025). ``Generative AI at Work.'' \emph{Quarterly Journal of Economics} 140(2): 889--942.
-  \item Cherny, B. (2026). Ten tips from the Claude Code team. Thread on X, January 31, 2026. \url{https://x.com/bcherny/status/2017742741636321619}
 \end{itemize}
 \end{frame}
 
-\begin{frame}{References (2 of 3)}
+\begin{frame}{References (2 of 4)}
 \footnotesize
 \begin{itemize}\itemsep3pt
+  \item Cherny, B. (2026). Ten tips from the Claude Code team. Thread on X, January 31, 2026. \url{https://x.com/bcherny/status/2017742741636321619}
   \item Galiani, S., F. A. L\'opez, and R. A. Sosa (2026). ``AI Agents and Prompt Engineering in Econometric Coding.'' NBER Working Paper 35588.
   \item Gemma Team (2026). ``Gemma 4 Technical Report.'' arXiv:2607.02770. Model cards (2026): DeepSeek-V4-Pro, Kimi-K2.6, Qwen3.6-27B, Qwen3.5-397B-A17B (Hugging Face); Gemini 3.1 Pro (Google DeepMind). Ollama documentation.
   \item Goldsmith-Pinkham, P. (2026). ``Getting Started with Claude Code: A Researcher's Setup Guide.'' \emph{paulgp.substack.com}, March 29, 2026.
   \item Hans, A. and I. Bilionis (2026). ``Coding-Agents Can Replicate Scientific Machine Learning Papers.'' arXiv:2607.02134; skill and case studies: \url{https://github.com/PredictiveScienceLab/paper-replication-paper}
+  \item Kant, I. (1784). ``An Answer to the Question: `What Is Enlightenment?'.'' Translated by H. B. Nisbet in H. Reiss (ed.), \emph{Kant: Political Writings}, 2nd ed., Cambridge University Press, 1991.
   \item Korinek, A. (2023). ``Generative AI for Economic Research: Use Cases and Implications for Economists.'' \emph{Journal of Economic Literature} 61(4): 1281--1317.
-  \item Liu, N. F. et al.\ (2024). ``Lost in the Middle: How Language Models Use Long Contexts.'' \emph{TACL} 12: 157--173.
-  \item Osmani, A. (2026). ``Which Claude Model Should You Build With? Fable, Opus, Sonnet, or Haiku.'' claude.dev blog, November 9, 2026. \url{https://claude.dev/blog/which-claude-model-should-you-build-with/}
 \end{itemize}
 \end{frame}
 
-\begin{frame}{References (3 of 3)}
+\begin{frame}{References (3 of 4)}
 \footnotesize
 \begin{itemize}\itemsep3pt
+  \item Liu, N. F. et al.\ (2024). ``Lost in the Middle: How Language Models Use Long Contexts.'' \emph{TACL} 12: 157--173.
+  \item OpenAI (2026). Claimed resolution of the Navier--Stokes Millennium Prize problem, announced in September 2026; not independently verified as of November 2026.
+  \item Osmani, A. (2026). ``Which Claude Model Should You Build With? Fable, Opus, Sonnet, or Haiku.'' claude.dev blog, November 9, 2026. \url{https://claude.dev/blog/which-claude-model-should-you-build-with/}
   \item Schluntz, E. and B. Zhang (2024). ``Building Effective Agents.'' Anthropic engineering blog, December 19, 2024.
   \item Schwartz, M., I. Andrews, and J. M. Shapiro (2026). ``An LLM Workflow That Reproduces, Improves, and Extends Published Economics Research.'' NBER Working Paper 35782.
   \item Walters, W. H. and E. I. Wilder (2023). ``Fabrication and Errors in the Bibliographic Citations Generated by ChatGPT.'' \emph{Scientific Reports} 13: 14045.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{References (4 of 4)}
+\footnotesize
+\begin{itemize}\itemsep3pt
   \item Policies cited (as of November 2026): COPE (2023), ``Authorship and AI tools'', position statement; AEA, Data and Code Availability Policy (February 2026), \url{https://www.aeaweb.org/journals/data/data-code-policy}; the AI policies of the AEA, Oxford University Press, the Econometric Society, Elsevier, and Springer Nature; Regulation (EU) 2024/1689 (the AI Act), Art.\ 50.
 \end{itemize}
 \vspace{0.6em}

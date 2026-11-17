@@ -79,7 +79,7 @@ section (§) of `prompts.md`.
 
 | Clock | Part | Minutes | Content |
 |---|---|---|---|
-| 0:00 | Intro | 5 | Title, why now, the running example (one model, seven steps, the tool each step introduces), the code behind each live demo |
+| 0:00 | Intro | 5 | Title, why now, a word of warning (the evidence on AI tools is mixed), the running example (one model, seven steps, the tool each step introduces), the code behind each live demo |
 | 0:05 | I | 15 | Tiers, context window, where the agent helps, workflow, the running example and the step ladder |
 | 0:20 | II | 10 | Stack, commands, models and effort, open-weight models, git, **D1** + WT 1 |
 | 0:30 | III | 25 | Feedback loop on Step 1, prompt levels, the Level-3 port, **D2 (12 min)**, notebooks, parallel, context |
@@ -90,7 +90,7 @@ section (§) of `prompts.md`.
 | 1:43 | VII | 15 | Closing the loop, how /goal works, the residual the loop must write, **D4 (goal set at 1:45, shown at 1:57)**, the goal taken apart, turn by turn, the verification panels, guardrails |
 | 1:58 | VIII | 12 | The plan and its reconciliation, the silent failure, **D5 (optional)**, replication |
 | 2:10 | IX | 15 | Verification, disclosure, referees/supervisors/students, replication packages, governance, six habits |
-| 2:25 | Wrap-up | 5 | Quick reference, takeaways, ten tips, conclusion, references |
+| 2:25 | Wrap-up | 5 | Quick reference, takeaways, ten tips, Sapere aude (delegate tasks, not responsibility), conclusion, references |
 
 If running late: drop the notebook and worktree slides, the paper-replication slides and the tips slides; never drop D2 or D4.
 
