@@ -232,6 +232,10 @@
 
 {\setbeamercolor{background canvas}{bg=uzhgreylight}
 \begin{frame}
+\begin{tikzpicture}[remember picture,overlay]
+  \node[anchor=east, inner sep=0pt] at ([xshift=-0.6cm, yshift=0.5cm]current page.east)
+    {\includegraphics[width=2.2cm]{figures/qr_repository.jpg}};
+\end{tikzpicture}%
 \titlepage
 \vspace{-0.2cm}
 \begin{center}
@@ -340,6 +344,22 @@ The tools are more than ``autocomplete.'' Agents plan, run, and debug for hours.
 Which of these claims can we trust? The rest of the lecture is about checking them.
 \end{center}
 {\scriptsize\textcolor{uzhgreydark}{Sources: Bastani et al.\ (2025), \emph{PNAS}; OpenAI (2026).}}
+\end{frame}
+
+% --- A word of warning: Sapere aude ---
+\begin{frame}{Delegate tasks to the agent, not responsibility}
+\begin{columns}[c,onlytextwidth]
+\column{0.27\textwidth}\centering
+\includegraphics[width=\linewidth,height=0.62\textheight,keepaspectratio]{figures/kant_aufklaerung.png}\par\smallskip
+{\scriptsize\textcolor{uzhgreydark}{Kant, \emph{What Is Enlightenment?} (1784)}}
+\column{0.69\textwidth}
+{\LARGE\textbf{\emph{Sapere aude!}}}\par\medskip
+{\large ``Have courage to use your own understanding!''}\par\bigskip
+{\small Kant defines immaturity as ``the inability to use one's own understanding without the guidance of another.''}\par\bigskip
+In research with an agent, you formulate the question, assess the answer, and take responsibility for the conclusion.
+\end{columns}
+\vspace{1.2em}
+{\scriptsize\textcolor{uzhgreydark}{Translation by H. B. Nisbet, in H. Reiss (ed.), \emph{Kant: Political Writings}, Cambridge University Press (1991).}}
 \end{frame}
 
 % --- Today's plan ---
@@ -2783,22 +2803,6 @@ The ten tips come from the Claude Code team and were posted by Boris Cherny, who
 \end{enumerate}
 \vspace{0.7em}
 \boristip{10} Ask the agent to explain what it wrote.
-\end{frame}
-
-% --- A word of warning: Sapere aude ---
-\begin{frame}{Delegate tasks to the agent, not responsibility}
-\begin{columns}[c,onlytextwidth]
-\column{0.27\textwidth}\centering
-\includegraphics[width=\linewidth,height=0.62\textheight,keepaspectratio]{figures/kant_aufklaerung.png}\par\smallskip
-{\scriptsize\textcolor{uzhgreydark}{Kant, \emph{What Is Enlightenment?} (1784)}}
-\column{0.69\textwidth}
-{\LARGE\textbf{\emph{Sapere aude!}}}\par\medskip
-{\large ``Have courage to use your own understanding!''}\par\bigskip
-{\small Kant defines immaturity as ``the inability to use one's own understanding without the guidance of another.''}\par\bigskip
-In research with an agent, you formulate the question, assess the answer, and take responsibility for the conclusion.
-\end{columns}
-\vspace{1.2em}
-{\scriptsize\textcolor{uzhgreydark}{Translation by H. B. Nisbet, in H. Reiss (ed.), \emph{Kant: Political Writings}, Cambridge University Press (1991).}}
 \end{frame}
 
 \begin{frame}{The repository reproduces everything shown today}

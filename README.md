@@ -71,7 +71,7 @@ Cost: a Pro subscription covers every demo; on the API, a few dollars on Opus, a
 
 | Part | Topic |
 |---|---|
-| Intro | Why now; what "agentic" means; a word of warning on the mixed evidence about AI tools; the running example; the code behind each live demo |
+| Intro | Why now; what "agentic" means; a word of warning on the mixed evidence about AI tools, and *Sapere aude* (delegate tasks to the agent, not responsibility); the running example; the code behind each live demo |
 | I | Mental models: tiers, the context window, the workflow; the running example and its seven steps |
 | II | Setting up: Claude Code, models and effort, open-weight models, Git, the demo project (demo 1) |
 | III | The core loop on Step 1; the same task in plan mode (demo 2); notebooks, parallel sessions, context |
@@ -81,7 +81,7 @@ Cost: a Pro subscription covers every demo; on the API, a few dollars on Opus, a
 | VII | Autonomous loops: `/goal` builds the solver against five tests (demo 4); the verification figure; guardrails |
 | VIII | From plan to table and figure: the reconciled plan, the silent failure, four loss kernels (demo 5), paper replication |
 | IX | Verification, disclosure, referees and supervisors, replication packages, data governance |
-| Wrap-up | Quick reference, takeaways, ten tips, a first week on your own project, *Sapere aude* (delegate tasks to the agent, not responsibility), references |
+| Wrap-up | Quick reference, takeaways, ten tips, a first week on your own project, references |
 
 Block 1 is Parts I–IV, Block 2 Parts V–IX, with a break in between. Five live demos, nothing to install to attend.
 
