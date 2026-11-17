@@ -15,11 +15,11 @@ A deep equilibrium net (DEQN) for the Brock–Mirman growth model, built step by
 with the agent and checked at every step against a known answer. The steps, where
 they appear, and what they are checked against:
 
-| Step | Part | What the agent builds | Checked against | Our version |
+| Step | Part | What the agent builds | Checked against | Provided version |
 |---|---|---|---|---|
 | 1 | III | the deterministic DEQN (delta = 1), ported from TensorFlow to PyTorch | closed form s* = alpha beta | `code/deqn/deterministic.py` |
 | 2 | IV | the stochastic extension as a six-component prompt | reference policy `solve(0.96, 0.9)` | `code/deqn/solution/deqn_stochastic.py` |
-| 3 | VI | the `/deqn-accuracy` skill: the on-path check of a saved policy | reference policy / closed form | `code/deqn/accuracy.py` |
+| 3 | VI | the `/deqn-accuracy` skill: the on-path check of a saved policy | closed form for the Step-1 policy (the live demo); reference policy otherwise | `code/deqn/accuracy.py` |
 | 4 | VII | `/goal` builds the stochastic solver against five tests | `code/deqn/tests/`, `reference/` | `code/deqn/solution/` |
 | 5 | VIII | the plan of Step 4 and its reconciliation | measured numbers | `code/deqn/plan_deqn.md` |
 | 6 | VIII | the silent failure: the recipe without the bias initialization | on-path check | `code/deqn/stochastic_box.py`, `silent_failure.md` |
@@ -60,14 +60,14 @@ section (§) of `prompts.md`.
 | # | WT | Part | File / command | What to look at |
 |---|---|---|---|---|
 | 9 | WT 2 | V | `code/CLAUDE_md_template.md` (the paper example) and `code/CLAUDE_md_demo.md` (= `demo/CLAUDE.md`) | In the template: Paths With Rules (`data/raw/`: READ ONLY), Current Status, Decisions Made, and the stale line (JAX in the log, TensorFlow in the package list). In the demo file: what the code does not tell you, the two rules, the DEQN notation, "accuracy means ... never the training loss". Live: §8. |
-| 10 | WT 3 | VI | `code/skills/deqn-accuracy/SKILL.md`, `code/deqn/accuracy.py` | Frontmatter, the four steps, the constraints; the script is the same one the tests' logic mirrors. **D3:** `/deqn-accuracy results/deqn_deterministic.pt` (§9, 5 s); open the report under `notes/`. |
+| 10 | WT 3 | VI | `code/skills/deqn-accuracy/SKILL.md`, `code/deqn/accuracy.py` | Frontmatter, the four steps, the constraints; the skill runs `accuracy.py`, whose checks follow the same logic as the five tests. **D3:** `/deqn-accuracy results/deqn_deterministic.pt` (§9, 5 s); open the report under `notes/`. |
 | 11 | WT 3 | VI | `code/skills/data-diagnostics/SKILL.md`, `code/skills/strategic-revision/SKILL.md` | Two more skills of the same shape, for data files and for referee reports; not on the slides. |
 | 12 | WT 4 | VI | `code/agents/verifier.md` | The whole file (28 lines). Live: the verifier prompt of §9 on the accuracy report. Watch the main session delegate and receive a summary. |
-| 13 | | VI | `code/agents/solution_accuracy_checker.md`, `code/agents/econometrics_reviewer.md` | The four checks (check 2 now cites the lecture's own silent failure); checklist A–E (effective first-stage F; F > 10 is not enough). Compare the `tools:` lines: read-only agents have no `Bash`, `Edit`, `Write`. |
+| 13 | | VI | `code/agents/solution_accuracy_checker.md`, `code/agents/econometrics_reviewer.md` | The four checks (check 2 cites the lecture's own silent failure); checklist A–E (effective first-stage F; F > 10 is not enough). Compare the `tools:` lines: read-only agents have no `Bash`, `Edit`, `Write`. |
 | 14 | WT 5 | VI | `code/hooks/settings.json` (= `demo/.claude/settings.json`) | The `permissions.deny` rules (no reading `data/raw/` or `reference/`), the `PreToolUse` block (no edits under `data/raw/`, `reference/`, `tests/`; exit code 2), the audit log. Optional live (§9): "Relax the threshold in tests/..." refused by the hook; "Show me reference/baseline.md" refused by the deny rule. Then `cat .claude/audit.log`. |
 | 15 | | VII | `code/deqn/solution/deqn_stochastic.py` | `residual()`, lines 32–47: the residual shown on the slide; `train()` below it. Kept outside the demo project. |
 | 16 | WT 6 | VII | `code/deqn/tests/test_deqn_stochastic.py`, `tests/conftest.py`, `code/deqn/stochastic.py`, `code/deqn/reference/baseline.md` | The five tests are the spec; `conftest.py` is their own residual and simulation, independent of the solver; the stub raises `NotImplementedError`; `baseline.md` says where each threshold comes from. **D4:** set the `/goal` (§11) in a second terminal in `demo/` at the start of Part VII. |
-| 17 | | VII | `code/prompts.md` §11 | The goal taken apart (condition, problem, recipe, interface, each turn, cap) and the run turn by turn. While these slides are shown, the goal is running; at the end of the part switch to the second terminal: `python3 -m pytest -q tests/` (5 passed), `git log --oneline` (one commit per turn), `/goal` (turns, time, tokens), `/deqn-accuracy results/deqn_stochastic.pt`. |
+| 17 | | VII | `code/prompts.md` §11 | The goal taken apart (condition, problem, recipe, interface, each turn, cap) and the run turn by turn. While these slides are shown, the goal is running; at the end of the part switch to the second terminal: `python3 -m pytest -q tests/` (5 passed), `git log --oneline` (one commit per turn), `/goal` (turns, time, spend), `/deqn-accuracy results/deqn_stochastic.pt`. |
 | 18 | | VII | `code/deqn/accuracy.py --plot`, `slides/figures/agentic_deqn_verify_{good,bad,step1}.pdf` | The three panels behind the verdict: policy vs reference across the window, the residual along the own path against the threshold, the path against the window. The slide shows the `/goal` policy (ACCURATE); the same figure for the silent failure (WRONG) and for the Step-1 policy is in `slides/figures/`. `cd code && python3 deqn/accuracy.py deqn/outputs/deqn_stochastic.pt --plot out.pdf` redraws it. |
 | 19 | | VII | `code/prompts.md` §12 | The headless command, the headless goal, and the fresh-context shell loop. |
 | 20 | WT 7 | VIII | `code/deqn/plan_deqn.md` | Problem, recipe, metrics and targets; "First implementation, and what the plan did not foresee" (the four numbers of the wrong run); "Revised recipe (achieved)"; the sanity rule. |
@@ -81,11 +81,11 @@ section (§) of `prompts.md`.
 |---|---|---|---|
 | 0:00 | Intro | 5 | Title, why now, a word of warning (the evidence on AI tools is mixed), the running example (one model, seven steps, the tool each step introduces), the code behind each live demo |
 | 0:05 | I | 15 | Tiers, context window, where the agent helps, workflow, the running example and the step ladder |
-| 0:20 | II | 10 | Stack, commands, models and effort, open-weight models, git, **D1** + WT 1 |
+| 0:20 | II | 10 | Stack, commands, models and effort, open-weight models, Git, **D1** + WT 1 |
 | 0:30 | III | 25 | Feedback loop on Step 1, prompt levels, the Level-3 port, **D2 (12 min)**, notebooks, parallel, context |
 | 0:55 | IV | 15 | Anatomy (Step 2), constraints, templates, failure modes |
 | 1:10 | Break | 10 | |
-| 1:20 | V | 8 | CLAUDE.md, WT 2 |
+| 1:20 | V | 8 | `CLAUDE.md`, WT 2 |
 | 1:28 | VI | 15 | Map, the accuracy skill + verifier **D3 (5 min)**, specialists, deny rules and hooks, MCP |
 | 1:43 | VII | 15 | Closing the loop, how /goal works, the residual the loop must write, **D4 (goal set at 1:45, shown at 1:57)**, the goal taken apart, turn by turn, the verification panels, guardrails |
 | 1:58 | VIII | 12 | The plan and its reconciliation, the silent failure, **D5 (optional)**, replication |
