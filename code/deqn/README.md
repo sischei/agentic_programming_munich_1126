@@ -11,7 +11,7 @@ the artifacts the slides show. Source material: the course notebooks in `source/
 | Step | Lecture | File | Checked against | Run time |
 |---|---|---|---|---|
 | 1 | Part III | `deterministic.py`: the TF notebook ported to PyTorch, delta = 1 | closed form s* = alpha beta = 0.3564 | 3 s |
-| 2-4 | Parts IV, VII | `stochastic.py` (the stub the `/goal` fills), `solution/deqn_stochastic.py` (our answer) | reference policy `solve(0.96, 0.9)` | 11 s |
+| 2-4 | Parts IV, VII | `stochastic.py` (the stub the `/goal` fills), `solution/deqn_stochastic.py` (the provided solution) | reference policy `solve(0.96, 0.9)` | 11 s |
 | 3 | Part VI | `accuracy.py`: the on-path check (also the `/deqn-accuracy` skill) | closed form for the Step-1 policy (the live demo); reference policy otherwise | 5 s |
 | 4 | Part VII | `tests/`, `reference/`: five tests and where their thresholds come from | as above | 14 s |
 | 5-6 | Part VIII | `plan_deqn.md`, `stochastic_box.py`, `silent_failure.md`, `plot_silent_failure.py` | as above | 11 s |

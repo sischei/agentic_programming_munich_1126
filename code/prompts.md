@@ -61,7 +61,7 @@ Turn 3, the steer, after the agent reports "the loss has converged":
 A small loss is not a small error. The answer is known: s* = alpha*beta. Print max |s(K) - alpha*beta| on 1,001 points of [0.1, 1] and plot s(K) against the constant. Then tell me whether it is solved.
 ```
 
-Our version of the result: `code/deqn/deterministic.py` (training loss 3.1e-7,
+The provided version of the result: `code/deqn/deterministic.py` (training loss 3.1e-7,
 max |s - alpha beta| = 4.9e-4, 3 s).
 
 ## 3. A Level-3 prompt: the port of Step 1
@@ -95,7 +95,7 @@ the check, not in the loss; `make_net` and `save_policy` reused, not re-implemen
 torch seeded before the network is built; "solved" judged by the policy error, not by
 the loss.
 
-Expected (our version is `code/deqn/deterministic.py`, figure
+Expected (the provided version is `code/deqn/deterministic.py`, figure
 `code/deqn/outputs/deqn_step1_figure.pdf`):
 
 | quantity | value |
@@ -157,7 +157,7 @@ and recipe of the goal in §11):
 ```
 
 Expected: 5 passed in about 14 s; on-path mean |residual| about 1.4e-4; max |s - s_ref|
-about 2.3e-3; E[s] 0.252; log K in [1.08, 1.81]. Our version: `code/deqn/solution/deqn_stochastic.py`.
+about 2.3e-3; E[s] 0.252; log K in [1.08, 1.81]. The provided solution: `code/deqn/solution/deqn_stochastic.py`.
 
 ### The constraint lines, to append to any prompt
 
